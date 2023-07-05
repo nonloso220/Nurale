@@ -32,6 +32,7 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
         defaultValues,
         resolver: zodResolver(schema),
     })
+    //ciao
     const {
         formState: { errors },
         trigger,
