@@ -4,15 +4,14 @@ import { fetchSkills } from '../../../../store/skills/skills'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schema } from '../validation'
 import Flex from '../../../atoms/Flex'
-import { Stack } from '@chakra-ui/react'
+import { Stack, Textarea } from '@chakra-ui/react'
 import Li from '../../../atoms/Li'
 import { theme } from '../../../../theme'
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import Modal from '../../../atoms/Modal'
 import InputForm from '../../../molecules/InputForm'
-import { Skill, createSkill, updateSkill } from '../../../../store/skills'
+import { Skill, updateSkill } from '../../../../store/skills'
 import { useEffect } from 'react'
-import SelectForm from '../../../molecules/selectForm'
 
 interface Props {
     open: boolean
@@ -32,7 +31,6 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
         defaultValues,
         resolver: zodResolver(schema),
     })
-    //ciao
     const {
         formState: { errors },
         trigger,
@@ -66,6 +64,7 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
     const handleClick = () => {
         setOpen(!open)
         open ? null : reset(defaultValues)
+        console.log(open)
     }
     useEffect(() => {
         if (skill) {
@@ -74,6 +73,7 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
             setValue('skillType', skill.skillType)
         } else null
     }, [open])
+
     return (
         <Modal show={open} color="black">
             <Flex
@@ -100,6 +100,8 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
                                     placeholder="Nome"
                                     fontWeight="500"
                                     name={'name'}
+                                    action={'input'}
+                                    type="text"
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -123,11 +125,14 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
                     >
                         <FormProvider {...methods}>
                             <Stack spacing={3}>
-                                <SelectForm
+                                <InputForm
                                     fontSize="16px"
                                     label="Tipo di skill"
                                     fontWeight="500"
                                     name={'skillType'}
+                                    action={'select'}
+                                    type="text"
+                                    placeholder={''}
                                     defaultElement={getValues('skillType')}
                                     selectElements={[
                                         'Frontend',
@@ -158,6 +163,8 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
                                 placeholder="Note"
                                 fontWeight="500"
                                 name={'note'}
+                                action={'textArea'}
+                                type="text"
                                 style={{
                                     width: '100%',
                                     borderRadius: '11px',
@@ -165,6 +172,7 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
                                     display: 'flex',
                                 }}
                             />
+
                             <div style={{ color: 'red' }}>
                                 {errors?.name?.message}
                             </div>

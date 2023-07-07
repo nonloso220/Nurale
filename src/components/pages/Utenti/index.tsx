@@ -23,6 +23,7 @@ const Users = () => {
     const [user, setUser] = useState<User | null>(null)
     const users = useSelector(getUsers)
     const totalElement = useSelector(getPaginations)
+    const [currentPage, setCurrentPage] = useState<number>(1)
     const take = 100
     const [skip, setSkip] = useState(0)
     useEffect(() => {
@@ -152,6 +153,8 @@ const Users = () => {
                             skip={skip}
                             take={take}
                             totalElement={totalElement}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
                         />
                     </Flex>
                 )}

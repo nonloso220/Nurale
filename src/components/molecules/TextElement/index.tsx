@@ -57,38 +57,39 @@ const TextElement = ({
             }}
         >
             {nameIcon && <Icons name={nameIcon} size={1.5} color={colorIcon} />}
-
             {sidebarArrow ? null : (
-                <Text
-                    style={{
-                        fontWeight: 'bold',
-                        lineHeight: '1.3rem',
-                        fontSize: '14.2px',
-                        padding: `${paddingIcon}`,
-                    }}
-                >
-                    <span>{label}</span>
-                </Text>
+                <>
+                    <Text
+                        style={{
+                            fontWeight: 'bold',
+                            lineHeight: '1.3rem',
+                            fontSize: '14.2px',
+                            padding: `${paddingIcon}`,
+                        }}
+                    >
+                        <span>{label}</span>
+                    </Text>
+                    {nameOtherIcon && (
+                        <span
+                            style={{ paddingTop: '12px', marginLeft: 'auto' }}
+                        >
+                            {dropDownOpen ? (
+                                <Icons
+                                    name={nameOtherIcon}
+                                    size={1.5}
+                                    color={colorIcon}
+                                />
+                            ) : (
+                                <Icons
+                                    name={'dropdownUpIcon'}
+                                    size={1.5}
+                                    color={colorIcon}
+                                />
+                            )}
+                        </span>
+                    )}
+                </>
             )}
-            {sidebarArrow
-                ? null
-                : nameOtherIcon && (
-                      <span style={{ paddingTop: '12px', marginLeft: 'auto' }}>
-                          {dropDownOpen ? (
-                              <Icons
-                                  name={nameOtherIcon}
-                                  size={1.5}
-                                  color={colorIcon}
-                              />
-                          ) : (
-                              <Icons
-                                  name={'dropdownUpIcon'}
-                                  size={1.5}
-                                  color={colorIcon}
-                              />
-                          )}
-                      </span>
-                  )}
         </Flex>
     )
 }

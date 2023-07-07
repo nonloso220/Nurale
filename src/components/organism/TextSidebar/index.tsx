@@ -3,7 +3,7 @@ import TextElement from '../../molecules/TextElement'
 import { SIDEBAR, icons } from '../../../utils/costants'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import MenuList from '../../atoms/MenuList'
+import MenuList from '../../molecules/MenuList'
 import Li from '../../atoms/Li'
 
 interface Props {
@@ -25,19 +25,11 @@ const TextSidebar = ({
 }: Props) => {
     const [colorBoolean, setColorBoolean] = useState<boolean>(false)
     const navigate = useNavigate()
-    // const path = `/${label}`
     const [open, setOpen] = useState<boolean>(false)
 
     const handleClick = () => {
         if (!dropdownVerification) {
             SIDEBAR.map((sidebar) => {
-                // if (sidebar.sublinkVerification) {
-                //     sidebar.sublink?.map((sub) =>
-                //         sub.name == label
-                //             ? sub.href && navigate(sub.href)
-                //             : null
-                //     )
-                // } else
                 sidebar.name == label
                     ? sidebar.href &&
                       (navigate(sidebar.href),

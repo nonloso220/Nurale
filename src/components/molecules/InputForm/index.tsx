@@ -1,19 +1,26 @@
-import { CloseIcon } from '@chakra-ui/icons'
+import { CloseIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import {
     Input,
     InputGroup,
     InputProps,
     InputRightElement,
+    Select,
+    Textarea,
 } from '@chakra-ui/react'
 import { useFormContext } from 'react-hook-form'
+import Li from '../../atoms/Li'
+import { useEffect, useState } from 'react'
 interface Props extends InputProps {
+    type?: string
     placeholder: string
     label: string
     fontWeight?: string
     fontSize?: string
-    name?: string
+    name: string
     error?: string
-    closeIcon?: boolean
+    action: string
+    defaultElement?: any
+    selectElements?: string[]
     closeIconAction?: () => void
 }
 const InputForm = ({
@@ -23,11 +30,20 @@ const InputForm = ({
     fontSize,
     name,
     error,
-    closeIcon,
+    type = 'text',
+    action = 'input',
     closeIconAction,
+    defaultElement,
+    selectElements,
     ...rest
 }: Props) => {
     const { register } = useFormContext()
+    const [show, setShow] = useState(true)
+    const handleClick = () => setShow(!show)
+    useEffect(() => {
+        setShow(true)
+        // type === 'password' ? setShow(false) :
+    }, [])
     return (
         <div>
             <label
@@ -39,28 +55,56 @@ const InputForm = ({
             >
                 {label}
             </label>
-            <InputGroup>
-                {name ? (
+            {action === 'select' ? ( //SELECT
+                <Select
+                    name={name}
+                    placeholder={defaultElement}
+                    style={{
+                        borderRadius: '11px',
+                        borderColor: 'rgb(133, 125, 172)',
+                    }}
+                >
+                    {selectElements?.map((element) => (
+                        <option value={element}>{element}</option>
+                    ))}
+                </Select>
+            ) : action === 'input' ? ( //INPUT
+                <InputGroup>
                     <Input
                         placeholder={placeholder}
                         fontSize={fontSize ? fontSize : '18px'}
                         {...register(name)}
                         {...rest}
+                        type={show ? 'text' : 'password'}
+                        isDisabled={type === 'email' ? true : false}
+                        cursor={type === 'email' ? 'not-allowed' : 'pointer'}
+                        readOnly={type === 'email' ? true : false}
                     />
-                ) : (
-                    <Input
-                        placeholder={placeholder}
-                        fontSize={fontSize ? fontSize : '18px'}
-                        readOnly={true}
-                        cursor="not-allowed"
-                    />
-                )}
-                {closeIcon ? (
-                    <InputRightElement>
-                        <CloseIcon onClick={closeIconAction} />
-                    </InputRightElement>
-                ) : null}
-            </InputGroup>
+                    {type === 'password' || type === 'closeIcon' ? (
+                        <InputRightElement>
+                            {type === 'closeIcon' ? ( //close icon
+                                <CloseIcon onClick={closeIconAction} />
+                            ) : null}
+                            {type === 'password' ? ( //password icon
+                                <Li
+                                    onClick={handleClick}
+                                    style={{
+                                        top: '36px',
+                                        border: '0px',
+                                        position: 'absolute',
+                                        left: '36px',
+                                        width: 'fit-content',
+                                    }}
+                                >
+                                    {show ? <ViewIcon /> : <ViewOffIcon />}
+                                </Li>
+                            ) : null}
+                        </InputRightElement>
+                    ) : null}
+                </InputGroup>
+            ) : action === 'textArea' ? ( //TEXT AREA
+                <Textarea name={name} placeholder="Note" />
+            ) : null}
 
             <div style={{ color: 'red' }}>{error}</div>
         </div>

@@ -115,8 +115,11 @@ const FormEditUser = ({ open, user, setOpen }: Props) => {
                         <FormProvider {...methods}>
                             <Stack spacing={3}>
                                 <InputForm
+                                    type="email"
                                     fontSize="16px"
                                     label="Email"
+                                    name={'email'}
+                                    action={'input'}
                                     placeholder={String(user?.email)}
                                     fontWeight="500"
                                     style={{
@@ -135,6 +138,8 @@ const FormEditUser = ({ open, user, setOpen }: Props) => {
                                     placeholder="Risorsa"
                                     fontWeight="500"
                                     name={'risorsa'}
+                                    action={'input'}
+                                    type={'text'}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -164,13 +169,16 @@ const FormEditUser = ({ open, user, setOpen }: Props) => {
                                     placeholder="Nome"
                                     fontWeight="500"
                                     name={'firstName'}
+                                    action={'input'}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
                                         borderColor: '#857DAC',
                                         display: 'flex',
                                     }}
-                                    closeIcon={!deleteFirstName ? true : false}
+                                    type={
+                                        !deleteFirstName ? 'closeIcon' : 'text'
+                                    }
                                     closeIconAction={handleCloseIconFirstName}
                                 />
                                 <div style={{ color: 'red' }}>
@@ -182,13 +190,16 @@ const FormEditUser = ({ open, user, setOpen }: Props) => {
                                     placeholder="Cognome"
                                     fontWeight="500"
                                     name={'lastName'}
+                                    action={'input'}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
                                         borderColor: '#857DAC',
                                         display: 'flex',
                                     }}
-                                    closeIcon={!deletLasteName ? true : false}
+                                    type={
+                                        !deletLasteName ? 'closeIcon' : 'text'
+                                    }
                                     closeIconAction={handleCloseIconLastName}
                                 />
                                 <div style={{ color: 'red' }}>
@@ -200,13 +211,14 @@ const FormEditUser = ({ open, user, setOpen }: Props) => {
                                     placeholder="Telefono"
                                     fontWeight="500"
                                     name={'phone'}
+                                    action={'input'}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
                                         borderColor: '#857DAC',
                                         display: 'flex',
                                     }}
-                                    closeIcon={!deletePhone ? true : false}
+                                    type={!deletePhone ? 'closeIcon' : 'text'}
                                     closeIconAction={handleCloseIconPhone}
                                 />
                                 <div style={{ color: 'red' }}>
@@ -254,9 +266,7 @@ const FormEditUser = ({ open, user, setOpen }: Props) => {
                         marginRight="1rem"
                     >
                         <CheckIcon />
-                        <span style={{ fontWeight: 'bold' }}>
-                            &nbsp; Conferma
-                        </span>
+                        <span style={{ fontWeight: 'bold' }}>&nbsp; Salva</span>
                     </Li>
                 </Flex>
             </Flex>

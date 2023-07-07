@@ -1,16 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import { SIDEBAR } from '../../../utils/costants'
-import Li from '../Li'
-import TextElement from '../../molecules/TextElement'
+import Li from '../../atoms/Li'
+import TextElement from '../TextElement'
 interface Props {
     name: string
 }
 const MenuList = ({ name }: Props) => {
-    // const handleDropdownFocus = (state: boolean) => {
-    //     setOpen(!state)
-    //     console.log(open)
-    // }
-    // console.log(open)
     const navigate = useNavigate()
     return (
         <ul

@@ -9,6 +9,8 @@ interface Props {
     skip: number
     take: number
     totalElement: number
+    currentPage: number
+    setCurrentPage: (currentPage: number) => void
     // setSkip: (skip: number) => void
     handlePagination: (page: number) => void
 }
@@ -17,10 +19,12 @@ const Paginate = ({
     skip,
     take,
     totalElement,
+    currentPage,
+    setCurrentPage,
     handlePagination,
 }: Props): ReactElement => {
     const [pages, setPages] = useState<number>()
-    const [currentPage, setCurrentPage] = useState<number>(1)
+
     useEffect(() => {
         setPages(Math.floor(totalElement / take) + 1)
     }, [totalElement])

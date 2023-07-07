@@ -105,6 +105,8 @@ const FormNewUser = ({ open, setOpen }: Props) => {
                                     placeholder="Email"
                                     fontWeight="500"
                                     name={'email'}
+                                    action={'input'}
+                                    type={'text'}
                                     style={{
                                         width: '95%',
                                         borderRadius: '11px',
@@ -121,6 +123,8 @@ const FormNewUser = ({ open, setOpen }: Props) => {
                                     placeholder="Nome"
                                     fontWeight="500"
                                     name={'firstName'}
+                                    action={'input'}
+                                    type={'text'}
                                     style={{
                                         width: '95%',
                                         borderRadius: '11px',
@@ -138,6 +142,7 @@ const FormNewUser = ({ open, setOpen }: Props) => {
                                         placeholder="Password"
                                         fontWeight="500"
                                         name={'password'}
+                                        action={'input'}
                                         style={{
                                             width: '190%',
                                             borderRadius: '11px',
@@ -188,6 +193,8 @@ const FormNewUser = ({ open, setOpen }: Props) => {
                                     placeholder="Risorsa"
                                     fontWeight="500"
                                     name={'risorsa'}
+                                    action={'input'}
+                                    type={'text'}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -204,6 +211,8 @@ const FormNewUser = ({ open, setOpen }: Props) => {
                                     placeholder="Cognome"
                                     fontWeight="500"
                                     name={'lastName'}
+                                    action={'input'}
+                                    type={'text'}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -220,6 +229,8 @@ const FormNewUser = ({ open, setOpen }: Props) => {
                                     placeholder="Conferma Password"
                                     fontWeight="500"
                                     name={'passwordConfirm'}
+                                    action={'input'}
+                                    type={'text'}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',

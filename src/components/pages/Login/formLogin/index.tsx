@@ -88,6 +88,8 @@ const FormLogin = () => {
                     <Stack spacing={3}>
                         <InputForm
                             label="Email"
+                            action="input"
+                            type="text"
                             placeholder="inserisci email"
                             fontWeight="bold"
                             name={'email'}
@@ -95,8 +97,9 @@ const FormLogin = () => {
                         <div style={{ color: 'red' }}>
                             {errors?.email?.message}
                         </div>
-                        <InputPwdForm
+                        <InputForm
                             type="password"
+                            action="input"
                             name="password"
                             placeholder="Inserisci Password"
                             label="Password"

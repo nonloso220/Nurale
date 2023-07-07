@@ -27,6 +27,7 @@ const Skills = () => {
     const [skill, setSkill] = useState<Skill | null>(null)
     const skills = useSelector(getSkills)
     const totalElement = useSelector(getPaginations)
+    const [currentPage, setCurrentPage] = useState<number>(1)
     const take = 10
 
     useEffect(() => {
@@ -90,6 +91,8 @@ const Skills = () => {
     const handlePagination = (page: number) => {
         setSkip(page)
     }
+    console.log('skip=' + skip)
+    console.log('totalelement=' + totalElement)
     return (
         <Flex
             column="column"
@@ -134,6 +137,7 @@ const Skills = () => {
                     Aggiungi nuova Skill
                 </Text>
                 <br />
+
                 {open ? (
                     <FormNewSkill
                         open={open}
@@ -144,7 +148,7 @@ const Skills = () => {
                 ) : openEdit ? (
                     <FormEditSkill
                         open={openEdit}
-                        setOpen={setOpen}
+                        setOpen={setOpenEdit}
                         take={take}
                         skip={skip}
                         skill={skill}
@@ -164,6 +168,8 @@ const Skills = () => {
                             skip={skip}
                             take={take}
                             totalElement={totalElement}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
                         />
                     </Flex>
                 )}

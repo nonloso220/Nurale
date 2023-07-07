@@ -89,6 +89,8 @@ const FormNewSkill = ({ open, take, skip, setOpen }: Props) => {
                                     placeholder="Nome"
                                     fontWeight="500"
                                     name={'name'}
+                                    action={'input'}
+                                    type="text"
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -118,6 +120,16 @@ const FormNewSkill = ({ open, take, skip, setOpen }: Props) => {
                                     placeholder="Tipo di skill"
                                     fontWeight="500"
                                     name={'skillType'}
+                                    action={'select'}
+                                    type="text"
+                                    defaultElement={'  '}
+                                    selectElements={[
+                                        'Frontend',
+                                        'Backend',
+                                        'Designer',
+                                        'Administrator',
+                                        'Other',
+                                    ]}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -146,6 +158,8 @@ const FormNewSkill = ({ open, take, skip, setOpen }: Props) => {
                                 placeholder="Note"
                                 fontWeight="500"
                                 name={'note'}
+                                action={'textArea'}
+                                type="text"
                                 style={{
                                     width: '100%',
                                     borderRadius: '11px',

@@ -1,15 +1,12 @@
-// import { useNavigate, useLocation } from 'react-router-dom'
-// import { SIDEBAR } from '../../../utils/costants'
 import { Flex } from '../../atoms'
 import LogoImage from '../../molecules/LogoImage'
 import { Divider, Stack, Switch } from '@chakra-ui/react'
 import './sidebar.css'
 import TextSidebar from '../TextSidebar'
 import TextElement from '../../molecules/TextElement'
-import { ROUTES, SIDEBAR, TOKEN } from '../../../utils/costants'
+import { ROUTES, SIDEBAR } from '../../../utils/costants'
 import { useState } from 'react'
 import { removeTokenCookies } from '../../../utils/auth/authCookies'
-import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 const Sidebar = () => {
     const navigate = useNavigate()
@@ -19,7 +16,6 @@ const Sidebar = () => {
     }
     const handleLogout = () => {
         removeTokenCookies()
-        // Cookies.remove(TOKEN)
         navigate(ROUTES.Login)
     }
     return (
@@ -96,7 +92,6 @@ const Sidebar = () => {
                 column="column"
                 style={{
                     marginTop: sidebarArrow ? '25px' : '2.5rem',
-                    // paddingTop: sidebarArrow ? '0px' : '60px',
                     overflow: 'hidden auto',
                     position: 'sticky',
                     paddingLeft: sidebarArrow ? '11px' : '0px',
