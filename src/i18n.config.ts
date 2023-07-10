@@ -18,6 +18,8 @@ const resources = {
   },
 };
 
+localStorage.setItem('lang', 'it')
+
 const lng = localStorage.getItem('lang') || 'it';
 
 dayjs.extend(localizedFormat);

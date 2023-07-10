@@ -57,12 +57,12 @@ const InputForm = ({
             </label>
             {action === 'select' ? ( //SELECT
                 <Select
-                    name={name}
                     placeholder={defaultElement}
                     style={{
                         borderRadius: '11px',
                         borderColor: 'rgb(133, 125, 172)',
                     }}
+                    {...register(name)}
                 >
                     {selectElements?.map((element) => (
                         <option value={element}>{element}</option>
@@ -103,7 +103,7 @@ const InputForm = ({
                     ) : null}
                 </InputGroup>
             ) : action === 'textArea' ? ( //TEXT AREA
-                <Textarea name={name} placeholder="Note" />
+                <Textarea placeholder="Note" {...register(name)} />
             ) : null}
 
             <div style={{ color: 'red' }}>{error}</div>

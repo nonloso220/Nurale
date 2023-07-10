@@ -15,6 +15,7 @@ import ModalConfirm from '../../molecules/ModalConfirm'
 import FormNewUser from './formNewUser'
 import FormEditUser from './formEditUser'
 import Paginate from '../../organism/Pagination'
+import { useTranslation } from 'react-i18next'
 const Users = () => {
     const dispatch = useAppDispatch()
     const [open, setOpen] = useState(false)
@@ -26,6 +27,7 @@ const Users = () => {
     const [currentPage, setCurrentPage] = useState<number>(1)
     const take = 100
     const [skip, setSkip] = useState(0)
+    const { t } = useTranslation()
     useEffect(() => {
         dispatch(
             fetchUsers({
@@ -116,7 +118,7 @@ const Users = () => {
                         onClick={handleClick}
                     >
                         <AddIcon />
-                        <span>&nbsp; aggiungi nuovo</span>
+                        <span>&nbsp; {t('user.addNewUser')}</span>
                     </Li>
                 </Flex>
                 <Text

@@ -16,24 +16,26 @@ import {
 import FormNewSkill from './formNewSkill'
 import Paginate from '../../organism/Pagination'
 import FormEditSkill from './formEditSkill'
-import { Skill } from '../../../store/skills/skill'
+import { Skill, deleteSkill } from '../../../store/skills/skill'
+import ModalConfirm from '../../molecules/ModalConfirm'
+import FormAddFilter from './fomAddFilter'
 
 const Skills = () => {
     const dispatch = useAppDispatch()
     const [open, setOpen] = useState(false)
-    // const [openDelete, setOpenDelete] = useState(false)
+    const [openDelete, setOpenDelete] = useState(false)
     const [openEdit, setOpenEdit] = useState(false)
     const [skip, setSkip] = useState(0)
     const [skill, setSkill] = useState<Skill | null>(null)
     const skills = useSelector(getSkills)
     const totalElement = useSelector(getPaginations)
     const [currentPage, setCurrentPage] = useState<number>(1)
+    const [filter, setFilter] = useState(false)
     const take = 10
-
     useEffect(() => {
         dispatch(
             fetchSkills({
-                search: '',
+                // skillType: selectSkillType,
                 skip: skip,
                 take: take,
             })
@@ -41,6 +43,9 @@ const Skills = () => {
     }, [])
     const handleClick = () => {
         setOpen(!open)
+    }
+    const handleClickFilter = () => {
+        setFilter(!filter)
     }
     const createColumHelper: any = createColumnHelper<any>()
     const cols = [
@@ -61,24 +66,24 @@ const Skills = () => {
         setOpenEdit(true)
         setSkill(object)
     }
-    // const handleConfirmDelete = (object: User) => {
-    //     setOpenDelete(true)
-    //     setUser(object)
-    // }
+    const handleConfirmDelete = (object: Skill) => {
+        setOpenDelete(true)
+        setSkill(object)
+    }
 
-    // const handleCloseDelete = async () => {
-    //     setOpenDelete(false)
-    //     await dispatch(
-    //         fetchUsers({
-    //             search: '',
-    //             skip: skip,
-    //             take: take,
-    //         })
-    //     )
-    // }
-    // const handleDelete = async () => {
-    //     await dispatch(deleteUser(user?.id))
-    // }
+    const handleCloseDelete = async () => {
+        setOpenDelete(false)
+        await dispatch(
+            fetchSkills({
+                search: '',
+                skip: skip,
+                take: take,
+            })
+        )
+    }
+    const handleDelete = async () => {
+        await dispatch(deleteSkill(skill?.id))
+    }
     useEffect(() => {
         dispatch(
             fetchSkills({
@@ -111,21 +116,42 @@ const Skills = () => {
                 }}
             >
                 <Flex bgcolor="white">
-                    <Li
-                        style={{
-                            backgroundColor: theme.colors.pink100,
-                            display: open || openEdit ? 'none' : 'block',
-                            border: '0px',
-                            padding: '10px',
-                            width: '167px',
-                            color: 'white',
-                        }}
-                        onClick={handleClick}
-                    >
-                        <AddIcon />
-                        <span>&nbsp; aggiungi nuovo</span>
-                    </Li>
+                    <Flex bgcolor="white">
+                        <Li
+                            style={{
+                                backgroundColor: theme.colors.pink100,
+                                display: open || openEdit ? 'none' : 'block',
+                                border: '0px',
+                                padding: '10px',
+                                width: '167px',
+                                color: 'white',
+                            }}
+                            onClick={handleClick}
+                        >
+                            <AddIcon />
+                            <span>&nbsp; aggiungi nuovo</span>
+                        </Li>
+                    </Flex>
+                    <Flex bgcolor="white" style={{ marginLeft: 'auto' }}>
+                        <Li
+                            style={{
+                                backgroundColor: theme.colors.pink100,
+                                display: open || openEdit ? 'none' : 'block',
+                                border: '0px',
+                                padding: '10px',
+                                width: '191px',
+                                color: 'white',
+                                marginRight: '0',
+                            }}
+                            onClick={handleClickFilter}
+                        >
+                            <span style={{ paddingLeft: '33%' }}>
+                                &nbsp; Filtri
+                            </span>
+                        </Li>
+                    </Flex>
                 </Flex>
+
                 <Text
                     style={{
                         color: theme.colors.pink100,
@@ -160,8 +186,16 @@ const Skills = () => {
                                 columns={cols}
                                 data={skills}
                                 handleEdit={handleFormEditSkill}
-                                handleDelete={() => null}
+                                handleDelete={handleConfirmDelete}
                             ></Table>
+                            {filter ? (
+                                <FormAddFilter
+                                    open={filter}
+                                    take={take}
+                                    skip={skip}
+                                    setOpen={setFilter}
+                                />
+                            ) : null}
                         </Flex>
                         <Paginate
                             handlePagination={handlePagination}
@@ -173,12 +207,12 @@ const Skills = () => {
                         />
                     </Flex>
                 )}
-                {/* <ModalConfirm
+                <ModalConfirm
                     open={openDelete}
-                    objectName={String(user?.email)}
+                    objectName={String(skill?.name)}
                     handleClose={handleCloseDelete}
                     handleDelete={handleDelete}
-                ></ModalConfirm> */}
+                ></ModalConfirm>
             </div>
         </Flex>
     )
