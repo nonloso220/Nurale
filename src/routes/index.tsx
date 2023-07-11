@@ -9,6 +9,7 @@ import Commesse from '../components/pages/Commesse'
 import RequireAuth from '../utils/helpers/requaireAuth'
 import Users from '../components/pages/Utenti'
 import Skills from '../components/pages/Skills'
+import TypeOfPayments from '../components/pages/Type-of-payments'
 
 const AppRoutes = () => {
     return (
@@ -26,6 +27,7 @@ const AppRoutes = () => {
                         <Route path={ROUTES.Ordini} element={<Ordini />} />
                         <Route path={ROUTES.Utenti} element={<Users />} />
                         <Route path={ROUTES.Skills} element={<Skills />} />
+                        <Route path={ROUTES.TipiDiPagamento} element={<TypeOfPayments />} />
                     </Route>
                 </Route>
             </Routes>
