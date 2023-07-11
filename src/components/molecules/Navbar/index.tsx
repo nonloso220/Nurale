@@ -10,7 +10,7 @@ const Navbar = ({ label }: Props) => {
                 bgcolor="linear-gradient(90deg, rgb(239, 66, 111) 0%, rgb(81, 70, 137) 26.06%, rgba(0, 0, 0, 0) 51.87%)"
                 width={100}
                 widthType="%"
-                height={60}
+                height={47}
                 heightType="px"
                 style={{
                     borderRadius: '0px 0px 20px 0px',

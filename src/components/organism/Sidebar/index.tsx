@@ -91,7 +91,7 @@ const Sidebar = () => {
                 bgcolor="white"
                 column="column"
                 style={{
-                    marginTop: sidebarArrow ? '25px' : '2.5rem',
+                    marginTop: sidebarArrow ? '25px' : '3.3rem',
                     overflow: 'hidden auto',
                     position: 'sticky',
                     paddingLeft: sidebarArrow ? '11px' : '0px',
@@ -112,58 +112,60 @@ const Sidebar = () => {
                 ))}
             </Flex>
             <br />
-            <Divider
-                style={{
-                    position: 'absolute',
-                    border: '1.5px solid',
-                    width: sidebarArrow ? `${32}px` : `${189}px`,
-                    color: '#514689',
-                    marginTop: `${530}px`,
-                    marginLeft: sidebarArrow ? '7px' : '0px',
-                }}
-            />
-            <br />
-            <Flex
-                bgcolor="white"
-                column="column"
-                style={{
-                    marginTop: sidebarArrow ? '3px' : '-42px',
-                    paddingLeft: sidebarArrow ? '11px' : '0px',
-                    fontFamily: 'Lato',
-                }}
-            >
-                <div
-                    onClick={() => handleClick(false)}
-                    style={{ paddingBottom: '22px', cursor: 'pointer' }}
+            <div style={{marginTop: 'auto',marginBottom: '15%',}}>
+                <Divider
+                    style={{
+                        position: 'absolute',
+                        border: '1.5px solid',
+                        width: sidebarArrow ? `${32}px` : `${189}px`,
+                        color: '#514689',
+                        // marginTop: `${530}px`,
+                        marginLeft: sidebarArrow ? '7px' : '0px',
+                    }}
+                />
+                <br />
+                <Flex
+                    bgcolor="white"
+                    column="column"
+                    style={{
+                        marginTop: sidebarArrow ? '3px' : '-42px',
+                        paddingLeft: sidebarArrow ? '11px' : '0px',
+                        fontFamily: 'Lato',
+                    }}
                 >
-                    <div onClick={handleLogout}>
-                        <TextElement
-                            label={sidebarArrow ? '' : 'Logout'}
-                            nameIcon={'logoutIcon'}
-                            sidebarArrow={sidebarArrow}
-                            paddingBottom="11px"
-                            marginTop="30px"
-                        />
-                    </div>
+                    <div
+                        onClick={() => handleClick(false)}
+                        style={{ paddingBottom: '22px', cursor: 'pointer' }}
+                    >
+                        <div onClick={handleLogout}>
+                            <TextElement
+                                label={sidebarArrow ? '' : 'Logout'}
+                                nameIcon={'logoutIcon'}
+                                sidebarArrow={sidebarArrow}
+                                paddingBottom="11px"
+                                marginTop="30px"
+                            />
+                        </div>
 
-                    <Flex bgcolor="white">
-                        <TextElement
-                            label={sidebarArrow ? '' : 'Darkmode'}
-                            nameIcon={'darkmodeIcon'}
-                            sidebarArrow={sidebarArrow}
-                        />
-                        {sidebarArrow ? null : (
-                            <Stack
-                                align="center"
-                                direction="row"
-                                style={{ paddingRight: '22px' }}
-                            >
-                                <Switch size="md" />
-                            </Stack>
-                        )}
-                    </Flex>
-                </div>
-            </Flex>
+                        <Flex bgcolor="white">
+                            <TextElement
+                                label={sidebarArrow ? '' : 'Darkmode'}
+                                nameIcon={'darkmodeIcon'}
+                                sidebarArrow={sidebarArrow}
+                            />
+                            {sidebarArrow ? null : (
+                                <Stack
+                                    align="center"
+                                    direction="row"
+                                    style={{ paddingRight: '22px' }}
+                                >
+                                    <Switch size="md" />
+                                </Stack>
+                            )}
+                        </Flex>
+                    </div>
+                </Flex>
+            </div>
         </Flex>
     )
 }

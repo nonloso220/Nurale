@@ -10,7 +10,7 @@ import { theme } from '../../../../theme'
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import Modal from '../../../atoms/Modal'
 import InputForm from '../../../molecules/InputForm'
-import { Skill, createSkill } from '../../../../store/skills'
+import { Skill } from '../../../../store/skills'
 
 interface Props {
     open: boolean
@@ -21,8 +21,6 @@ interface Props {
 const FormAddFilter = ({ open, take, skip, setOpen }: Props) => {
     const dispatch = useAppDispatch()
     const defaultValues = {
-        name: '',
-        note: '',
         skillType: '',
     }
     const methods = useForm<Skill>({
@@ -41,20 +39,15 @@ const FormAddFilter = ({ open, take, skip, setOpen }: Props) => {
             console.log(errors)
             return errors1
         }
-        const newSkill = {
-            name: getValues('name'),
-            note: getValues('note'),
-            skillType: getValues('skillType'),
-        }
-
-        await dispatch(createSkill(newSkill))
         await reset(defaultValues)
         await setOpen(false)
         await dispatch(
             fetchSkills({
-                search: '',
+                search:'',
+                skillType: getValues('skillType'),
                 skip: skip,
                 take: take,
+                
             })
         )
     }
@@ -62,7 +55,6 @@ const FormAddFilter = ({ open, take, skip, setOpen }: Props) => {
         setOpen(!open)
         open ? null : reset(defaultValues)
     }
-    //285+487+27a   340 700
     return (
         <Modal
             show={open}
@@ -71,12 +63,12 @@ const FormAddFilter = ({ open, take, skip, setOpen }: Props) => {
         >
             <Flex
                 bgcolor="white"
-                border="1px solid #857DAC"
                 style={{
                     borderRadius: '10px',
                     width: '340px',
                     height: '480px',
                     padding: '16px',
+                    boxShadow:'0 0 10px #857DAC'
                 }}
                 column="column"
             >

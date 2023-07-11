@@ -23,7 +23,7 @@ const TextSidebar = ({
     dropdownVerification = false,
     sidebarArrow = false,
 }: Props) => {
-    const [colorBoolean, setColorBoolean] = useState<boolean>(false)
+    
     const navigate = useNavigate()
     const [open, setOpen] = useState<boolean>(false)
 
@@ -32,10 +32,7 @@ const TextSidebar = ({
             SIDEBAR.map((sidebar) => {
                 sidebar.name == label
                     ? sidebar.href &&
-                      (navigate(sidebar.href),
-                      setColorBoolean(
-                          location.pathname === sidebar.href ? true : false
-                      ))
+                      (navigate(sidebar.href))
                     : null
             })
         } else {
@@ -43,14 +40,13 @@ const TextSidebar = ({
             console.log(open)
         }
     }
-    console.log(colorBoolean)
     return (
         <Flex
             bgcolor="white"
             height={100}
             heightType="%"
             style={{
-                paddingBottom: '12px',
+                paddingBottom: '16px',
                 width: sidebarArrow ? 'fit-content' : '100%',
             }}
             column="column"

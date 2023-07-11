@@ -8,6 +8,7 @@ export interface initialStateSkills{
 }
 export interface QueryParams
 {
+    skillType?:string;
     search?: string;
     skip?: number;
     take?: number;
