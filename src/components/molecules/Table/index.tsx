@@ -40,7 +40,10 @@ const TableComponent = ({ data, columns, handleEdit, handleDelete }: Props) => {
             <Table variant="striped" colorScheme="gray">
                 <Thead>
                     {ColumnModel.map((headerGroup) => (
-                        <Tr key={headerGroup.id}>
+                        <Tr
+                            key={headerGroup.id}
+                            style={{ whiteSpace: 'normal' }}
+                        >
                             {headerGroup.headers.map((header) => (
                                 <Th
                                     key={header.index}
