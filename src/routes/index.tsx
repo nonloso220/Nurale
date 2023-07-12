@@ -1,15 +1,16 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ROUTES } from '../utils/costants'
-import { Layout } from '../components'
-import Login from '../components/pages/Login'
-import RecuperoPassword from '../components/pages/RecuperoPassword'
-import Home from '../components/pages/Home'
-import Ordini from '../components/pages/Ordini'
-import Commesse from '../components/pages/Commesse'
+
 import RequireAuth from '../utils/helpers/requaireAuth'
-import Users from '../components/pages/Utenti'
-import Skills from '../components/pages/Skills'
-import TypeOfPayments from '../components/pages/Type-of-payments'
+import Users from '../components/pages/users'
+import Login from '../components/pages/Login'
+import RecuperoPassword from '../components/pages/recuperoPassword'
+import Layout from '../components/molecules/Layout'
+import Home from '../components/pages/home'
+import Commesse from '../components/pages/commesse'
+import Ordini from '../components/pages/ordini'
+import Skills from '../components/pages/skills'
+import TypeOfPayments from '../components/pages/type-of-payments'
 
 const AppRoutes = () => {
     return (

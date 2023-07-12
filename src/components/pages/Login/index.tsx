@@ -1,13 +1,9 @@
-import { Flex } from '../../atoms'
-import FormLogin from './formLogin'
-import ImmagineLogin from './immagineLogin'
-const Login = () => {
+import Login from "../../organism/Login"
+
+
+const login = () => {
     return (
-        <Flex width={100}>
-            <FormLogin />
-            <ImmagineLogin />
-        </Flex>
+        <Login/>
     )
 }
-
-export default Login
+export default login

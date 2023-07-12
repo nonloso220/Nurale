@@ -1,0 +1,11 @@
+export { default as Commesse} from "./Commesse";
+export { default as Home} from "./Home";
+export { default as Login} from "./Login";
+export { default as Ordini} from "./Ordini";
+export { default as Pagination} from "./Pagination";
+export { default as RecuperoPassword} from "./RecuperoPassword";
+export { default as Sidebar} from "./Sidebar";
+export { default as Skills} from "./Skills";
+export { default as TextSidebar} from "./TextSidebar";
+export { default as TypeOfPayments} from "./Type-of-payments";
+export { default as Utenti} from "./Utenti";

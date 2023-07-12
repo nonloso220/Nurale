@@ -1,17 +1,8 @@
-import { Flex } from '../..'
-import Navbar from '../../molecules/Navbar'
+import Home from '../../organism/Home'
 
-const Home = () => {
+const home = () => {
     return (
-        <Flex
-            column="column"
-            bgcolor="white"
-            width={100}
-            widthType="%"
-            height={100}
-        >
-            <Navbar />
-        </Flex>
+        <Home/>
     )
 }
-export default Home
+export default home

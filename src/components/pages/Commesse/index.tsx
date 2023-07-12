@@ -1,17 +1,9 @@
-import { Flex } from '../..'
-import Navbar from '../../molecules/Navbar'
+import Commesse from "../../organism/Commesse"
 
-const Commesse = () => {
+
+const commesse = () => {
     return (
-        <Flex
-            column="column"
-            bgcolor="white"
-            width={100}
-            widthType="%"
-            height={100}
-        >
-            <Navbar />
-        </Flex>
+        <Commesse/>
     )
 }
-export default Commesse
+export default commesse

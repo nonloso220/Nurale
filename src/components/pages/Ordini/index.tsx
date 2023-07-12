@@ -1,17 +1,9 @@
-import { Flex } from '../..'
-import Navbar from '../../molecules/Navbar'
+import Ordini from "../../organism/Ordini"
 
-const Ordini = () => {
+
+const ordini = () => {
     return (
-        <Flex
-            column="column"
-            bgcolor="white"
-            width={100}
-            widthType="%"
-            height={100}
-        >
-            <Navbar />
-        </Flex>
+        <Ordini/>
     )
 }
-export default Ordini
+export default ordini
