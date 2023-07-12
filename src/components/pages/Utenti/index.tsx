@@ -12,10 +12,9 @@ import Li from '../../atoms/Li'
 import { User } from '../../../store/users/user'
 import { deleteUser } from '../../../store/users/user/actions/delete'
 import ModalConfirm from '../../molecules/ModalConfirm'
-import FormNewUser from './formNewUser'
-import FormEditUser from './formEditUser'
 import Paginate from '../../organism/Pagination'
 import { useTranslation } from 'react-i18next'
+import FormUser from './form'
 const Users = () => {
     const dispatch = useAppDispatch()
     const [open, setOpen] = useState(false)
@@ -133,9 +132,9 @@ const Users = () => {
                 </Text>
                 <br />
                 {open ? (
-                    <FormNewUser open={open} setOpen={setOpen} />
+                    <FormUser open={open} setOpen={setOpen} />
                 ) : openEdit ? (
-                    <FormEditUser
+                    <FormUser
                         open={openEdit}
                         user={user}
                         setOpen={setOpenEdit}
