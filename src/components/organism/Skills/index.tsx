@@ -85,7 +85,7 @@ const Skills = () => {
     useEffect(() => {
         dispatch(
             fetchSkills({
-                skillType: '',
+              
                 skip: skip,
                 take: take,
             })
