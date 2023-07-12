@@ -9,12 +9,12 @@ import { Text } from '@chakra-ui/react'
 import { theme } from '../../../theme'
 import Li from '../../atoms/Li'
 import { fetchSkills } from '../../../store/skills/skills'
-import {
-    getPaginations,
-    getSkills,
-} from '../../../store/skills/skills/selectors'
 import Paginate from '../../organism/Pagination'
-import { fetchTypeOfPayments } from '../../../store/typeOfPayments'
+import {
+    fetchTypeOfPayments,
+    getPaginations,
+    getTypeOfPayments,
+} from '../../../store/typeOfPayments'
 const TypeOfPayments = () => {
     const dispatch = useAppDispatch()
     const [open, setOpen] = useState(false)
@@ -22,10 +22,10 @@ const TypeOfPayments = () => {
     // const [openEdit, setOpenEdit] = useState(false)
     const [skip, setSkip] = useState(0)
     // const [skill, setSkill] = useState<Skill | null>(null)
-    const skills = useSelector(getSkills)
+    const typeOfPayments = useSelector(getTypeOfPayments)
     const totalElement = useSelector(getPaginations)
     const [currentPage, setCurrentPage] = useState<number>(1)
-    // const [filter, setFilter] = useState(false)
+    const [filter, setFilter] = useState(false)
     const take = 10
     useEffect(() => {
         dispatch(
@@ -35,12 +35,12 @@ const TypeOfPayments = () => {
             })
         )
     }, [])
-    // const handleClick = () => {
-    //     setOpen(!open)
-    // }
-    // const handleClickFilter = () => {
-    //     setFilter(!filter)
-    // }
+    const handleClick = () => {
+        setOpen(!open)
+    }
+    const handleClickFilter = () => {
+        setFilter(!filter)
+    }
     const createColumHelper: any = createColumnHelper<any>()
     const cols = [
         createColumHelper.accessor('name', {
@@ -49,7 +49,7 @@ const TypeOfPayments = () => {
         }),
         createColumHelper.accessor('daysToFirstPayment', {
             cell: (Props: any) => Props.getValue(),
-            header: 'Giorni al primo pagamento',
+            header: <p style={{}}>Giorni al primo pagamento</p>,
         }),
         createColumHelper.accessor('daysBetweenPayments', {
             cell: (Props: any) => Props.getValue(),
@@ -65,7 +65,7 @@ const TypeOfPayments = () => {
         }),
         createColumHelper.accessor('note', {
             cell: (Props: any) => Props.getValue(),
-            header: 'note',
+            header: 'Note',
         }),
     ]
     // const handleFormEditSkill = (object: Skill) => {
@@ -130,7 +130,7 @@ const TypeOfPayments = () => {
                                 width: '167px',
                                 color: 'white',
                             }}
-                            onClick={()=>{}}
+                            onClick={handleClick}
                         >
                             <AddIcon />
                             <span>&nbsp; aggiungi nuovo</span>
@@ -140,14 +140,14 @@ const TypeOfPayments = () => {
                         <Li
                             style={{
                                 backgroundColor: theme.colors.pink100,
-                                display: open  ? 'none' : 'block',
+                                display: open ? 'none' : 'block',
                                 border: '0px',
                                 padding: '10px',
                                 width: '191px',
                                 color: 'white',
                                 marginRight: '0',
                             }}
-                           
+                            onClick={handleClickFilter}
                         >
                             <span style={{ paddingLeft: '33%' }}>
                                 &nbsp; Filtri
@@ -169,21 +169,20 @@ const TypeOfPayments = () => {
                 <br />
 
                 {open ? (
-                    <div></div>
-                    // <FormNewSkill
-                    //     open={open}
-                    //     take={take}
-                    //     skip={skip}
-                    //     setOpen={setOpen}
-                    // />
-                )  : (
+                    <FormNewTypeOfPayment
+                        open={open}
+                        take={take}
+                        skip={skip}
+                        setOpen={setOpen}
+                    />
+                ) : (
                     <Flex bgcolor="white" column="column">
                         <Flex bgcolor="white">
                             <Table
                                 columns={cols}
-                                data={skills}
-                                handleEdit={()=>{}}
-                                handleDelete={()=>{}}
+                                data={typeOfPayments}
+                                handleEdit={() => {}}
+                                handleDelete={() => {}}
                             ></Table>
                             {/* {filter ? (
                                 <div></div>
