@@ -13,12 +13,11 @@ import {
     getPaginations,
     getSkills,
 } from '../../../store/skills/skills/selectors'
-import FormNewSkill from './formNewSkill'
 import Paginate from '../../organism/Pagination'
-import FormEditSkill from './formEditSkill'
 import { Skill, deleteSkill } from '../../../store/skills/skill'
 import ModalConfirm from '../../molecules/ModalConfirm'
 import FormAddFilter from './fomAddFilter'
+import FormSkill from './form'
 
 const Skills = () => {
     const dispatch = useAppDispatch()
@@ -164,14 +163,14 @@ const Skills = () => {
                 <br />
 
                 {open ? (
-                    <FormNewSkill
+                    <FormSkill
                         open={open}
                         take={take}
                         skip={skip}
                         setOpen={setOpen}
                     />
                 ) : openEdit ? (
-                    <FormEditSkill
+                    <FormSkill
                         open={openEdit}
                         setOpen={setOpenEdit}
                         take={take}

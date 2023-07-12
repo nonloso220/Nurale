@@ -10,17 +10,17 @@ import { theme } from '../../../../theme'
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import Modal from '../../../atoms/Modal'
 import InputForm from '../../../molecules/InputForm'
-import { Skill, updateSkill } from '../../../../store/skills'
+import { Skill, createSkill, updateSkill } from '../../../../store/skills'
 import { useEffect } from 'react'
 
 interface Props {
     open: boolean
-    skill: Skill | null
+    skill?: Skill | null
     take: number
     skip: number
     setOpen: (item: boolean) => void
 }
-const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
+const FormSkill = ({ open, skill, skip, take, setOpen }: Props) => {
     const dispatch = useAppDispatch()
     const defaultValues = {
         name: '',
@@ -49,8 +49,12 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
             note: getValues('note'),
             skillType: getValues('skillType'),
         }
-
-        await dispatch(updateSkill(newSkill))
+        if(skill){
+            await dispatch(updateSkill(newSkill))
+        }
+        else{
+            await dispatch(createSkill(newSkill))
+        }
         await reset(defaultValues)
         await setOpen(false)
         await dispatch(
@@ -133,7 +137,7 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
                                     action={'select'}
                                     type="text"
                                     placeholder={''}
-                                    defaultElement={getValues('skillType')}
+                                    defaultElement={skill?getValues('skillType'):' '}
                                     selectElements={[
                                         'Frontend',
                                         'Backend',
@@ -141,6 +145,12 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
                                         'Administrator',
                                         'Other',
                                     ]}
+                                    style={{
+                                        width: '100%',
+                                        borderRadius: '11px',
+                                        borderColor: '#857DAC',
+                                        display: 'flex',
+                                    }}
                                 />
                                 <div style={{ color: 'red' }}>
                                     {errors?.skillType?.message}
@@ -226,4 +236,4 @@ const FormEditSkill = ({ open, skill, skip, take, setOpen }: Props) => {
         </Modal>
     )
 }
-export default FormEditSkill
+export default FormSkill
