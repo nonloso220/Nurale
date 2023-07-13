@@ -4,12 +4,11 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schema } from '../validation'
 import { useNavigate } from 'react-router-dom'
-import { EMAIL, ROUTES, TOKEN } from '../../../../utils/costants'
+import { EMAIL, ROUTES } from '../../../../utils/costants'
 import { Flex, Spacer } from '../../../atoms'
 import { LogoImage } from '../../../molecules'
 import { User } from '../../../../utils/models'
 import { useAppDispatch } from '../../../../store/applicationStore'
-import InputPwdForm from '../../../organism/InputPwdForm'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { LoginUser } from '../../../../store'
@@ -104,6 +103,7 @@ const FormLogin = () => {
                             placeholder="Inserisci Password"
                             label="Password"
                             fontWeight="bold"
+                            showPassword={false}
                             error={errors?.password?.message}
                         />
                         {/* <div style={{ color: 'red' }}>
