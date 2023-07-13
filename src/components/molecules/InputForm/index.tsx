@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { useFormContext } from 'react-hook-form'
 import Li from '../../atoms/Li'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 interface Props extends InputProps {
     type?: string
     placeholder: string
@@ -21,6 +21,7 @@ interface Props extends InputProps {
     action: string
     defaultElement?: any
     selectElements?: string[]
+    showPassword?: boolean
     closeIconAction?: () => void
 }
 const InputForm = ({
@@ -35,15 +36,12 @@ const InputForm = ({
     closeIconAction,
     defaultElement,
     selectElements,
+    showPassword = true,
     ...rest
 }: Props) => {
+    const [show, setShow] = useState(showPassword)
     const { register } = useFormContext()
-    const [show, setShow] = useState(true)
     const handleClick = () => setShow(!show)
-    useEffect(() => {
-        setShow(true)
-        // type === 'password' ? setShow(false) :
-    }, [])
     return (
         <div>
             <label
@@ -88,13 +86,13 @@ const InputForm = ({
                             {type === 'password' ? ( //password icon
                                 <Li
                                     onClick={handleClick}
-                                    style={{
-                                        top: '36px',
-                                        border: '0px',
-                                        position: 'absolute',
-                                        left: '36px',
-                                        width: 'fit-content',
-                                    }}
+                                    // style={{
+                                    //     top: '36px',
+                                    //     border: '0px',
+                                    //     position: 'absolute',
+                                    //     left: '36px',
+                                    //     width: 'fit-content',
+                                    // }}
                                 >
                                     {show ? <ViewIcon /> : <ViewOffIcon />}
                                 </Li>

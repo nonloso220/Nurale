@@ -61,10 +61,9 @@ const FormUser = ({ open, user, setOpen }: Props) => {
             //risorsa: getValues('risorsa'),
             id: user?.id,
         }
-        if(user){
+        if (user) {
             await dispatch(updateUser(newUser))
-        }
-        else{
+        } else {
             await dispatch(createUser(newUser))
         }
         reset(defaultValues)
@@ -131,12 +130,14 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                         <FormProvider {...methods}>
                             <Stack spacing={3}>
                                 <InputForm
-                                    type={user?"email":'input'}
+                                    type={user ? 'email' : 'input'}
                                     fontSize="16px"
                                     label="Email"
                                     name={'email'}
                                     action={'input'}
-                                    placeholder={user?String(user?.email):"Email"}
+                                    placeholder={
+                                        user ? String(user?.email) : 'Email'
+                                    }
                                     fontWeight="500"
                                     style={{
                                         width: '95%',
@@ -148,7 +149,7 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                                 <div style={{ color: 'red' }}>
                                     {errors?.email?.message}
                                 </div>
-                                {user?(
+                                {user ? (
                                     <InputForm
                                         fontSize="16px"
                                         label="Risorsa"
@@ -164,7 +165,7 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                                             display: 'flex',
                                         }}
                                     />
-                                ):(
+                                ) : (
                                     <>
                                         <InputForm
                                             fontSize="16px"
@@ -179,12 +180,15 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                                                 borderRadius: '11px',
                                                 borderColor: '#857DAC',
                                                 display: 'flex',
-                                            }} 
+                                            }}
                                         />
                                         <div style={{ color: 'red' }}>
                                             {errors?.firstName?.message}
                                         </div>
-                                        <Flex bgcolor="white" style={{ width: '100%' }}>
+                                        <Flex
+                                            bgcolor="white"
+                                            style={{ width: '100%' }}
+                                        >
                                             <InputForm
                                                 fontSize="16px"
                                                 label="Password"
@@ -197,11 +201,12 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                                                     borderRadius: '11px',
                                                     borderColor: '#857DAC',
                                                     flexDirection: 'column',
-                                                }} 
+                                                }}
                                             />
                                             <Li
                                                 style={{
-                                                    backgroundColor: theme.colors.pink100,
+                                                    backgroundColor:
+                                                        theme.colors.pink100,
                                                     color: 'white',
                                                     border: '0px',
                                                     paddingLeft: '16px',
@@ -214,7 +219,9 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                                                     marginLeft: '40%',
                                                     fontFamily: 'Lato',
                                                 }}
-                                                onClick={handlePasswordGeneretor}
+                                                onClick={
+                                                    handlePasswordGeneretor
+                                                }
                                             >
                                                 <span>Genera</span>
                                             </Li>
@@ -240,68 +247,102 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                     >
                         <FormProvider {...methods}>
                             <Stack spacing={3}>
-                                {user?(<><InputForm
-                                    fontSize="16px"
-                                    label="Nome"
-                                    placeholder="Nome"
-                                    fontWeight="500"
-                                    name={'firstName'}
-                                    action={'input'}
-                                    style={{
-                                        width: '100%',
-                                        borderRadius: '11px',
-                                        borderColor: '#857DAC',
-                                        display: 'flex',
-                                    }}
-                                    type={!deleteFirstName ? 'closeIcon' : 'text'}
-                                    closeIconAction={handleCloseIconFirstName} /><div style={{ color: 'red' }}>
-                                        {errors?.firstName?.message}
-                                    </div><InputForm
-                                        fontSize="16px"
-                                        label="Cognome"
-                                        placeholder="Cognome"
-                                        fontWeight="500"
-                                        name={'lastName'}
-                                        action={'input'}
-                                        style={{
-                                            width: '100%',
-                                            borderRadius: '11px',
-                                            borderColor: '#857DAC',
-                                            display: 'flex',
-                                        }}
-                                        type={!deletLasteName ? 'closeIcon' : 'text'}
-                                        closeIconAction={handleCloseIconLastName} /><div style={{ color: 'red' }}>
-                                        {errors?.lastName?.message}
-                                    </div><InputForm
-                                        fontSize="16px"
-                                        label="Telefono"
-                                        placeholder="Telefono"
-                                        fontWeight="500"
-                                        name={'phone'}
-                                        action={'input'}
-                                        style={{
-                                            width: '100%',
-                                            borderRadius: '11px',
-                                            borderColor: '#857DAC',
-                                            display: 'flex',
-                                        }}
-                                        type={!deletePhone ? 'closeIcon' : 'text'}
-                                        closeIconAction={handleCloseIconPhone} /><div style={{ color: 'red' }}>
-                                        {errors?.phone?.message}
-                                    </div></>):(<><InputForm
-                                        fontSize="16px"
-                                        label="Risorsa"
-                                        placeholder="Risorsa"
-                                        fontWeight="500"
-                                        name={'risorsa'}
-                                        action={'input'}
-                                        type={'text'}
-                                        style={{
-                                            width: '100%',
-                                            borderRadius: '11px',
-                                            borderColor: '#857DAC',
-                                            display: 'flex',
-                                        }} /><InputForm
+                                {user ? (
+                                    <>
+                                        <InputForm
+                                            fontSize="16px"
+                                            label="Nome"
+                                            placeholder="Nome"
+                                            fontWeight="500"
+                                            name={'firstName'}
+                                            action={'input'}
+                                            style={{
+                                                width: '100%',
+                                                borderRadius: '11px',
+                                                borderColor: '#857DAC',
+                                                display: 'flex',
+                                            }}
+                                            type={
+                                                !deleteFirstName
+                                                    ? 'closeIcon'
+                                                    : 'text'
+                                            }
+                                            closeIconAction={
+                                                handleCloseIconFirstName
+                                            }
+                                        />
+                                        <div style={{ color: 'red' }}>
+                                            {errors?.firstName?.message}
+                                        </div>
+                                        <InputForm
+                                            fontSize="16px"
+                                            label="Cognome"
+                                            placeholder="Cognome"
+                                            fontWeight="500"
+                                            name={'lastName'}
+                                            action={'input'}
+                                            style={{
+                                                width: '100%',
+                                                borderRadius: '11px',
+                                                borderColor: '#857DAC',
+                                                display: 'flex',
+                                            }}
+                                            type={
+                                                !deletLasteName
+                                                    ? 'closeIcon'
+                                                    : 'text'
+                                            }
+                                            closeIconAction={
+                                                handleCloseIconLastName
+                                            }
+                                        />
+                                        <div style={{ color: 'red' }}>
+                                            {errors?.lastName?.message}
+                                        </div>
+                                        <InputForm
+                                            fontSize="16px"
+                                            label="Telefono"
+                                            placeholder="Telefono"
+                                            fontWeight="500"
+                                            name={'phone'}
+                                            action={'input'}
+                                            style={{
+                                                width: '100%',
+                                                borderRadius: '11px',
+                                                borderColor: '#857DAC',
+                                                display: 'flex',
+                                            }}
+                                            type={
+                                                !deletePhone
+                                                    ? 'closeIcon'
+                                                    : 'text'
+                                            }
+                                            closeIconAction={
+                                                handleCloseIconPhone
+                                            }
+                                        />
+                                        <div style={{ color: 'red' }}>
+                                            {errors?.phone?.message}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <InputForm
+                                            fontSize="16px"
+                                            label="Risorsa"
+                                            placeholder="Risorsa"
+                                            fontWeight="500"
+                                            name={'risorsa'}
+                                            action={'input'}
+                                            type={'text'}
+                                            style={{
+                                                width: '100%',
+                                                borderRadius: '11px',
+                                                borderColor: '#857DAC',
+                                                display: 'flex',
+                                            }}
+                                        />
+                                        <InputForm
                                             fontSize="16px"
                                             label="Cognome"
                                             placeholder="Cognome"
@@ -314,9 +355,12 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                                                 borderRadius: '11px',
                                                 borderColor: '#857DAC',
                                                 display: 'flex',
-                                            }} /><div style={{ color: 'red' }}>
+                                            }}
+                                        />
+                                        <div style={{ color: 'red' }}>
                                             {errors?.lastName?.message}
-                                        </div><InputForm
+                                        </div>
+                                        <InputForm
                                             fontSize="16px"
                                             label="Conferma Password"
                                             placeholder="Conferma Password"
@@ -329,13 +373,16 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                                                 borderRadius: '11px',
                                                 borderColor: '#857DAC',
                                                 display: 'flex',
-                                            }} /><div style={{ color: 'red' }}>
+                                            }}
+                                        />
+                                        <div style={{ color: 'red' }}>
                                             {errors?.passwordConfirm?.message}
-                                        </div></>)}
-                                         {/* <div style={{ color: 'red' }}>
+                                        </div>
+                                    </>
+                                )}
+                                {/* <div style={{ color: 'red' }}>
                                                 {errors?.?.message}
                                             </div> */}
-                                
                             </Stack>
                         </FormProvider>
                     </Flex>
@@ -379,7 +426,7 @@ const FormUser = ({ open, user, setOpen }: Props) => {
                     >
                         <CheckIcon />
                         <span style={{ fontWeight: 'bold' }}>
-                            &nbsp;{user?'Salva':'Conferma'}
+                            &nbsp;{user ? 'Salva' : 'Conferma'}
                         </span>
                     </Li>
                 </Flex>

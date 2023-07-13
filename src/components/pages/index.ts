@@ -4,5 +4,5 @@ export { default as login} from "./Login";
 export { default as ordini} from "./ordini";
 export { default as recuperoPassword} from "./recuperoPassword";
 export { default as skills} from "./skills";
-export { default as typeOfPayments} from "./type-of-payments";
-export { default as users} from "./users";
+export { default as typeOfPayments} from "./TypeOfPayments";
+export { default as users} from "./Users";

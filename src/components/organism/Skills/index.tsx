@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { Flex, Table } from '../..'
 import Navbar from '../../molecules/Navbar'
 import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useAppDispatch } from '../../../store/applicationStore'
 import { AddIcon } from '@chakra-ui/icons'
 import { Text } from '@chakra-ui/react'
@@ -16,8 +16,9 @@ import {
 import Paginate from '../../organism/Pagination'
 import { Skill, deleteSkill } from '../../../store/skills/skill'
 import ModalConfirm from '../../molecules/ModalConfirm'
-import FormAddFilter from './fomAddFilter'
 import FormSkill from './form'
+import Filter from '../../molecules/Filter'
+import SelectFilter from '../../atoms/SelectFilter'
 
 const Skills = () => {
     const dispatch = useAppDispatch()
@@ -30,6 +31,8 @@ const Skills = () => {
     const totalElement = useSelector(getPaginations)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [filter, setFilter] = useState(false)
+    const [elementFilter, setElementFilter] = useState('')
+    const [clear, setClear] = useState<boolean>(false)
     const take = 10
     useEffect(() => {
         dispatch(
@@ -73,7 +76,6 @@ const Skills = () => {
         setOpenDelete(false)
         await dispatch(
             fetchSkills({
-                search: '',
                 skip: skip,
                 take: take,
             })
@@ -85,7 +87,6 @@ const Skills = () => {
     useEffect(() => {
         dispatch(
             fetchSkills({
-              
                 skip: skip,
                 take: take,
             })
@@ -94,8 +95,31 @@ const Skills = () => {
     const handlePagination = (page: number) => {
         setSkip(page)
     }
+    const handleChangeFilter = (event: ChangeEvent<HTMLSelectElement>) => {
+        setElementFilter(event.target.value)
+    }
+    const fetchSkillsFiltered = async () => {
+        await dispatch(
+            fetchSkills({
+                skillType: elementFilter,
+                skip: skip,
+                take: take,
+            })
+        )
+    }
+    const handleResetFilter = async () => {
+        setElementFilter('')
+        setClear(true)
+        await dispatch(
+            fetchSkills({
+                skip: skip,
+                take: take,
+            })
+        )
+    }
     console.log('skip=' + skip)
     console.log('totalelement=' + totalElement)
+    console.log('filter=' + filter)
     return (
         <Flex
             column="column"
@@ -187,12 +211,38 @@ const Skills = () => {
                                 handleDelete={handleConfirmDelete}
                             ></Table>
                             {filter ? (
-                                <FormAddFilter
+                                <Filter
+                                    handleSave={fetchSkillsFiltered}
+                                    handleResetFilter={handleResetFilter}
                                     open={filter}
-                                    take={take}
-                                    skip={skip}
                                     setOpen={setFilter}
-                                />
+                                >
+                                    <SelectFilter
+                                        clear={clear}
+                                        setClear={setClear}
+                                        fontSize="16px"
+                                        label="Tipo di skill"
+                                        fontWeight="550"
+                                        defaultElement={''}
+                                        defaultValue=""
+                                        selectElements={[
+                                            '',
+                                            'Frontend',
+                                            'Backend',
+                                            'Designer',
+                                            'Administrator',
+                                            'Other',
+                                        ]}
+                                        handleChangeFilter={handleChangeFilter}
+
+                                        // style={{
+                                        //     width: '100%',
+                                        //     borderRadius: '11px',
+                                        //     borderColor: '#857DAC',
+                                        //     display: 'flex',
+                                        // }}
+                                    />
+                                </Filter>
                             ) : null}
                         </Flex>
                         <Paginate

@@ -65,6 +65,7 @@ const RecuperoPassword = () => {
                                 placeholder="inserisci email"
                                 fontWeight="bold"
                                 name={'email'}
+                                action={'input'}
                             />
                             <div style={{ color: 'red' }}>
                                 {errors?.email?.message}
