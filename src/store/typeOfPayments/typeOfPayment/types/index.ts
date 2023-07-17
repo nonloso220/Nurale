@@ -6,17 +6,5 @@ export interface TypeOfPayment{
     movePaymentsToTheEndOfMonth: boolean,
     daysOffsetPayments: number,
     note: string
-}
-export interface initialStateTypeOfPayments
-{
-    data: TypeOfPayment[];
-    loading: boolean;
-    error: null | string;
-    totalCount:number
-}
-export interface QueryParams
-{
-    search?: string;
-    skip?: number;
-    take?: number;
+    id?: number | null
 }

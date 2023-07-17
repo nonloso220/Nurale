@@ -2,7 +2,7 @@ import {combineReducers} from "@reduxjs/toolkit";
 import { userReducer, usersReducer } from "./users";
 import { skillReduxer, skillsReducer } from "./skills";
 import { authReducer } from "./auth";
-import { TypeOfPaymentsReducer } from "./typeOfPayments";
+import { TypeOfPaymentsReducer } from "./typeOfPayments/typeOfPayments";
 
 const rootReducer = combineReducers(
 {

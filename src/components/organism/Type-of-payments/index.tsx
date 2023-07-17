@@ -14,7 +14,8 @@ import {
     fetchTypeOfPayments,
     getPaginations,
     getTypeOfPayments,
-} from '../../../store/typeOfPayments'
+} from '../../../store/typeOfPayments/typeOfPayments'
+import FormTypeOfPayment from './form'
 const TypeOfPayments = () => {
     const dispatch = useAppDispatch()
     const [open, setOpen] = useState(false)
@@ -92,8 +93,7 @@ const TypeOfPayments = () => {
     // }
     useEffect(() => {
         dispatch(
-            fetchSkills({
-                search: '',
+            fetchTypeOfPayments({
                 skip: skip,
                 take: take,
             })
@@ -164,12 +164,12 @@ const TypeOfPayments = () => {
                     fontSize="3xl"
                     display={open ? 'block' : 'none'}
                 >
-                    Aggiungi nuova Skill
+                    Aggiungi nuovo Tipo di Pagamento
                 </Text>
                 <br />
 
                 {open ? (
-                    <FormNewTypeOfPayment
+                    <FormTypeOfPayment
                         open={open}
                         take={take}
                         skip={skip}
