@@ -16,30 +16,32 @@ const Navbar = ({ label }: Props) => {
                     borderRadius: '0px 0px 20px 0px',
                     color: 'white',
                     boxShadow: 'rgba(81, 70, 137, 0.3) 0px 2px 6px',
+                    justifyContent: 'space-between',
                 }}
             >
                 <span
                     style={{
                         marginBlock: 'auto',
-                        marginRight: '80%',
                         marginLeft: '3%',
                         fontSize: 'larger',
                     }}
                 >
                     {label}
                 </span>
-
-                <TextElement
-                    nameIcon={'campanelloIcon'}
-                    colorIcon="gray"
-                    paddingIcon="0"
-                    paddingRight="15px"
-                />
-                <TextElement
-                    nameIcon={'accountIcon'}
-                    colorIcon="gray"
-                    paddingIcon="0"
-                />
+                <Flex bgcolor="white">
+                    <TextElement
+                        nameIcon={'campanelloIcon'}
+                        colorIcon="gray"
+                        paddingIcon="0"
+                        left="-70px"
+                    />
+                    <TextElement
+                        nameIcon={'accountIcon'}
+                        colorIcon="gray"
+                        paddingIcon="0"
+                        left="-34px"
+                    />
+                </Flex>
             </Flex>
         </div>
     )

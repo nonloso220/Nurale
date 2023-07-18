@@ -22,8 +22,13 @@ export const ROUTES =
   Timesheet:'/Timesheet',
   Report:'/Report',
 };
-export type icons='homeIcon'|'inserimentoVel'|'commesseIcon'|'anagraficheIcon'|'settingsIcon' |'timesheetIcon'|'logoutIcon'|'darkmodeIcon'|'campanelloIcon'|'accountIcon'|'sidebarIcon'|'dropdownIcon'|'dropdownUpIcon'|'sidebarReverseIcon'|'rightArrowIcon'|'leftArrowIcon'|'editIcon'|'deleteIcon'
+export type icons='homeIcon'|'inserimentoVel'|'commesseIcon'|'anagraficheIcon'|'settingsIcon' |'timesheetIcon'|'logoutIcon'|'darkmodeIcon'|'campanelloIcon'|'accountIcon'|'sidebarIcon'|'dropdownIcon'|'dropdownUpIcon'|'sidebarReverseIcon'|'rightArrowIcon'|'leftArrowIcon'|'editIcon'|'deleteIcon'|'trueIcon'|'falseIcon'
 
+export interface Column {
+  id: string;
+  name: string;
+  transform?: (value: any) => any;
+}
 
 interface sidebar{
   name: string

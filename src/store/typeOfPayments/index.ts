@@ -1,2 +1,2 @@
 export * from './typeOfPayments'
-// export * from './typeOfPayment'
+export * from './typeOfPayment'

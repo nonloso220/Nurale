@@ -14,6 +14,7 @@ interface Props {
     dropDownOpen?: boolean
     sidebarArrow?: boolean
     left?: string
+    right?: string
     top?: string
     display?: string
     position?: any
@@ -34,6 +35,7 @@ const TextElement = ({
     dropDownOpen = false,
     sidebarArrow = false,
     left = '0',
+    right = '0',
     top = '0',
     display = 'flex',
     position = 'relative',
@@ -53,6 +55,7 @@ const TextElement = ({
                 paddingRight: `${paddingRight}`,
                 width: '100%',
                 left: `${left}`,
+                right: `${right}`,
                 top: `${top}`,
             }}
         >

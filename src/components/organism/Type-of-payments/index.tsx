@@ -1,4 +1,3 @@
-import { createColumnHelper } from '@tanstack/react-table'
 import { Flex, Table } from '../..'
 import Navbar from '../../molecules/Navbar'
 import { useSelector } from 'react-redux'
@@ -8,7 +7,6 @@ import { AddIcon } from '@chakra-ui/icons'
 import { Text } from '@chakra-ui/react'
 import { theme } from '../../../theme'
 import Li from '../../atoms/Li'
-import { fetchSkills } from '../../../store/skills/skills'
 import Paginate from '../Pagination'
 import {
     fetchTypeOfPayments,
@@ -16,13 +14,21 @@ import {
     getTypeOfPayments,
 } from '../../../store/typeOfPayments/typeOfPayments'
 import FormTypeOfPayment from './form'
+import ModalConfirm from '../../molecules/ModalConfirm'
+import {
+    TypeOfPayment,
+    deleteTypeOfPayment,
+} from '../../../store/typeOfPayments'
+import { handleColumns } from './columns'
 const TypeOfPayments = () => {
     const dispatch = useAppDispatch()
     const [open, setOpen] = useState(false)
-    // const [openDelete, setOpenDelete] = useState(false)
-    // const [openEdit, setOpenEdit] = useState(false)
+    const [openDelete, setOpenDelete] = useState(false)
+    const [openEdit, setOpenEdit] = useState(false)
     const [skip, setSkip] = useState(0)
-    // const [skill, setSkill] = useState<Skill | null>(null)
+    const [typeOfPayment, setTypeOfPayment] = useState<TypeOfPayment | null>(
+        null
+    )
     const typeOfPayments = useSelector(getTypeOfPayments)
     const totalElement = useSelector(getPaginations)
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -42,55 +48,27 @@ const TypeOfPayments = () => {
     const handleClickFilter = () => {
         setFilter(!filter)
     }
-    const createColumHelper: any = createColumnHelper<any>()
-    const cols = [
-        createColumHelper.accessor('name', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Nome',
-        }),
-        createColumHelper.accessor('daysToFirstPayment', {
-            cell: (Props: any) => Props.getValue(),
-            header: <p style={{}}>Giorni al primo pagamento</p>,
-        }),
-        createColumHelper.accessor('daysBetweenPayments', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Giorni tra i pagamenti',
-        }),
-        createColumHelper.accessor('numberOfPayments', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Numero di pagamenti',
-        }),
-        createColumHelper.accessor('movePaymentsToTheEndOfMonth', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Spostare i pagamenti alla fine del mese',
-        }),
-        createColumHelper.accessor('note', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Note',
-        }),
-    ]
-    // const handleFormEditSkill = (object: Skill) => {
-    //     setOpenEdit(true)
-    //     setSkill(object)
-    // }
-    // const handleConfirmDelete = (object: Skill) => {
-    //     setOpenDelete(true)
-    //     setSkill(object)
-    // }
+    const handleFormEditSkill = (object: TypeOfPayment) => {
+        setOpenEdit(true)
+        setTypeOfPayment(object)
+    }
+    const handleConfirmDelete = (object: TypeOfPayment) => {
+        setOpenDelete(true)
+        setTypeOfPayment(object)
+    }
 
-    // const handleCloseDelete = async () => {
-    //     setOpenDelete(false)
-    //     await dispatch(
-    //         fetchSkills({
-    //             search: '',
-    //             skip: skip,
-    //             take: take,
-    //         })
-    //     )
-    // }
-    // const handleDelete = async () => {
-    //     await dispatch(deleteSkill(skill?.id))
-    // }
+    const handleCloseDelete = async () => {
+        setOpenDelete(false)
+        await dispatch(
+            fetchTypeOfPayments({
+                skip: skip,
+                take: take,
+            })
+        )
+    }
+    const handleDelete = async () => {
+        await dispatch(deleteTypeOfPayment(typeOfPayment?.id))
+    }
     useEffect(() => {
         dispatch(
             fetchTypeOfPayments({
@@ -111,7 +89,7 @@ const TypeOfPayments = () => {
             height={100}
             style={{ overflow: 'auto' }}
         >
-            <Navbar label="Skills" />
+            <Navbar label="Tipi di pagamento" />
             <div
                 style={{
                     paddingLeft: '30px',
@@ -175,14 +153,22 @@ const TypeOfPayments = () => {
                         skip={skip}
                         setOpen={setOpen}
                     />
+                ) : openEdit ? (
+                    <FormTypeOfPayment
+                        open={openEdit}
+                        take={take}
+                        skip={skip}
+                        TypeOfPayment={typeOfPayment}
+                        setOpen={setOpenEdit}
+                    />
                 ) : (
                     <Flex bgcolor="white" column="column">
                         <Flex bgcolor="white">
                             <Table
-                                columns={cols}
+                                columns={handleColumns()}
                                 data={typeOfPayments}
-                                handleEdit={() => {}}
-                                handleDelete={() => {}}
+                                handleEdit={handleFormEditSkill}
+                                handleDelete={handleConfirmDelete}
                             ></Table>
                             {/* {filter ? (
                                 <div></div>
@@ -204,12 +190,12 @@ const TypeOfPayments = () => {
                         />
                     </Flex>
                 )}
-                {/* <ModalConfirm
+                <ModalConfirm
                     open={openDelete}
-                    objectName={String(skill?.name)}
+                    objectName={String(typeOfPayment?.name)}
                     handleClose={handleCloseDelete}
                     handleDelete={handleDelete}
-                ></ModalConfirm> */}
+                ></ModalConfirm>
             </div>
         </Flex>
     )

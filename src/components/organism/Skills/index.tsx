@@ -19,6 +19,7 @@ import ModalConfirm from '../../molecules/ModalConfirm'
 import FormSkill from './form'
 import Filter from '../../molecules/Filter'
 import SelectFilter from '../../atoms/SelectFilter'
+import { handleColumns } from './columns'
 
 const Skills = () => {
     const dispatch = useAppDispatch()
@@ -48,21 +49,6 @@ const Skills = () => {
     const handleClickFilter = () => {
         setFilter(!filter)
     }
-    const createColumHelper: any = createColumnHelper<any>()
-    const cols = [
-        createColumHelper.accessor('name', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Nome',
-        }),
-        createColumHelper.accessor('skillType', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Tipo di skill',
-        }),
-        createColumHelper.accessor('note', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Note',
-        }),
-    ]
     const handleFormEditSkill = (object: Skill) => {
         setOpenEdit(true)
         setSkill(object)
@@ -205,7 +191,7 @@ const Skills = () => {
                     <Flex bgcolor="white" column="column">
                         <Flex bgcolor="white">
                             <Table
-                                columns={cols}
+                                columns={handleColumns()}
                                 data={skills}
                                 handleEdit={handleFormEditSkill}
                                 handleDelete={handleConfirmDelete}

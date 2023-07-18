@@ -6,7 +6,7 @@ import apiClient from "../../../../utils/helpers/apiClient";
 
 
 export const fetchTypeOfPayments = createAsyncThunk(
-    'fetch/users',
+    'fetch/type-of-payments',
     async (params: QueryParams | undefined, thunkAPI) => {
       try {
         const response = await apiClient.get<AxiosResponse>({

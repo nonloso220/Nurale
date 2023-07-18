@@ -48,27 +48,6 @@ const ModalConfirm = ({
                         >
                             <Flex paddingTop="3rem">
                                 <Stack spacing={3} direction="row">
-                                    {/* <ButtonForm
-                                        leftIcon={<CloseIcon />}
-                                        width="fit-content"
-                                        onClick={handleClose}
-                                        fontSize={theme.fontSizes.xs}
-                                        backgroundColor={theme.colors.gray20}
-                                        color={theme.colors.purple}
-                                    >
-                                        Annulla
-                                    </ButtonForm>
-                                    <ButtonForm
-                                        leftIcon={<CheckIcon />}
-                                        width="fit-content"
-                                        onClick={async () => (
-                                            await handleDelete(), handleClose()
-                                        )}
-                                        fontSize={theme.fontSizes.xs}
-                                        backgroundColor={theme.colors.pink100}
-                                    >
-                                        Conferma
-                                    </ButtonForm> */}
                                     <Li
                                         style={{
                                             backgroundColor:

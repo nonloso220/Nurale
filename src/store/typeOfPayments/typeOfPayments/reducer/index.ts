@@ -10,7 +10,7 @@ const initialState : initialStateTypeOfPayments =
     totalCount:0,
 };
 
-export const TypeOfPaymentsReducer = createSlice(
+export const typeOfPaymentsReducer = createSlice(
     {
         name: "Type-of-payments",
         initialState,

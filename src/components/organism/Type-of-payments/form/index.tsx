@@ -1,16 +1,21 @@
-import { FormProvider, useForm } from "react-hook-form"
-import { useAppDispatch } from "../../../../store"
-import { TypeOfPayment, fetchTypeOfPayments } from "../../../../store/typeOfPayments/typeOfPayments"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { schema } from "../validation"
-import { useEffect } from "react"
-import { Flex, Modal } from "../../../atoms"
-import { Stack, Switch } from "@chakra-ui/react"
-import InputForm from "../../../molecules/InputForm"
-import { theme } from "../../../../theme"
-import Li from "../../../atoms/Li"
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons"
-import TextElement from "../../../molecules/TextElement"
+import { FormProvider, useForm } from 'react-hook-form'
+import { useAppDispatch } from '../../../../store'
+import { fetchTypeOfPayments } from '../../../../store/typeOfPayments/typeOfPayments'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { schema } from '../validation'
+import { useEffect } from 'react'
+import { Flex, Modal } from '../../../atoms'
+import { Stack, Switch } from '@chakra-ui/react'
+import InputForm from '../../../molecules/InputForm'
+import { theme } from '../../../../theme'
+import Li from '../../../atoms/Li'
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import TextElement from '../../../molecules/TextElement'
+import {
+    TypeOfPayment,
+    createTypeOfPayment,
+    updateTypeOfPayments,
+} from '../../../../store/typeOfPayments'
 
 interface Props {
     open: boolean
@@ -19,10 +24,21 @@ interface Props {
     skip: number
     setOpen: (item: boolean) => void
 }
-const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) => {
+const FormTypeOfPayment = ({
+    open,
+    TypeOfPayment,
+    skip,
+    take,
+    setOpen,
+}: Props) => {
     const dispatch = useAppDispatch()
     const defaultValues = {
         name: '',
+        daysToFirstPayment: undefined,
+        daysBetweenPayments: undefined,
+        numberOfPayments: undefined,
+        movePaymentsToTheEndOfMonth: false,
+        daysOffsetPayments: undefined,
         note: '',
     }
     const methods = useForm<TypeOfPayment>({
@@ -37,21 +53,40 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
         reset,
     } = methods
     const handleSave = async () => {
+        setValue(
+            'daysBetweenPayments',
+            Number(getValues('daysBetweenPayments'))
+        )
+        setValue('daysOffsetPayments', Number(getValues('daysOffsetPayments')))
+        setValue('daysToFirstPayment', Number(getValues('daysToFirstPayment')))
+        setValue('numberOfPayments', Number(getValues('numberOfPayments')))
+        getValues('daysOffsetPayments')
+            ? null
+            : setValue('daysOffsetPayments', 0)
+        getValues('daysToFirstPayment')
+            ? null
+            : setValue('daysToFirstPayment', 0)
         const errors1 = await trigger()
         if (!errors1) {
             console.log(errors)
             return errors1
         }
         const newTypeOfPayment = {
-            // name: getValues('name'),
-            // note: getValues('note'),
-            // skillType: getValues('skillType'),
+            name: getValues('name'),
+            daysToFirstPayment: getValues('daysToFirstPayment'),
+            daysBetweenPayments: getValues('daysBetweenPayments'),
+            numberOfPayments: getValues('numberOfPayments'),
+            movePaymentsToTheEndOfMonth: getValues(
+                'movePaymentsToTheEndOfMonth'
+            ),
+            daysOffsetPayments: getValues('daysOffsetPayments'),
+            note: getValues('note'),
+            id: TypeOfPayment?.id,
         }
-        if(TypeOfPayment){
-            // await dispatch(updateSkill(newTypeOfPayment))
-        }
-        else{
-            // await dispatch(createSkill(newTypeOfPayment))
+        if (TypeOfPayment) {
+            await dispatch(updateTypeOfPayments(newTypeOfPayment))
+        } else {
+            await dispatch(createTypeOfPayment(newTypeOfPayment))
         }
         await reset(defaultValues)
         await setOpen(false)
@@ -69,9 +104,16 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
     }
     useEffect(() => {
         if (TypeOfPayment) {
-            // setValue('name', skill.name)
-            // setValue('note', skill.note)
-            // setValue('skillType', skill.skillType)
+            setValue('name', TypeOfPayment.name)
+            setValue('daysToFirstPayment', TypeOfPayment.daysToFirstPayment)
+            setValue('daysBetweenPayments', TypeOfPayment.daysBetweenPayments)
+            setValue('numberOfPayments', TypeOfPayment.numberOfPayments)
+            setValue(
+                'movePaymentsToTheEndOfMonth',
+                TypeOfPayment.movePaymentsToTheEndOfMonth
+            )
+            setValue('daysOffsetPayments', TypeOfPayment.daysOffsetPayments)
+            setValue('note', TypeOfPayment.note)
         } else null
     }, [open])
     return (
@@ -86,11 +128,7 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
                 }}
                 column="column"
             >
-                <Flex
-                    bgcolor="white"
-                    column="column"
-                    style={{ width: '100%' }}
-                >
+                <Flex bgcolor="white" column="column" style={{ width: '100%' }}>
                     <FormProvider {...methods}>
                         <Stack spacing={3}>
                             <InputForm
@@ -115,7 +153,6 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
                     </FormProvider>
                 </Flex>
                 <Flex bgcolor="white">
-                    
                     <Flex
                         bgcolor="white"
                         column="column"
@@ -130,7 +167,6 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
                                     fontWeight="500"
                                     name={'daysToFirstPayment'}
                                     action={'input'}
-                                    type="text"
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -148,7 +184,6 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
                                     fontWeight="500"
                                     name={'numberOfPayments'}
                                     action={'input'}
-                                    type="text"
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -178,7 +213,6 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
                                     fontWeight="500"
                                     name={'daysBetweenPayments'}
                                     action={'input'}
-                                    type="text"
                                     placeholder={'Giorni tra i pagamenti'}
                                     style={{
                                         width: '100%',
@@ -196,7 +230,6 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
                                     fontWeight="500"
                                     name={'daysOffsetPayments'}
                                     action={'input'}
-                                    type="text"
                                     placeholder={'Giorni scostamento pagamento'}
                                     style={{
                                         width: '100%',
@@ -212,11 +245,7 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
                         </FormProvider>
                     </Flex>
                 </Flex>
-                <Flex
-                    bgcolor="white"
-                    column="column"
-                    style={{ width: '100%' }}
-                >
+                <Flex bgcolor="white" column="column" style={{ width: '100%' }}>
                     <FormProvider {...methods}>
                         <Stack spacing={3}>
                             <InputForm
@@ -240,11 +269,11 @@ const FormTypeOfPayment = ({ open, TypeOfPayment, skip, take, setOpen }: Props) 
                         </Stack>
                     </FormProvider>
                 </Flex>
-                <Flex bgcolor="white" column="column" >
+                <Flex bgcolor="white" column="column">
                     <TextElement
-                        paddingIcon='0'
+                        paddingIcon="0"
                         label={'Spostare i pagamenti alla fine del mese'}
-                        paddingBottom='6px'
+                        paddingBottom="6px"
                     />
                     <Stack
                         align="center"

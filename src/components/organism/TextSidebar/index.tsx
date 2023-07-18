@@ -23,7 +23,6 @@ const TextSidebar = ({
     dropdownVerification = false,
     sidebarArrow = false,
 }: Props) => {
-    
     const navigate = useNavigate()
     const [open, setOpen] = useState<boolean>(false)
 
@@ -31,13 +30,11 @@ const TextSidebar = ({
         if (!dropdownVerification) {
             SIDEBAR.map((sidebar) => {
                 sidebar.name == label
-                    ? sidebar.href &&
-                      (navigate(sidebar.href))
+                    ? sidebar.href && navigate(sidebar.href)
                     : null
             })
         } else {
             setOpen(!open)
-            console.log(open)
         }
     }
     return (

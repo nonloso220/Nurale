@@ -9,6 +9,7 @@ import {
     Tr,
 } from '@chakra-ui/react'
 import {
+    createColumnHelper,
     flexRender,
     getCoreRowModel,
     useReactTable,
@@ -17,16 +18,29 @@ import {
 import './index.css'
 import { theme } from '../../../theme'
 import Icons from '../../atoms/icons'
+import { useTranslation } from 'react-i18next'
 interface Props {
     data: any
     columns: any
     handleEdit: (item: any) => void
     handleDelete: (item: any) => void
 }
-const TableComponent = ({ data, columns, handleEdit, handleDelete }: Props) => {
+const TableComponent = ({ data, columns, handleDelete, handleEdit }: Props) => {
+    const { t } = useTranslation()
+    const COLUMNHELPER: any = createColumnHelper<any>()
+    const columnsHelpers = columns.map((col: any) => {
+        return COLUMNHELPER.accessor(col.id, {
+            cell: (props: any) => {
+                return col.transform
+                    ? col.transform(props.row.original[col.id])
+                    : props.getValue()
+            },
+            header: col.name,
+        })
+    })
     const tableInstance = useReactTable({
         data: data,
-        columns: columns,
+        columns: columnsHelpers,
         getCoreRowModel: getCoreRowModel(),
     })
     const ColumnModel = tableInstance.getHeaderGroups()

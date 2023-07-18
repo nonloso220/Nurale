@@ -15,6 +15,7 @@ import ModalConfirm from '../../molecules/ModalConfirm'
 import Paginate from '../../organism/Pagination'
 import { useTranslation } from 'react-i18next'
 import FormUser from './form'
+import { handleColumns } from './columns'
 const Users = () => {
     const dispatch = useAppDispatch()
     const [open, setOpen] = useState(false)
@@ -51,21 +52,7 @@ const Users = () => {
     const handleClick = () => {
         setOpen(!open)
     }
-    const createColumHelper: any = createColumnHelper<any>()
-    const cols = [
-        createColumHelper.accessor('firstName', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Nome',
-        }),
-        createColumHelper.accessor('lastName', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Cognome',
-        }),
-        createColumHelper.accessor('email', {
-            cell: (Props: any) => Props.getValue(),
-            header: 'Email',
-        }),
-    ]
+
     const handleConfirmDelete = (object: User) => {
         setOpenDelete(true)
         setUser(object)
@@ -143,7 +130,7 @@ const Users = () => {
                     <Flex bgcolor="white" column="column">
                         <Flex bgcolor="white">
                             <Table
-                                columns={cols}
+                                columns={handleColumns()}
                                 data={users}
                                 handleEdit={handleFormEditUser}
                                 handleDelete={handleConfirmDelete}

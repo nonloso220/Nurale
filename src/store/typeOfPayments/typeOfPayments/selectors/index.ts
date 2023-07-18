@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { RootState } from "../../..";
 
-export const getUsersState = (state : RootState) => state.TypeOfPayments;
+export const getUsersState = (state : RootState) => state.typeOfPayments;
 
 export const getTypeOfPayments = createSelector(
     getUsersState,

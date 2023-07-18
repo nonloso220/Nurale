@@ -17,6 +17,8 @@ import editIcon from './editIcon'
 import deleteIcon from './deleteIcon'
 import rightArrowIcon from './rightArrowIcon'
 import leftArrowIcon from './leftArrowIcon'
+import trueIcon from './trueIcon'
+import falseIcon from './falseIcon'
 
 interface Props {
     name: icons
@@ -44,6 +46,8 @@ const Icons = ({ name, size = 24, maxHeight = 24, color = 'black' }: Props) => {
         rightArrowIcon,
         editIcon,
         deleteIcon,
+        trueIcon,
+        falseIcon,
     }
 
     const Icon = index[name]
