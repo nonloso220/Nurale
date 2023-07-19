@@ -103,9 +103,6 @@ const Skills = () => {
             })
         )
     }
-    console.log('skip=' + skip)
-    console.log('totalelement=' + totalElement)
-    console.log('filter=' + filter)
     return (
         <Flex
             column="column"
@@ -162,7 +159,7 @@ const Skills = () => {
 
                 <Text
                     style={{
-                        color: theme.colors.pink100,
+                        color:theme.colors.pink100,
                         fontFamily: 'Lato',
                     }}
                     fontSize="3xl"
