@@ -11,6 +11,7 @@ import Commesse from '../components/pages/commesse'
 import Ordini from '../components/pages/ordini'
 import Skills from '../components/pages/skills'
 import TypeOfPayments from '../components/pages/TypeOfPayments'
+import Costumers from '../components/organism/Costumers'
 
 const AppRoutes = () => {
     return (
@@ -32,6 +33,7 @@ const AppRoutes = () => {
                             path={ROUTES.TipiDiPagamento}
                             element={<TypeOfPayments />}
                         />
+                        <Route path={ROUTES.Clienti} element={<Costumers />} />
                     </Route>
                 </Route>
             </Routes>

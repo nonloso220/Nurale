@@ -9,7 +9,7 @@ export interface initialStateTypeOfPayments
 }
 export interface QueryParams
 {
-    search?: string;
+    hasEndOfMonth?: boolean;
     skip?: number;
     take?: number;
 }
