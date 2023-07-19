@@ -1,0 +1,31 @@
+1)tableLayout 
+2)sitemare pagine già fatte con il tebleLayaout
+3)andare avanti con le pagine da fare
+
+
+
+
+
+
+
+index.tsx{
+	tableLayout{
+		navabar
+		tato aggiungi
+		tasto filter
+		form aggiungi
+		form edit
+		table
+		filter(form)
+		pagination
+		modal confirm
+	}
+	
+}
+
+form.tax
+columns.tsx
+
+
+
+
