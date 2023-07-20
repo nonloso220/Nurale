@@ -1,53 +1,53 @@
-import { useEffect, useState } from "react"
-import { useAppDispatch } from "../../../store"
-import { Flex, Table } from "../.."
-import Navbar from "../../molecules/Navbar"
-import Li from "../../atoms/Li"
-import { theme } from "../../../theme"
-import { AddIcon } from "@chakra-ui/icons"
-import Filter from "../../molecules/Filter"
-import Paginate from "../Pagination"
-import ModalConfirm from "../../molecules/ModalConfirm"
-import { TypeOfPayment } from "../../../store/typeOfPayments"
-import { number } from "zod"
+import { useEffect, useState } from 'react'
+import { useAppDispatch } from '../../../store'
+import { Skill } from '../../../store/skills/skill/types'
+import { User } from '../../../store/users/user/types'
+import { Flex, Table } from '../..'
+import Navbar from '../../molecules/Navbar'
+import Li from '../../atoms/Li'
+import { AddIcon } from '@chakra-ui/icons'
+import { theme } from '../../../theme'
+import Filter from '../../molecules/Filter'
+import Paginate from '../Pagination'
+import ModalConfirm from '../../molecules/ModalConfirm'
+import { Text } from '@chakra-ui/react'
+import { QueryParams } from '../../../utils/models'
+import { TypeOfPayment } from '../../../store/typeOfPayments'
 
-interface Props{
-    element:[]
-    totalElement:number
-    TypeOfElement:{} | null
-    setTypeOfPayment:()=>void
-    fetch:({})=>void
-    handleFormEdit:()=>void
-    handleConfirmDelete:()=>void
-    handleColumns:()=>void
-    Form:({open:boolean
-        take:number
-        skip:number
-        element:{}
-        setOpen:()=>void})=>void
+interface Props {
+    totalElement: number //getPaginations  useSelector(getPaginations)
+    objects: [] //getobject  useSelector(getTypeOfPayments)
+    handleColumns: () => void
+    fetch: ({}) => void
+    FormAdd: React.ReactNode
 }
-const TableLayout=({TypeOfElement,setTypeOfPayment,totalElement,element,fetch,handleFormEdit,handleConfirmDelete,handleColumns,Form}:Props)=>{
+const TableLayout = ({
+    totalElement,
+    objects,
+    handleColumns,
+    fetch,
+    FormAdd,
+}: Props) => {
     const dispatch = useAppDispatch()
     const [open, setOpen] = useState(false)
     const [openDelete, setOpenDelete] = useState(false)
     const [openEdit, setOpenEdit] = useState(false)
     const [skip, setSkip] = useState(0)
-    // const [typeOfPayment, setTypeOfPayment] = useState<TypeOfElement | null>(null)
-    // const typeOfPayments = useSelector(getTypeOfPayments)
-    // const totalElement = useSelector(getPaginations)
-    const [elementFilter, setElementFilter] = useState<boolean>()
+    const [object, setObject] = useState<TypeOfPayment | User | Skill | null>(
+        null
+    )
+    const [elementFilter, setElementFilter] = useState<boolean | string>()
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [filter, setFilter] = useState(false)
     // const [coloredButton, setColoredButton] = useState(false)
     // const [coloredButton2, setColoredButton2] = useState(false)
-    const take = 10
+    let take = 10
+    const params: QueryParams = {
+        skip: skip,
+        take: take,
+    }
     useEffect(() => {
-        dispatch(
-            fetch({
-                skip: skip,
-                take: take,
-            })
-        )
+        dispatch(fetch({ params }))
     }, [])
     const handleClick = () => {
         setOpen(!open)
@@ -55,34 +55,24 @@ const TableLayout=({TypeOfElement,setTypeOfPayment,totalElement,element,fetch,ha
     const handleClickFilter = () => {
         setFilter(!filter)
     }
-    // const handleFormEditSkill = (object: TypeOfPayment) => {
-    //     setOpenEdit(true)
-    //     setTypeOfPayment(object)
-    // }
-    // const handleConfirmDelete = (object: TypeOfPayment) => {
-    //     setOpenDelete(true)
-    //     setTypeOfPayment(object)
-    // }
+    const handleFormEditSkill = (object: TypeOfPayment | User | Skill) => {
+        setOpenEdit(true)
+        setObject(object)
+    }
+    const handleConfirmDelete = (object: TypeOfPayment | User | Skill) => {
+        setOpenDelete(true)
+        setObject(object)
+    }
 
     const handleCloseDelete = async () => {
         setOpenDelete(false)
-        await dispatch(
-            fetch({
-                skip: skip,
-                take: take,
-            })
-        )
+        await dispatch(fetch({ params }))
     }
     const handleDelete = async () => {
-        await dispatch(deleteTypeOfPayment(TypeOfElement?.id))
+        await dispatch(delete object?.id)
     }
     useEffect(() => {
-        dispatch(
-            fetch({
-                skip: skip,
-                take: take,
-            })
-        )
+        dispatch(fetch({ params }))
     }, [skip])
     const handlePagination = (page: number) => {
         setSkip(page)
@@ -94,23 +84,31 @@ const TableLayout=({TypeOfElement,setTypeOfPayment,totalElement,element,fetch,ha
     }
     const fetchTypeOfPaymentsFiltered = async () => {
         await dispatch(
-            fetch({
-                hasEndOfMonth: elementFilter,
-                skip: skip,
-                take: take,
-            })
+            isUser(object)
+                ? null
+                : isSkill(object)
+                ? ((params.skillType = String(elementFilter)),
+                  fetch({ params }))
+                : isTypeOfPayments(object)
+                ? ((params.hasEndOfMonth = Boolean(elementFilter)),
+                  fetch({ params }))
+                : null
         )
     }
     const handleResetFilter = async () => {
         // setColoredButton(false)
         // setColoredButton2(false)
         setElementFilter(undefined)
-        await dispatch(
-            fetch({
-                skip: skip,
-                take: take,
-            })
-        )
+        await dispatch(fetch({ params }))
+    }
+    function isUser(object: any): object is User {
+        return object
+    }
+    function isSkill(object: any): object is Skill {
+        return object
+    }
+    function isTypeOfPayments(object: any): object is TypeOfPayment {
+        return object
     }
     return (
         <Flex
@@ -165,8 +163,7 @@ const TableLayout=({TypeOfElement,setTypeOfPayment,totalElement,element,fetch,ha
                         </Li>
                     </Flex>
                 </Flex>
-
-                {/* <Text
+                <Text
                     style={{
                         color: theme.colors.pink100,
                         fontFamily: 'Lato',
@@ -175,31 +172,34 @@ const TableLayout=({TypeOfElement,setTypeOfPayment,totalElement,element,fetch,ha
                     display={open ? 'block' : 'none'}
                 >
                     Aggiungi nuovo Tipo di Pagamento
-                </Text> */}
+                </Text>
                 <br />
 
                 {open ? (
-                    <Form
-                        open={open}
-                        take={take}
-                        skip={skip}
-                        setOpen={setOpen}
-                    />
-                ) : openEdit ? (
-                    <Form
-                        open={openEdit}
-                        take={take}
-                        skip={skip}
-                        TypeOfPayment={TypeOfElement}
-                        setOpen={setOpenEdit}
-                    />
+                    //form funcion
+                    FormAdd
+                ) : // <FormTypeOfPayment
+                //     open={open}
+                //     take={take}
+                //     skip={skip}
+                //     setOpen={setOpen}
+                // />
+                openEdit ? (
+                    <div></div>
                 ) : (
+                    // <FormTypeOfPayment
+                    //     open={openEdit}
+                    //     take={take}
+                    //     skip={skip}
+                    //     TypeOfPayment={typeOfPayment}
+                    //     setOpen={setOpenEdit}
+                    // />
                     <Flex bgcolor="white" column="column">
                         <Flex bgcolor="white">
                             <Table
                                 columns={handleColumns()}
-                                data={element}
-                                handleEdit={handleFormEdit}
+                                data={objects}
+                                handleEdit={handleFormEditSkill}
                                 handleDelete={handleConfirmDelete}
                             ></Table>
                             {filter ? (
@@ -286,13 +286,14 @@ const TableLayout=({TypeOfElement,setTypeOfPayment,totalElement,element,fetch,ha
                 )}
                 <ModalConfirm
                     open={openDelete}
-                    objectName={String(TypeOfElement?.name)}
+                    objectName={String(
+                        isUser(object) ? object.email : object?.name
+                    )}
                     handleClose={handleCloseDelete}
                     handleDelete={handleDelete}
                 ></ModalConfirm>
             </div>
         </Flex>
     )
-
 }
 export default TableLayout

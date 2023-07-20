@@ -7,9 +7,3 @@ export interface initialStateTypeOfPayments
     error: null | string;
     totalCount:number
 }
-export interface QueryParams
-{
-    hasEndOfMonth?: boolean;
-    skip?: number;
-    take?: number;
-}

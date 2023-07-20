@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { QueryParams } from "../types";
 import { BASE, API, V1, TYPEOFPAYMENTS } from "../../../../utils/costants";
 import apiClient from "../../../../utils/helpers/apiClient";
+import { QueryParams } from "../../../../utils/models";
 
 
 export const fetchTypeOfPayments = createAsyncThunk(

@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { QueryParams } from "../types";
 import apiClient from "../../../../utils/helpers/apiClient";
 import { API, BASE, SKILLS, V1 } from "../../../../utils/costants";
+import { QueryParams } from "../../../../utils/models";
 
 export const fetchSkills = createAsyncThunk(
     'fetch/skills',

@@ -6,10 +6,3 @@ export interface initialStateSkills{
     error: null | string;
     totalCount:number
 }
-export interface QueryParams
-{
-    skillType?:string;
-    search?: string;
-    skip?: number;
-    take?: number;
-}

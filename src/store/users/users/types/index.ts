@@ -8,10 +8,3 @@ export interface initialStateUsers
     error: null | string;
     totalCount:number
 }
-
-export interface QueryParams
-{
-    search?: string;
-    skip?: number;
-    take?: number;
-}

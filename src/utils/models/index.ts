@@ -2,6 +2,14 @@ export interface User{
     email:string
     password:string
 }
+export interface QueryParams
+{
+    hasEndOfMonth?: boolean;
+    skillType?:string;
+    search?: string;
+    skip?: number;
+    take?: number;
+}
 export interface JwtTokenDecoded {
     role: ROLE;
     iss: string;
