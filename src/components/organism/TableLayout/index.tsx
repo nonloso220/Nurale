@@ -16,22 +16,21 @@ import { TypeOfPayment } from '../../../store/typeOfPayments'
 
 interface Props {
     totalElement: number //getPaginations  useSelector(getPaginations)
-    objects: [] //getobject  useSelector(getTypeOfPayments)
+    objects:  TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
     handleColumns: () => void
     fetch: ({}) => void
-    FormAdd: React.ReactNode
+   
+    form:(item:any)=>void 
+    children: React.ReactNode
+    open:boolean,
+    setOpen:(item:boolean)=>void
+    deleteFunction:(item:any)=>void
 }
 const TableLayout = ({
-    totalElement,
-    objects,
-    handleColumns,
-    fetch,
-    FormAdd,
+    totalElement, objects, handleColumns, fetch, form, children, open = false, setOpen,deleteFunction
 }: Props) => {
     const dispatch = useAppDispatch()
-    const [open, setOpen] = useState(false)
     const [openDelete, setOpenDelete] = useState(false)
-    const [openEdit, setOpenEdit] = useState(false)
     const [skip, setSkip] = useState(0)
     const [object, setObject] = useState<TypeOfPayment | User | Skill | null>(
         null
@@ -47,7 +46,10 @@ const TableLayout = ({
         take: take,
     }
     useEffect(() => {
-        dispatch(fetch({ params }))
+        dispatch(fetch({
+            skip: skip,
+            take: take
+        }))
     }, [])
     const handleClick = () => {
         setOpen(!open)
@@ -55,51 +57,63 @@ const TableLayout = ({
     const handleClickFilter = () => {
         setFilter(!filter)
     }
-    const handleFormEditSkill = (object: TypeOfPayment | User | Skill) => {
-        setOpenEdit(true)
+    const handleFormEdit = (object: TypeOfPayment | User | Skill) => {
+        setOpen(true)
         setObject(object)
     }
     const handleConfirmDelete = (object: TypeOfPayment | User | Skill) => {
         setOpenDelete(true)
         setObject(object)
     }
-
     const handleCloseDelete = async () => {
         setOpenDelete(false)
-        await dispatch(fetch({ params }))
+        await dispatch(fetch({
+            skip: skip,
+            take: take
+        }))
     }
     const handleDelete = async () => {
-        await dispatch(delete object?.id)
+        await dispatch(deleteFunction (object?.id))
     }
     useEffect(() => {
-        dispatch(fetch({ params }))
+        dispatch(fetch({
+            skip: skip,
+            take: take
+        }))
     }, [skip])
     const handlePagination = (page: number) => {
         setSkip(page)
     }
-    const handleFilter = (element: boolean) => {
-        // setColoredButton(element ? true : false)
-        // setColoredButton2(element ? false : true)
-        setElementFilter(element)
-    }
-    const fetchTypeOfPaymentsFiltered = async () => {
+    // const handleFilter = (element: boolean) => {
+    //     // setColoredButton(element ? true : false)
+    //     // setColoredButton2(element ? false : true)
+    //     setElementFilter(element)
+    // }
+    const fetchFiltered = async () => {
         await dispatch(
             isUser(object)
                 ? null
                 : isSkill(object)
-                ? ((params.skillType = String(elementFilter)),
-                  fetch({ params }))
-                : isTypeOfPayments(object)
-                ? ((params.hasEndOfMonth = Boolean(elementFilter)),
-                  fetch({ params }))
-                : null
+                    ? ((params.skillType = String(elementFilter)),
+                        fetch({
+                            skip: skip,
+                            take: take
+                        }))
+                    : isTypeOfPayments(object)
+                        ? ((params.hasEndOfMonth = Boolean(elementFilter)),
+                            fetch({
+                                skip: skip,
+                                take: take
+                            }))
+                        : null
         )
     }
     const handleResetFilter = async () => {
-        // setColoredButton(false)
-        // setColoredButton2(false)
         setElementFilter(undefined)
-        await dispatch(fetch({ params }))
+        await dispatch(fetch({
+            skip: skip,
+            take: take
+        }))
     }
     function isUser(object: any): object is User {
         return object
@@ -110,6 +124,13 @@ const TableLayout = ({
     function isTypeOfPayments(object: any): object is TypeOfPayment {
         return object
     }
+    const objectForm: any = {
+        object,
+        open,
+        setOpen,
+        params,
+    }
+    console.log(open)
     return (
         <Flex
             column="column"
@@ -174,116 +195,117 @@ const TableLayout = ({
                     Aggiungi nuovo Tipo di Pagamento
                 </Text>
                 <br />
-
                 {open ? (
-                    //form funcion
-                    FormAdd
+                    form(objectForm),
+                    children
                 ) : // <FormTypeOfPayment
-                //     open={open}
-                //     take={take}
-                //     skip={skip}
-                //     setOpen={setOpen}
-                // />
-                openEdit ? (
-                    <div></div>
-                ) : (
-                    // <FormTypeOfPayment
-                    //     open={openEdit}
+                    //     open={open}
                     //     take={take}
                     //     skip={skip}
-                    //     TypeOfPayment={typeOfPayment}
-                    //     setOpen={setOpenEdit}
+                    //     setOpen={setOpen}
                     // />
-                    <Flex bgcolor="white" column="column">
-                        <Flex bgcolor="white">
-                            <Table
-                                columns={handleColumns()}
-                                data={objects}
-                                handleEdit={handleFormEditSkill}
-                                handleDelete={handleConfirmDelete}
-                            ></Table>
-                            {filter ? (
-                                <Filter
-                                    handleSave={fetchTypeOfPaymentsFiltered}
-                                    handleResetFilter={handleResetFilter}
-                                    open={filter}
-                                    setOpen={setFilter}
-                                >
-                                    {/* <Flex bgcolor="white">
-                                        <span>
-                                            Pagamenti alla fine del mese
-                                        </span>
-                                    </Flex>
-                                    <Flex bgcolor="white">
-                                        <Li
-                                            style={{
-                                                backgroundColor:
-                                                    theme.colors.pink100,
-                                                display: open
-                                                    ? 'none'
-                                                    : 'block',
-                                                border: '0px',
-                                                padding: '10px',
-                                                width: '65px',
-                                                color: 'white',
-                                                textAlign: 'center',
-                                            }}
-                                            onClick={handleResetFilter}
-                                        >
-                                            Tutti
-                                        </Li>
-                                        <Li
-                                            style={{
-                                                backgroundColor: coloredButton
-                                                    ? theme.colors.purple
-                                                    : theme.colors.pink100,
-                                                display: open
-                                                    ? 'none'
-                                                    : 'block',
-                                                border: '0px',
-                                                padding: '10px',
-                                                width: '65px',
-                                                color: 'white',
-                                                textAlign: 'center',
-                                            }}
-                                            onClick={() => handleFilter(true)}
-                                        >
-                                            Si
-                                        </Li>
-                                        <Li
-                                            style={{
-                                                backgroundColor: coloredButton2
-                                                    ? theme.colors.purple
-                                                    : theme.colors.pink100,
-                                                display: open
-                                                    ? 'none'
-                                                    : 'block',
-                                                border: '0px',
-                                                padding: '10px',
-                                                width: '65px',
-                                                color: 'white',
-                                                textAlign: 'center',
-                                            }}
-                                            onClick={() => {
-                                                handleFilter(false)
-                                            }}
-                                        >
-                                            No
-                                        </Li>
-                                    </Flex> */}
-                                </Filter>
-                            ) : null}
+                    // openEdit ? (
+                    //     setOpen(true),
+                    //     form(objectForm),
+                    //     children
+                    // ) : 
+                    (
+                        // <FormTypeOfPayment
+                        //     open={openEdit}
+                        //     take={take}
+                        //     skip={skip}
+                        //     TypeOfPayment={typeOfPayment}
+                        //     setOpen={setOpenEdit}
+                        // />
+                        <Flex bgcolor="white" column="column">
+                            <Flex bgcolor="white">
+                                <Table
+                                    columns={handleColumns()}
+                                    data={objects}
+                                    handleEdit={handleFormEdit}
+                                    handleDelete={handleConfirmDelete}
+                                ></Table>
+                                {filter ? (
+                                    <Filter
+                                        handleSave={fetchFiltered}
+                                        handleResetFilter={handleResetFilter}
+                                        open={filter}
+                                        setOpen={setFilter}
+                                    >
+                                        {/* <Flex bgcolor="white">
+                            <span>
+                                Pagamenti alla fine del mese
+                            </span>
                         </Flex>
-                        <Paginate
-                            handlePagination={handlePagination}
-                            skip={skip}
-                            take={take}
-                            totalElement={totalElement}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    </Flex>
-                )}
+                        <Flex bgcolor="white">
+                            <Li
+                                style={{
+                                    backgroundColor:
+                                        theme.colors.pink100,
+                                    display: open
+                                        ? 'none'
+                                        : 'block',
+                                    border: '0px',
+                                    padding: '10px',
+                                    width: '65px',
+                                    color: 'white',
+                                    textAlign: 'center',
+                                }}
+                                onClick={handleResetFilter}
+                            >
+                                Tutti
+                            </Li>
+                            <Li
+                                style={{
+                                    backgroundColor: coloredButton
+                                        ? theme.colors.purple
+                                        : theme.colors.pink100,
+                                    display: open
+                                        ? 'none'
+                                        : 'block',
+                                    border: '0px',
+                                    padding: '10px',
+                                    width: '65px',
+                                    color: 'white',
+                                    textAlign: 'center',
+                                }}
+                                onClick={() => handleFilter(true)}
+                            >
+                                Si
+                            </Li>
+                            <Li
+                                style={{
+                                    backgroundColor: coloredButton2
+                                        ? theme.colors.purple
+                                        : theme.colors.pink100,
+                                    display: open
+                                        ? 'none'
+                                        : 'block',
+                                    border: '0px',
+                                    padding: '10px',
+                                    width: '65px',
+                                    color: 'white',
+                                    textAlign: 'center',
+                                }}
+                                onClick={() => {
+                                    handleFilter(false)
+                                }}
+                            >
+                                No
+                            </Li>
+                        </Flex> */}
+                                    </Filter>
+                                ) : null}
+                            </Flex>
+                            <Paginate
+                                handlePagination={handlePagination}
+                                skip={skip}
+                                take={take}
+                                totalElement={totalElement}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage} />
+                        </Flex>
+                    )}
                 <ModalConfirm
                     open={openDelete}
                     objectName={String(

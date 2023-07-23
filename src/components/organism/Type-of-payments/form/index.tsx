@@ -23,6 +23,7 @@ interface Props {
     take: number
     skip: number
     setOpen: (item: boolean) => void
+    form:(item:any)=>void 
 }
 const FormTypeOfPayment = ({
     open,
@@ -30,6 +31,7 @@ const FormTypeOfPayment = ({
     skip,
     take,
     setOpen,
+    form,
 }: Props) => {
     const dispatch = useAppDispatch()
     const defaultValues = {
@@ -52,6 +54,20 @@ const FormTypeOfPayment = ({
         setValue,
         reset,
     } = methods
+    useEffect(() => {
+        if (TypeOfPayment) {
+            setValue('name', TypeOfPayment.name)
+            setValue('daysToFirstPayment', TypeOfPayment.daysToFirstPayment)
+            setValue('daysBetweenPayments', TypeOfPayment.daysBetweenPayments)
+            setValue('numberOfPayments', TypeOfPayment.numberOfPayments)
+            setValue(
+                'movePaymentsToTheEndOfMonth',
+                TypeOfPayment.movePaymentsToTheEndOfMonth
+            )
+            setValue('daysOffsetPayments', TypeOfPayment.daysOffsetPayments)
+            setValue('note', TypeOfPayment.note)
+        } else null
+    }, [open])
     const handleSave = async () => {
         setValue(
             'daysBetweenPayments',
@@ -100,22 +116,16 @@ const FormTypeOfPayment = ({
     const handleClick = () => {
         setOpen(!open)
         open ? null : reset(defaultValues)
-        console.log(open)
+        const objectForm: any={
+            TypeOfPayment,
+            open,
+            skip,
+            take,
+            setOpen
+        }
+        form(objectForm)
     }
-    useEffect(() => {
-        if (TypeOfPayment) {
-            setValue('name', TypeOfPayment.name)
-            setValue('daysToFirstPayment', TypeOfPayment.daysToFirstPayment)
-            setValue('daysBetweenPayments', TypeOfPayment.daysBetweenPayments)
-            setValue('numberOfPayments', TypeOfPayment.numberOfPayments)
-            setValue(
-                'movePaymentsToTheEndOfMonth',
-                TypeOfPayment.movePaymentsToTheEndOfMonth
-            )
-            setValue('daysOffsetPayments', TypeOfPayment.daysOffsetPayments)
-            setValue('note', TypeOfPayment.note)
-        } else null
-    }, [open])
+    
     return (
         <Modal show={open} color="black">
             <Flex
