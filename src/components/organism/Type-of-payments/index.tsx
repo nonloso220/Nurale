@@ -1,60 +1,127 @@
-// import { Flex, Table } from '../..'
-// import Navbar from '../../molecules/Navbar'
-// import { useSelector } from 'react-redux'
-// import { useEffect, useState } from 'react'
-// import { useAppDispatch } from '../../../store/applicationStore'
-// import { AddIcon } from '@chakra-ui/icons'
-// import { Text } from '@chakra-ui/react'
-// import { theme } from '../../../theme'
-// import Li from '../../atoms/Li'
-// import Paginate from '../Pagination'
-// import {
-//     fetchTypeOfPayments,
-//     getPaginations,
-//     getTypeOfPayments,
-// } from '../../../store/typeOfPayments/typeOfPayments'
-// import FormTypeOfPayment from './form'
-// import ModalConfirm from '../../molecules/ModalConfirm'
-// import {
-//     TypeOfPayment,
-//     deleteTypeOfPayment,
-// } from '../../../store/typeOfPayments'
-// import { handleColumns } from './columns'
-// import Filter from '../../molecules/Filter'
-import { useState } from "react"
-import { TypeOfPayment, deleteTypeOfPayment, fetchTypeOfPayments, getPaginations, getTypeOfPayments } from "../../../store/typeOfPayments"
-import TableLayout from "../TableLayout"
-import FormTypeOfPayment from "./form"
-import { handleColumns } from "./columns"
-import { useSelector } from "react-redux"
-
+import { useState } from 'react'
+import {
+    TypeOfPayment,
+    deleteTypeOfPayment,
+    fetchTypeOfPayments,
+    getPaginations,
+    getTypeOfPayments,
+} from '../../../store/typeOfPayments'
+import TableLayout from '../TableLayout'
+import FormTypeOfPayment from './form'
+import { handleColumns } from './columns'
+import { useSelector } from 'react-redux'
+import { Flex } from '../..'
+import Li from '../../atoms/Li'
+import { theme } from '../../../theme'
 
 const TypeOfPayments = () => {
-    const totalElement=useSelector(getPaginations)
-    const typeOfPayments=useSelector(getTypeOfPayments)
+    const totalElement = useSelector(getPaginations)
+    const typeOfPayments = useSelector(getTypeOfPayments)
     const [typeOfPayment, setTypeOfPayment] = useState<TypeOfPayment | null>(
         null
     )
-    const [open,setOpen]=useState<boolean>(false)
-    const [skip,setSkip]=useState<number>(0)
-    const [take,setTake]=useState<number>(0)
-    const formObject=(Object:any)=>{
+    const [open, setOpen] = useState<boolean>(false)
+    const [skip, setSkip] = useState<number>(0)
+    const [take, setTake] = useState<number>(0)
+    const [elementFilter, setElementFilter] = useState<boolean | string>()
+    const formObject = (Object: any) => {
         setTypeOfPayment(Object.object)
         setSkip(Object.params.skip)
         setTake(Object.params.take)
         setOpen(Object.open)
     }
-    return(
-        <TableLayout totalElement={totalElement} objects={typeOfPayments} handleColumns={handleColumns} fetch={fetchTypeOfPayments} form={formObject} open={open} setOpen={setOpen} deleteFunction={deleteTypeOfPayment}>
-            <FormTypeOfPayment
-                open={open}
-                take={take}
-                skip={skip}
-                form={formObject}
-                TypeOfPayment={typeOfPayment}
-                setOpen={setOpen}
-            />
-        </TableLayout>
+    const handleFilter = (element: boolean) => {
+        // setColoredButton(element ? true : false)
+        // setColoredButton2(element ? false : true)
+        setElementFilter(element)
+    }
+    const handleResetFilter = async () => {
+        setElementFilter(undefined)
+        await dispatch(
+            fetch({
+                skip: skip,
+                take: take,
+            })
+        )
+    }
+    return (
+        <TableLayout
+            totalElement={totalElement}
+            objects={typeOfPayments}
+            handleColumns={handleColumns}
+            fetch={fetchTypeOfPayments}
+            form={formObject}
+            open={open}
+            setOpen={setOpen}
+            deleteFunction={deleteTypeOfPayment}
+            childrenFilter={
+                <>
+                    <Flex bgcolor="white">
+                        <span>Pagamenti alla fine del mese</span>
+                    </Flex>
+                    <Flex bgcolor="white">
+                        <Li
+                            style={{
+                                backgroundColor: theme.colors.pink100,
+                                display: open ? 'none' : 'block',
+                                border: '0px',
+                                padding: '10px',
+                                width: '65px',
+                                color: 'white',
+                                textAlign: 'center',
+                            }}
+                            onClick={handleResetFilter}
+                        >
+                            Tutti
+                        </Li>
+                        <Li
+                            style={{
+                                backgroundColor: coloredButton
+                                    ? theme.colors.purple
+                                    : theme.colors.pink100,
+                                display: open ? 'none' : 'block',
+                                border: '0px',
+                                padding: '10px',
+                                width: '65px',
+                                color: 'white',
+                                textAlign: 'center',
+                            }}
+                            onClick={() => handleFilter(true)}
+                        >
+                            Si
+                        </Li>
+                        <Li
+                            style={{
+                                backgroundColor: coloredButton2
+                                    ? theme.colors.purple
+                                    : theme.colors.pink100,
+                                display: open ? 'none' : 'block',
+                                border: '0px',
+                                padding: '10px',
+                                width: '65px',
+                                color: 'white',
+                                textAlign: 'center',
+                            }}
+                            onClick={() => {
+                                handleFilter(false)
+                            }}
+                        >
+                            No
+                        </Li>
+                    </Flex>
+                </>
+            }
+            children={
+                <FormTypeOfPayment
+                    open={open}
+                    take={take}
+                    skip={skip}
+                    form={formObject}
+                    TypeOfPayment={typeOfPayment}
+                    setOpen={setOpen}
+                />
+            }
+        />
     )
     // const dispatch = useAppDispatch()
     // const [open, setOpen] = useState(false)

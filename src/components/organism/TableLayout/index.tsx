@@ -16,18 +16,28 @@ import { TypeOfPayment } from '../../../store/typeOfPayments'
 
 interface Props {
     totalElement: number //getPaginations  useSelector(getPaginations)
-    objects:  TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
+    objects: TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
     handleColumns: () => void
     fetch: ({}) => void
-   
-    form:(item:any)=>void 
+
+    form: (item: any) => void
     children: React.ReactNode
-    open:boolean,
-    setOpen:(item:boolean)=>void
-    deleteFunction:(item:any)=>void
+    childrenFilter: React.ReactNode
+    open: boolean
+    setOpen: (item: boolean) => void
+    deleteFunction: (item: any) => void
 }
 const TableLayout = ({
-    totalElement, objects, handleColumns, fetch, form, children, open = false, setOpen,deleteFunction
+    totalElement,
+    objects,
+    handleColumns,
+    fetch,
+    form,
+    children,
+    childrenFilter,
+    open = false,
+    setOpen,
+    deleteFunction,
 }: Props) => {
     const dispatch = useAppDispatch()
     const [openDelete, setOpenDelete] = useState(false)
@@ -46,10 +56,12 @@ const TableLayout = ({
         take: take,
     }
     useEffect(() => {
-        dispatch(fetch({
-            skip: skip,
-            take: take
-        }))
+        dispatch(
+            fetch({
+                skip: skip,
+                take: take,
+            })
+        )
     }, [])
     const handleClick = () => {
         setOpen(!open)
@@ -65,55 +77,62 @@ const TableLayout = ({
         setOpenDelete(true)
         setObject(object)
     }
+    const handleFilter = (element: boolean) => {
+        // setColoredButton(element ? true : false)
+        // setColoredButton2(element ? false : true)
+        setElementFilter(element)
+    }
     const handleCloseDelete = async () => {
         setOpenDelete(false)
-        await dispatch(fetch({
-            skip: skip,
-            take: take
-        }))
+        await dispatch(
+            fetch({
+                skip: skip,
+                take: take,
+            })
+        )
     }
     const handleDelete = async () => {
-        await dispatch(deleteFunction (object?.id))
+        await dispatch(deleteFunction(object?.id))
     }
     useEffect(() => {
-        dispatch(fetch({
-            skip: skip,
-            take: take
-        }))
+        dispatch(
+            fetch({
+                skip: skip,
+                take: take,
+            })
+        )
     }, [skip])
     const handlePagination = (page: number) => {
         setSkip(page)
     }
-    // const handleFilter = (element: boolean) => {
-    //     // setColoredButton(element ? true : false)
-    //     // setColoredButton2(element ? false : true)
-    //     setElementFilter(element)
-    // }
+
     const fetchFiltered = async () => {
         await dispatch(
             isUser(object)
                 ? null
                 : isSkill(object)
-                    ? ((params.skillType = String(elementFilter)),
-                        fetch({
-                            skip: skip,
-                            take: take
-                        }))
-                    : isTypeOfPayments(object)
-                        ? ((params.hasEndOfMonth = Boolean(elementFilter)),
-                            fetch({
-                                skip: skip,
-                                take: take
-                            }))
-                        : null
+                ? ((params.skillType = String(elementFilter)),
+                  fetch({
+                      skip: skip,
+                      take: take,
+                  }))
+                : isTypeOfPayments(object)
+                ? ((params.hasEndOfMonth = Boolean(elementFilter)),
+                  fetch({
+                      skip: skip,
+                      take: take,
+                  }))
+                : null
         )
     }
     const handleResetFilter = async () => {
         setElementFilter(undefined)
-        await dispatch(fetch({
-            skip: skip,
-            take: take
-        }))
+        await dispatch(
+            fetch({
+                skip: skip,
+                take: take,
+            })
+        )
     }
     function isUser(object: any): object is User {
         return object
@@ -195,43 +214,25 @@ const TableLayout = ({
                 </Text>
                 <br />
                 {open ? (
-                    form(objectForm),
-                    children
-                ) : // <FormTypeOfPayment
-                    //     open={open}
-                    //     take={take}
-                    //     skip={skip}
-                    //     setOpen={setOpen}
-                    // />
-                    // openEdit ? (
-                    //     setOpen(true),
-                    //     form(objectForm),
-                    //     children
-                    // ) : 
-                    (
-                        // <FormTypeOfPayment
-                        //     open={openEdit}
-                        //     take={take}
-                        //     skip={skip}
-                        //     TypeOfPayment={typeOfPayment}
-                        //     setOpen={setOpenEdit}
-                        // />
-                        <Flex bgcolor="white" column="column">
-                            <Flex bgcolor="white">
-                                <Table
-                                    columns={handleColumns()}
-                                    data={objects}
-                                    handleEdit={handleFormEdit}
-                                    handleDelete={handleConfirmDelete}
-                                ></Table>
-                                {filter ? (
-                                    <Filter
-                                        handleSave={fetchFiltered}
-                                        handleResetFilter={handleResetFilter}
-                                        open={filter}
-                                        setOpen={setFilter}
-                                    >
-                                        {/* <Flex bgcolor="white">
+                    (form(objectForm), children)
+                ) : (
+                    <Flex bgcolor="white" column="column">
+                        <Flex bgcolor="white">
+                            <Table
+                                columns={handleColumns()}
+                                data={objects}
+                                handleEdit={handleFormEdit}
+                                handleDelete={handleConfirmDelete}
+                            ></Table>
+                            {filter ? (
+                                <Filter
+                                    handleSave={fetchFiltered}
+                                    handleResetFilter={handleResetFilter}
+                                    open={filter}
+                                    setOpen={setFilter}
+                                >
+                                    {childrenFilter}
+                                    {/* <Flex bgcolor="white">
                             <span>
                                 Pagamenti alla fine del mese
                             </span>
@@ -293,18 +294,19 @@ const TableLayout = ({
                                 No
                             </Li>
                         </Flex> */}
-                                    </Filter>
-                                ) : null}
-                            </Flex>
-                            <Paginate
-                                handlePagination={handlePagination}
-                                skip={skip}
-                                take={take}
-                                totalElement={totalElement}
-                                currentPage={currentPage}
-                                setCurrentPage={setCurrentPage} />
+                                </Filter>
+                            ) : null}
                         </Flex>
-                    )}
+                        <Paginate
+                            handlePagination={handlePagination}
+                            skip={skip}
+                            take={take}
+                            totalElement={totalElement}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
+                    </Flex>
+                )}
                 <ModalConfirm
                     open={openDelete}
                     objectName={String(
