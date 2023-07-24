@@ -15,29 +15,34 @@ import { QueryParams } from '../../../utils/models'
 import { TypeOfPayment } from '../../../store/typeOfPayments'
 
 interface Props {
+    lablel:string
     totalElement: number //getPaginations  useSelector(getPaginations)
     objects: TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
-    handleColumns: () => void
-    fetch: ({}) => void
-
-    form: (item: any) => void
+    elementFilter:boolean | string | undefined
     children: React.ReactNode
     childrenFilter: React.ReactNode
     open: boolean
+    handleColumns: () => void
+    fetchElement: ({}) => void
+    form: (item: any) => void
     setOpen: (item: boolean) => void
     deleteFunction: (item: any) => void
+    setElementFilter:(item:boolean | string | undefined)=>void
 }
 const TableLayout = ({
+    lablel,
     totalElement,
     objects,
-    handleColumns,
-    fetch,
-    form,
+    elementFilter,
     children,
     childrenFilter,
     open = false,
+    handleColumns,
+    fetchElement,
+    form,
     setOpen,
     deleteFunction,
+    setElementFilter
 }: Props) => {
     const dispatch = useAppDispatch()
     const [openDelete, setOpenDelete] = useState(false)
@@ -45,7 +50,6 @@ const TableLayout = ({
     const [object, setObject] = useState<TypeOfPayment | User | Skill | null>(
         null
     )
-    const [elementFilter, setElementFilter] = useState<boolean | string>()
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [filter, setFilter] = useState(false)
     // const [coloredButton, setColoredButton] = useState(false)
@@ -57,7 +61,7 @@ const TableLayout = ({
     }
     useEffect(() => {
         dispatch(
-            fetch({
+            fetchElement({
                 skip: skip,
                 take: take,
             })
@@ -77,15 +81,15 @@ const TableLayout = ({
         setOpenDelete(true)
         setObject(object)
     }
-    const handleFilter = (element: boolean) => {
-        // setColoredButton(element ? true : false)
-        // setColoredButton2(element ? false : true)
-        setElementFilter(element)
-    }
+    // const handleFilter = (element: boolean) => {
+    //     // setColoredButton(element ? true : false)
+    //     // setColoredButton2(element ? false : true)
+    //     setElementFilter(element)
+    // }
     const handleCloseDelete = async () => {
         setOpenDelete(false)
         await dispatch(
-            fetch({
+            fetchElement({
                 skip: skip,
                 take: take,
             })
@@ -96,7 +100,7 @@ const TableLayout = ({
     }
     useEffect(() => {
         dispatch(
-            fetch({
+            fetchElement({
                 skip: skip,
                 take: take,
             })
@@ -107,28 +111,30 @@ const TableLayout = ({
     }
 
     const fetchFiltered = async () => {
-        await dispatch(
-            isUser(object)
-                ? null
-                : isSkill(object)
-                ? ((params.skillType = String(elementFilter)),
-                  fetch({
+            console.log(elementFilter)
+            // isUser(object)
+            //     ? null
+                // : isSkill(object)
+                // ? ((params.skillType = String(elementFilter)),
+                //   fetch({
+                //       skip: skip,
+                //       take: take,
+                //   }))
+                // isTypeOfPayments(object)
+                // ? ((params.hasEndOfMonth = Boolean(elementFilter)),
+                    await dispatch(fetchElement({
+                      hasEndOfMonth:elementFilter,
                       skip: skip,
                       take: take,
                   }))
-                : isTypeOfPayments(object)
-                ? ((params.hasEndOfMonth = Boolean(elementFilter)),
-                  fetch({
-                      skip: skip,
-                      take: take,
-                  }))
-                : null
-        )
+                // : null
+        
     }
     const handleResetFilter = async () => {
+        console.log(elementFilter)
         setElementFilter(undefined)
         await dispatch(
-            fetch({
+            fetchElement({
                 skip: skip,
                 take: take,
             })
@@ -210,7 +216,7 @@ const TableLayout = ({
                     fontSize="3xl"
                     display={open ? 'block' : 'none'}
                 >
-                    Aggiungi nuovo Tipo di Pagamento
+                    {lablel}
                 </Text>
                 <br />
                 {open ? (
@@ -232,68 +238,6 @@ const TableLayout = ({
                                     setOpen={setFilter}
                                 >
                                     {childrenFilter}
-                                    {/* <Flex bgcolor="white">
-                            <span>
-                                Pagamenti alla fine del mese
-                            </span>
-                        </Flex>
-                        <Flex bgcolor="white">
-                            <Li
-                                style={{
-                                    backgroundColor:
-                                        theme.colors.pink100,
-                                    display: open
-                                        ? 'none'
-                                        : 'block',
-                                    border: '0px',
-                                    padding: '10px',
-                                    width: '65px',
-                                    color: 'white',
-                                    textAlign: 'center',
-                                }}
-                                onClick={handleResetFilter}
-                            >
-                                Tutti
-                            </Li>
-                            <Li
-                                style={{
-                                    backgroundColor: coloredButton
-                                        ? theme.colors.purple
-                                        : theme.colors.pink100,
-                                    display: open
-                                        ? 'none'
-                                        : 'block',
-                                    border: '0px',
-                                    padding: '10px',
-                                    width: '65px',
-                                    color: 'white',
-                                    textAlign: 'center',
-                                }}
-                                onClick={() => handleFilter(true)}
-                            >
-                                Si
-                            </Li>
-                            <Li
-                                style={{
-                                    backgroundColor: coloredButton2
-                                        ? theme.colors.purple
-                                        : theme.colors.pink100,
-                                    display: open
-                                        ? 'none'
-                                        : 'block',
-                                    border: '0px',
-                                    padding: '10px',
-                                    width: '65px',
-                                    color: 'white',
-                                    textAlign: 'center',
-                                }}
-                                onClick={() => {
-                                    handleFilter(false)
-                                }}
-                            >
-                                No
-                            </Li>
-                        </Flex> */}
                                 </Filter>
                             ) : null}
                         </Flex>
