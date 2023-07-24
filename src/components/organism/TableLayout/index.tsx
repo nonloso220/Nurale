@@ -130,7 +130,6 @@ const TableLayout = ({
         setOpen,
         params,
     }
-    console.log(open)
     return (
         <Flex
             column="column"

@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../../../store'
 import { fetchTypeOfPayments } from '../../../../store/typeOfPayments/typeOfPayments'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schema } from '../validation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Flex, Modal } from '../../../atoms'
 import { Stack, Switch } from '@chakra-ui/react'
 import InputForm from '../../../molecules/InputForm'
@@ -54,20 +54,7 @@ const FormTypeOfPayment = ({
         setValue,
         reset,
     } = methods
-    useEffect(() => {
-        if (TypeOfPayment) {
-            setValue('name', TypeOfPayment.name)
-            setValue('daysToFirstPayment', TypeOfPayment.daysToFirstPayment)
-            setValue('daysBetweenPayments', TypeOfPayment.daysBetweenPayments)
-            setValue('numberOfPayments', TypeOfPayment.numberOfPayments)
-            setValue(
-                'movePaymentsToTheEndOfMonth',
-                TypeOfPayment.movePaymentsToTheEndOfMonth
-            )
-            setValue('daysOffsetPayments', TypeOfPayment.daysOffsetPayments)
-            setValue('note', TypeOfPayment.note)
-        } else null
-    }, [open])
+    
     const handleSave = async () => {
         setValue(
             'daysBetweenPayments',
@@ -125,7 +112,20 @@ const FormTypeOfPayment = ({
         }
         form(objectForm)
     }
-    
+    useEffect(() => {
+        if (TypeOfPayment) {
+            setValue('name', TypeOfPayment.name)
+            setValue('daysToFirstPayment', TypeOfPayment.daysToFirstPayment)
+            setValue('daysBetweenPayments', TypeOfPayment.daysBetweenPayments)
+            setValue('numberOfPayments', TypeOfPayment.numberOfPayments)
+            setValue(
+                'movePaymentsToTheEndOfMonth',
+                TypeOfPayment.movePaymentsToTheEndOfMonth
+            )
+            setValue('daysOffsetPayments', TypeOfPayment.daysOffsetPayments)
+            setValue('note', TypeOfPayment.note)
+        } else null
+    }, [open,TypeOfPayment])
     return (
         <Modal show={open} color="black">
             <Flex
