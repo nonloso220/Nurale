@@ -1,4 +1,5 @@
 export interface User{
+    includes(object: any): any;
     email:string
     password:string
 }

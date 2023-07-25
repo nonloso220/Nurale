@@ -119,8 +119,7 @@ const TypeOfPayments = () => {
                 skip={skip}
                 form={formObject}
                 TypeOfPayment={typeOfPayment}
-                setOpen={setOpen} />} 
-        />
+                setOpen={setOpen} />} typePage={'typeOfPayment'}        />
     )
     // const dispatch = useAppDispatch()
     // const [open, setOpen] = useState(false)

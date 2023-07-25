@@ -13,11 +13,13 @@ import ModalConfirm from '../../molecules/ModalConfirm'
 import { Text } from '@chakra-ui/react'
 import { QueryParams } from '../../../utils/models'
 import { TypeOfPayment } from '../../../store/typeOfPayments'
+import { typePage } from '../../../utils/costants'
 
 interface Props {
     lablel:string
     totalElement: number //getPaginations  useSelector(getPaginations)
     objects: TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
+    typePage:typePage
     elementFilter:boolean | string | undefined
     children: React.ReactNode
     childrenFilter: React.ReactNode
@@ -37,6 +39,7 @@ const TableLayout = ({
     children,
     childrenFilter,
     open = false,
+    typePage,
     handleColumns,
     fetchElement,
     form,
@@ -109,26 +112,26 @@ const TableLayout = ({
     const handlePagination = (page: number) => {
         setSkip(page)
     }
-
     const fetchFiltered = async () => {
-            console.log(elementFilter)
-            // isUser(object)
-            //     ? null
-                // : isSkill(object)
-                // ? ((params.skillType = String(elementFilter)),
-                //   fetch({
-                //       skip: skip,
-                //       take: take,
-                //   }))
-                // isTypeOfPayments(object)
-                // ? ((params.hasEndOfMonth = Boolean(elementFilter)),
-                    await dispatch(fetchElement({
-                      hasEndOfMonth:elementFilter,
-                      skip: skip,
-                      take: take,
-                  }))
-                // : null
-        
+        switch(typePage){
+            case 'user':
+                console.log('null1')
+                break
+            case 'skill':
+                await dispatch(fetchElement({
+                    skillType:elementFilter,
+                    skip: skip,
+                    take: take,
+                }))
+                break
+            case 'typeOfPayment':
+                await dispatch(fetchElement({
+                    hasEndOfMonth:elementFilter,
+                    skip: skip,
+                    take: take,
+                }))
+                break
+        }
     }
     const handleResetFilter = async () => {
         console.log(elementFilter)
@@ -140,15 +143,7 @@ const TableLayout = ({
             })
         )
     }
-    function isUser(object: any): object is User {
-        return object
-    }
-    function isSkill(object: any): object is Skill {
-        return object
-    }
-    function isTypeOfPayments(object: any): object is TypeOfPayment {
-        return object
-    }
+    
     const objectForm: any = {
         object,
         open,
@@ -254,7 +249,7 @@ const TableLayout = ({
                 <ModalConfirm
                     open={openDelete}
                     objectName={String(
-                        isUser(object) ? object.email : object?.name
+                        // isUser(object) ? object?.email : object?.name
                     )}
                     handleClose={handleCloseDelete}
                     handleDelete={handleDelete}
