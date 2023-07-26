@@ -14,12 +14,13 @@ import { Text } from '@chakra-ui/react'
 import { QueryParams } from '../../../utils/models'
 import { TypeOfPayment } from '../../../store/typeOfPayments'
 import { typePage } from '../../../utils/costants'
+import { Customer } from '../../../store/customers'
 
 interface Props {
     labelNavbar: string
     lablel: string
     totalElement: number //getPaginations  useSelector(getPaginations)
-    objects: TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
+    objects: Customer[]| TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
     typePage: typePage
     elementFilter: boolean | string | undefined
     children: React.ReactNode

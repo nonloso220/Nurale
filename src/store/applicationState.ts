@@ -3,6 +3,7 @@ import { userReducer, usersReducer } from "./users";
 import { skillReduxer, skillsReducer } from "./skills";
 import { authReducer } from "./auth";
 import { typeOfPaymentReducer, typeOfPaymentsReducer } from "./typeOfPayments";
+import { customerReducer, customersReducer } from "./customers";
 
 const rootReducer = combineReducers(
 {
@@ -12,6 +13,8 @@ const rootReducer = combineReducers(
         skills:skillsReducer.reducer,
         skill:skillReduxer.reducer,
         typeOfPayments:typeOfPaymentsReducer.reducer,
-        typeOfPayment:typeOfPaymentReducer.reducer
+        typeOfPayment:typeOfPaymentReducer.reducer,
+        customers:customersReducer.reducer,
+        customer:customerReducer.reducer
 })
 export default rootReducer

@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import {
-    TypeOfPayment,
     deleteTypeOfPayment,
     fetchTypeOfPayments,
     getPaginations,
-    getTypeOfPayments,
 } from '../../../store/typeOfPayments'
 import TableLayout from '../TableLayout'
 // import FormTypeOfPayment from './form'
@@ -13,11 +11,12 @@ import { useSelector } from 'react-redux'
 import { Flex } from '../..'
 import Li from '../../atoms/Li'
 import { theme } from '../../../theme'
+import { Customer, getCustomers } from '../../../store/customers'
 
-const TypeOfPayments = () => {
+const Costumers = () => {
     const totalElement = useSelector(getPaginations)
-    const typeOfPayments = useSelector(getTypeOfPayments)
-    const [typeOfPayment, setTypeOfPayment] = useState<TypeOfPayment | null>(
+    const customers = useSelector(getCustomers)
+    const [customer, setCustomer] = useState<Customer | null>(
         null
     )
     const [open, setOpen] = useState<boolean>(false)
@@ -25,7 +24,7 @@ const TypeOfPayments = () => {
     const [take, setTake] = useState<number>(0)
     const [elementFilter, setElementFilter] = useState<boolean | string>()
     const formObject = (Object: any) => {
-        setTypeOfPayment(Object.object)
+        setCustomer(Object.object)
         setSkip(Object.params.skip)
         setTake(Object.params.take)
         setOpen(Object.open)
@@ -43,7 +42,7 @@ const TypeOfPayments = () => {
             labelNavbar="Tipi di pagamento"
             lablel="Aggiungi nuovo Tipo di Pagamento"
             totalElement={totalElement}
-            objects={typeOfPayments}
+            objects={customers}
             handleColumns={handleColumns}
             fetchElement={fetchTypeOfPayments}
             form={formObject}
@@ -54,7 +53,7 @@ const TypeOfPayments = () => {
             elementFilter={elementFilter}
             childrenFilter={
                 <>
-                    <Flex bgcolor="white">
+                    {/* <Flex bgcolor="white">
                         <span>Pagamenti alla fine del mese</span>
                     </Flex>
                     <Flex bgcolor="white">
@@ -107,22 +106,22 @@ const TypeOfPayments = () => {
                         >
                             No
                         </Li>
-                    </Flex>
+                    </Flex> */}
                 </>
             }
             children={
                 <div></div>
-                // <FormTypeOfPayment
+                // <FormCustomer
                 //     open={open}
                 //     take={take}
                 //     skip={skip}
                 //     form={formObject}
-                //     TypeOfPayment={typeOfPayment}
+                //     customer={customer}
                 //     setOpen={setOpen}
-                // />
+                // /> 
             }
-            typePage={'typeOfPayment'}
+            typePage={'customer'}
         />
     )
 }
-export default TypeOfPayments
+export default Costumers

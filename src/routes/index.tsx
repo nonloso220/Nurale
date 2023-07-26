@@ -11,7 +11,7 @@ import Commesse from '../components/pages/commesse'
 import Ordini from '../components/pages/ordini'
 import Skills from '../components/pages/skills'
 import TypeOfPayments from '../components/pages/TypeOfPayments'
-import Costumers from '../components/organism/Costumers'
+import Costumers from '../components/organism/Customers'
 
 const AppRoutes = () => {
     return (

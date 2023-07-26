@@ -1,4 +1,4 @@
-import Costumers from '../../organism/Costumers'
+import Costumers from '../../organism/Customers'
 
 const costumers = () => {
     return <Costumers />
