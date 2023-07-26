@@ -16,11 +16,11 @@ import { TypeOfPayment } from '../../../store/typeOfPayments'
 import { typePage } from '../../../utils/costants'
 
 interface Props {
-    lablel:string
+    lablel: string
     totalElement: number //getPaginations  useSelector(getPaginations)
     objects: TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
-    typePage:typePage
-    elementFilter:boolean | string | undefined
+    typePage: typePage
+    elementFilter: boolean | string | undefined
     children: React.ReactNode
     childrenFilter: React.ReactNode
     open: boolean
@@ -29,7 +29,7 @@ interface Props {
     form: (item: any) => void
     setOpen: (item: boolean) => void
     deleteFunction: (item: any) => void
-    setElementFilter:(item:boolean | string | undefined)=>void
+    setElementFilter: (item: boolean | string | undefined) => void
 }
 const TableLayout = ({
     lablel,
@@ -45,7 +45,7 @@ const TableLayout = ({
     form,
     setOpen,
     deleteFunction,
-    setElementFilter
+    setElementFilter,
 }: Props) => {
     const dispatch = useAppDispatch()
     const [openDelete, setOpenDelete] = useState(false)
@@ -72,6 +72,7 @@ const TableLayout = ({
     }, [])
     const handleClick = () => {
         setOpen(!open)
+        setObject(null)
     }
     const handleClickFilter = () => {
         setFilter(!filter)
@@ -84,11 +85,6 @@ const TableLayout = ({
         setOpenDelete(true)
         setObject(object)
     }
-    // const handleFilter = (element: boolean) => {
-    //     // setColoredButton(element ? true : false)
-    //     // setColoredButton2(element ? false : true)
-    //     setElementFilter(element)
-    // }
     const handleCloseDelete = async () => {
         setOpenDelete(false)
         await dispatch(
@@ -113,25 +109,40 @@ const TableLayout = ({
         setSkip(page)
     }
     const fetchFiltered = async () => {
-        switch(typePage){
+        switch (typePage) {
             case 'user':
                 console.log('null1')
                 break
             case 'skill':
-                await dispatch(fetchElement({
-                    skillType:elementFilter,
-                    skip: skip,
-                    take: take,
-                }))
+                await dispatch(
+                    fetchElement({
+                        skillType: elementFilter,
+                        skip: skip,
+                        take: take,
+                    })
+                )
                 break
             case 'typeOfPayment':
-                await dispatch(fetchElement({
-                    hasEndOfMonth:elementFilter,
-                    skip: skip,
-                    take: take,
-                }))
+                await dispatch(
+                    fetchElement({
+                        hasEndOfMonth: elementFilter,
+                        skip: skip,
+                        take: take,
+                    })
+                )
                 break
         }
+    }
+    const deleteName = () => {
+        if (object) {
+            if ('email' in object) {
+                return String(object?.email)
+            }
+            if ('name' in object) {
+                return String(object?.name)
+            }
+        }
+        return ''
     }
     const handleResetFilter = async () => {
         console.log(elementFilter)
@@ -143,7 +154,7 @@ const TableLayout = ({
             })
         )
     }
-    
+
     const objectForm: any = {
         object,
         open,
@@ -248,9 +259,7 @@ const TableLayout = ({
                 )}
                 <ModalConfirm
                     open={openDelete}
-                    objectName={String(
-                        // isUser(object) ? object?.email : object?.name
-                    )}
+                    objectName={deleteName()}
                     handleClose={handleCloseDelete}
                     handleDelete={handleDelete}
                 ></ModalConfirm>

@@ -23,7 +23,7 @@ interface Props {
     take: number
     skip: number
     setOpen: (item: boolean) => void
-    form:(item:any)=>void 
+    form: (item: any) => void
 }
 const FormTypeOfPayment = ({
     open,
@@ -54,7 +54,7 @@ const FormTypeOfPayment = ({
         setValue,
         reset,
     } = methods
-    
+
     const handleSave = async () => {
         setValue(
             'daysBetweenPayments',
@@ -103,17 +103,17 @@ const FormTypeOfPayment = ({
     const handleClick = () => {
         setOpen(!open)
         open ? null : reset(defaultValues)
-        const objectForm: any={
-            TypeOfPayment,
+        const objectForm: any = {
             open,
             skip,
             take,
-            setOpen
+            setOpen,
         }
         form(objectForm)
     }
     useEffect(() => {
         if (TypeOfPayment) {
+            console.log(TypeOfPayment)
             setValue('name', TypeOfPayment.name)
             setValue('daysToFirstPayment', TypeOfPayment.daysToFirstPayment)
             setValue('daysBetweenPayments', TypeOfPayment.daysBetweenPayments)
@@ -125,7 +125,7 @@ const FormTypeOfPayment = ({
             setValue('daysOffsetPayments', TypeOfPayment.daysOffsetPayments)
             setValue('note', TypeOfPayment.note)
         } else null
-    }, [open,TypeOfPayment])
+    }, [open, TypeOfPayment])
     return (
         <Modal show={open} color="black">
             <Flex

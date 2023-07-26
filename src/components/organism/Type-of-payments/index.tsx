@@ -37,16 +37,10 @@ const TypeOfPayments = () => {
     }
     const handleResetFilter = async () => {
         setElementFilter(undefined)
-        // await dispatch(
-        //     fetch({
-        //         skip: skip,
-        //         take: take,
-        //     })
-        // )
     }
     return (
         <TableLayout
-            lablel='Aggiungi nuovo Tipo di Pagamento'
+            lablel="Aggiungi nuovo Tipo di Pagamento"
             totalElement={totalElement}
             objects={typeOfPayments}
             handleColumns={handleColumns}
@@ -57,69 +51,76 @@ const TypeOfPayments = () => {
             deleteFunction={deleteTypeOfPayment}
             setElementFilter={setElementFilter}
             elementFilter={elementFilter}
-            childrenFilter={<>
-                <Flex bgcolor="white">
-                    <span>Pagamenti alla fine del mese</span>
-                </Flex>
-                <Flex bgcolor="white">
-                    <Li
-                        style={{
-                            backgroundColor: theme.colors.pink100,
-                            display: open ? 'none' : 'block',
-                            border: '0px',
-                            padding: '10px',
-                            width: '65px',
-                            color: 'white',
-                            textAlign: 'center',
-                        }}
-                        onClick={handleResetFilter}
-                    >
-                        Tutti
-                    </Li>
-                    <Li
-                        //  coloredButton
-                        //  ? theme.colors.purple
-                        style={{
-                            backgroundColor: theme.colors.pink100,
-                            display: open ? 'none' : 'block',
-                            border: '0px',
-                            padding: '10px',
-                            width: '65px',
-                            color: 'white',
-                            textAlign: 'center',
-                        }}
-                        onClick={() => handleFilter(true)}
-                    >
-                        Si
-                    </Li>
-                    <Li
-                        // coloredButton2
-                        // ? theme.colors.purple
-                        // :
-                        style={{
-                            backgroundColor: theme.colors.pink100,
-                            display: open ? 'none' : 'block',
-                            border: '0px',
-                            padding: '10px',
-                            width: '65px',
-                            color: 'white',
-                            textAlign: 'center',
-                        }}
-                        onClick={() => {
-                            handleFilter(false)
-                        } }
-                    >
-                        No
-                    </Li>
-                </Flex>
-            </>}
-            children={<FormTypeOfPayment
-                open={open}
-                take={take}
-                skip={skip}
-                form={formObject}
-                TypeOfPayment={typeOfPayment}
-                setOpen={setOpen} />} typePage={'typeOfPayment'}        />
+            childrenFilter={
+                <>
+                    <Flex bgcolor="white">
+                        <span>Pagamenti alla fine del mese</span>
+                    </Flex>
+                    <Flex bgcolor="white">
+                        <Li
+                            style={{
+                                backgroundColor: theme.colors.pink100,
+                                display: open ? 'none' : 'block',
+                                border: '0px',
+                                padding: '10px',
+                                width: '65px',
+                                color: 'white',
+                                textAlign: 'center',
+                            }}
+                            onClick={handleResetFilter}
+                        >
+                            Tutti
+                        </Li>
+                        <Li
+                            //  coloredButton
+                            //  ? theme.colors.purple
+                            style={{
+                                backgroundColor: theme.colors.pink100,
+                                display: open ? 'none' : 'block',
+                                border: '0px',
+                                padding: '10px',
+                                width: '65px',
+                                color: 'white',
+                                textAlign: 'center',
+                            }}
+                            onClick={() => handleFilter(true)}
+                        >
+                            Si
+                        </Li>
+                        <Li
+                            // coloredButton2
+                            // ? theme.colors.purple
+                            // :
+                            style={{
+                                backgroundColor: theme.colors.pink100,
+                                display: open ? 'none' : 'block',
+                                border: '0px',
+                                padding: '10px',
+                                width: '65px',
+                                color: 'white',
+                                textAlign: 'center',
+                            }}
+                            onClick={() => {
+                                handleFilter(false)
+                            }}
+                        >
+                            No
+                        </Li>
+                    </Flex>
+                </>
+            }
+            children={
+                <FormTypeOfPayment
+                    open={open}
+                    take={take}
+                    skip={skip}
+                    form={formObject}
+                    TypeOfPayment={typeOfPayment}
+                    setOpen={setOpen}
+                />
+            }
+            typePage={'typeOfPayment'}
+        />
     )
     // const dispatch = useAppDispatch()
     // const [open, setOpen] = useState(false)
