@@ -40,6 +40,7 @@ const TypeOfPayments = () => {
     }
     return (
         <TableLayout
+            labelNavbar="Tipi di pagamento"
             lablel="Aggiungi nuovo Tipo di Pagamento"
             totalElement={totalElement}
             objects={typeOfPayments}

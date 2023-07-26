@@ -6,15 +6,31 @@ export const handleColumns = () => {
     let COLUMNS: Column[] = []
     return (COLUMNS = [
         {
-            name: 'Nome',
+            name: 'Codice',
             id: 'name',
         },
         {
-            name: 'Tipo di skill',
+            name: 'Descrizione',
             id: 'skillType',
         },
         {
-            name: 'Note',
+            name: 'Cliente',
+            id: 'note',
+        },
+        {
+            name: 'Data inizio',
+            id: 'name',
+        },
+        {
+            name: 'Data Fine',
+            id: 'skillType',
+        },
+        {
+            name: 'Tipo di Commessa',
+            id: 'note',
+        },
+        {
+            name: 'Stato',
             id: 'note',
         },
     ])

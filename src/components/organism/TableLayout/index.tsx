@@ -16,6 +16,7 @@ import { TypeOfPayment } from '../../../store/typeOfPayments'
 import { typePage } from '../../../utils/costants'
 
 interface Props {
+    labelNavbar: string
     lablel: string
     totalElement: number //getPaginations  useSelector(getPaginations)
     objects: TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
@@ -32,6 +33,7 @@ interface Props {
     setElementFilter: (item: boolean | string | undefined) => void
 }
 const TableLayout = ({
+    labelNavbar,
     lablel,
     totalElement,
     objects,
@@ -170,7 +172,7 @@ const TableLayout = ({
             height={100}
             style={{ overflow: 'auto' }}
         >
-            <Navbar label="Tipi di pagamento" />
+            <Navbar label={labelNavbar} />
             <div
                 style={{
                     paddingLeft: '30px',
