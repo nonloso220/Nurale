@@ -1,36 +1,21 @@
 import { useTranslation } from 'react-i18next'
 import { Column } from '../../../utils/costants'
+import Icons from '../../atoms/icons'
 
 export const handleColumns = () => {
     const { t } = useTranslation()
     let COLUMNS: Column[] = []
     return (COLUMNS = [
         {
-            name: 'Codice',
+            name: 'Nome',
             id: 'name',
         },
         {
-            name: 'Descrizione',
-            id: 'skillType',
+            name: 'Tipo di pagamento',
+            id: 'typeOfPayment.name',
         },
         {
-            name: 'Cliente',
-            id: 'note',
-        },
-        {
-            name: 'Data inizio',
-            id: 'name',
-        },
-        {
-            name: 'Data Fine',
-            id: 'skillType',
-        },
-        {
-            name: 'Tipo di Commessa',
-            id: 'note',
-        },
-        {
-            name: 'Stato',
+            name: 'Note',
             id: 'note',
         },
     ])

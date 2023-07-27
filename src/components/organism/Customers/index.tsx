@@ -1,24 +1,24 @@
 import { useState } from 'react'
-import {
-    deleteTypeOfPayment,
-    fetchTypeOfPayments,
-    getPaginations,
-} from '../../../store/typeOfPayments'
 import TableLayout from '../TableLayout'
-// import FormTypeOfPayment from './form'
 import { handleColumns } from './columns'
 import { useSelector } from 'react-redux'
 import { Flex } from '../..'
 import Li from '../../atoms/Li'
 import { theme } from '../../../theme'
-import { Customer, getCustomers } from '../../../store/customers'
+import FormTypeOfPayment from '../Type-of-payments/form'
+import {
+    Customer,
+    deleteCustomer,
+    fetchCustomers,
+    getCustomers,
+    getPaginations,
+} from '../../../store/customers'
+import FormCustomer from './form'
 
-const Costumers = () => {
+const Customers = () => {
     const totalElement = useSelector(getPaginations)
     const customers = useSelector(getCustomers)
-    const [customer, setCustomer] = useState<Customer | null>(
-        null
-    )
+    const [customer, setCustomer] = useState<Customer | null>(null)
     const [open, setOpen] = useState<boolean>(false)
     const [skip, setSkip] = useState<number>(0)
     const [take, setTake] = useState<number>(0)
@@ -44,11 +44,11 @@ const Costumers = () => {
             totalElement={totalElement}
             objects={customers}
             handleColumns={handleColumns}
-            fetchElement={fetchTypeOfPayments}
+            fetchElement={fetchCustomers}
             form={formObject}
             open={open}
             setOpen={setOpen}
-            deleteFunction={deleteTypeOfPayment}
+            deleteFunction={deleteCustomer}
             setElementFilter={setElementFilter}
             elementFilter={elementFilter}
             childrenFilter={
@@ -110,18 +110,17 @@ const Costumers = () => {
                 </>
             }
             children={
-                <div></div>
-                // <FormCustomer
-                //     open={open}
-                //     take={take}
-                //     skip={skip}
-                //     form={formObject}
-                //     customer={customer}
-                //     setOpen={setOpen}
-                // /> 
+                <FormCustomer
+                    open={open}
+                    take={take}
+                    skip={skip}
+                    form={formObject}
+                    customer={customer}
+                    setOpen={setOpen}
+                />
             }
             typePage={'customer'}
         />
     )
 }
-export default Costumers
+export default Customers

@@ -12,11 +12,11 @@ import Li from '../../../atoms/Li'
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import TextElement from '../../../molecules/TextElement'
 import {
-    TypeOfPayment,
-    createTypeOfPayment,
-    updateTypeOfPayments,
-} from '../../../../store/typeOfPayments'
-import { Customer } from '../../../../store/customers'
+    Customer,
+    createCustomer,
+    fetchCustomers,
+    updateCustomer,
+} from '../../../../store/customers'
 
 interface Props {
     open: boolean
@@ -26,22 +26,15 @@ interface Props {
     setOpen: (item: boolean) => void
     form: (item: any) => void
 }
-const FormCustomer = ({
-    open,
-    customer,
-    skip,
-    take,
-    setOpen,
-    form,
-}: Props) => {
+const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
     const dispatch = useAppDispatch()
     const defaultValues = {
         name: '',
-        typeOfPaymentId:0,
+        typeOfPaymentId: 0,
         note: '',
-        typeOfPayment:{ id:0,name:''},
+        typeOfPayment: { id: 0, name: '' },
     }
-    const methods = useForm<TypeOfPayment>({
+    const methods = useForm<Customer>({
         defaultValues,
         resolver: zodResolver(schema),
     })
@@ -54,45 +47,38 @@ const FormCustomer = ({
     } = methods
 
     const handleSave = async () => {
-        setValue(
-            'daysBetweenPayments',
-            Number(getValues('daysBetweenPayments'))
-        )
-        setValue('daysOffsetPayments', Number(getValues('daysOffsetPayments')))
-        setValue('daysToFirstPayment', Number(getValues('daysToFirstPayment')))
-        setValue('numberOfPayments', Number(getValues('numberOfPayments')))
-        getValues('daysOffsetPayments')
-            ? null
-            : setValue('daysOffsetPayments', 0)
-        getValues('daysToFirstPayment')
-            ? null
-            : setValue('daysToFirstPayment', 0)
+        // setValue(
+        //     'daysBetweenPayments',
+        //     Number(getValues('daysBetweenPayments'))
+        // )
+        // setValue('daysOffsetPayments', Number(getValues('daysOffsetPayments')))
+        // setValue('daysToFirstPayment', Number(getValues('daysToFirstPayment')))
+        // setValue('numberOfPayments', Number(getValues('numberOfPayments')))
+        // getValues('daysOffsetPayments')
+        //     ? null
+        //     : setValue('daysOffsetPayments', 0)
+        // getValues('daysToFirstPayment')
+        //     ? null
+        //     : setValue('daysToFirstPayment', 0)
         const errors1 = await trigger()
         if (!errors1) {
             console.log(errors)
             return errors1
         }
-        const newTypeOfPayment = {
+        const newObject = {
             name: getValues('name'),
-            daysToFirstPayment: getValues('daysToFirstPayment'),
-            daysBetweenPayments: getValues('daysBetweenPayments'),
-            numberOfPayments: getValues('numberOfPayments'),
-            movePaymentsToTheEndOfMonth: getValues(
-                'movePaymentsToTheEndOfMonth'
-            ),
-            daysOffsetPayments: getValues('daysOffsetPayments'),
             note: getValues('note'),
-            id: TypeOfPayment?.id,
+            id: customer?.id,
         }
-        if (TypeOfPayment) {
-            await dispatch(updateTypeOfPayments(newTypeOfPayment))
+        if (customer) {
+            await dispatch(updateCustomer(newObject))
         } else {
-            await dispatch(createTypeOfPayment(newTypeOfPayment))
+            await dispatch(createCustomer(newObject))
         }
         await reset(defaultValues)
         await setOpen(false)
         await dispatch(
-            fetchTypeOfPayments({
+            fetchCustomers({
                 skip: skip,
                 take: take,
             })
@@ -110,20 +96,12 @@ const FormCustomer = ({
         form(objectForm)
     }
     useEffect(() => {
-        if (TypeOfPayment) {
-            console.log(TypeOfPayment)
-            setValue('name', TypeOfPayment.name)
-            setValue('daysToFirstPayment', TypeOfPayment.daysToFirstPayment)
-            setValue('daysBetweenPayments', TypeOfPayment.daysBetweenPayments)
-            setValue('numberOfPayments', TypeOfPayment.numberOfPayments)
-            setValue(
-                'movePaymentsToTheEndOfMonth',
-                TypeOfPayment.movePaymentsToTheEndOfMonth
-            )
-            setValue('daysOffsetPayments', TypeOfPayment.daysOffsetPayments)
-            setValue('note', TypeOfPayment.note)
+        if (customer) {
+            console.log(customer)
+            setValue('name', customer.name)
+            setValue('note', customer.note)
         } else null
-    }, [open, TypeOfPayment])
+    }, [open, customer])
     return (
         <Modal show={open} color="black">
             <Flex
@@ -136,30 +114,6 @@ const FormCustomer = ({
                 }}
                 column="column"
             >
-                <Flex bgcolor="white" column="column" style={{ width: '100%' }}>
-                    <FormProvider {...methods}>
-                        <Stack spacing={3}>
-                            <InputForm
-                                fontSize="16px"
-                                label="Nome"
-                                placeholder="Nome"
-                                fontWeight="500"
-                                name={'name'}
-                                action={'input'}
-                                type="text"
-                                style={{
-                                    width: '100%',
-                                    borderRadius: '11px',
-                                    borderColor: '#857DAC',
-                                    display: 'flex',
-                                }}
-                            />
-                            <div style={{ color: 'red' }}>
-                                {errors?.name?.message}
-                            </div>
-                        </Stack>
-                    </FormProvider>
-                </Flex>
                 <Flex bgcolor="white">
                     <Flex
                         bgcolor="white"
@@ -170,11 +124,12 @@ const FormCustomer = ({
                             <Stack spacing={3}>
                                 <InputForm
                                     fontSize="16px"
-                                    label="Giorni al primo pagamento"
-                                    placeholder="Giorni al primo pagamento"
+                                    label="Nome"
+                                    placeholder="Nome"
                                     fontWeight="500"
-                                    name={'daysToFirstPayment'}
+                                    name={'name'}
                                     action={'input'}
+                                    type="text"
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -183,24 +138,7 @@ const FormCustomer = ({
                                     }}
                                 />
                                 <div style={{ color: 'red' }}>
-                                    {errors?.daysToFirstPayment?.message}
-                                </div>
-                                <InputForm
-                                    fontSize="16px"
-                                    label="Numero di pagamenti"
-                                    placeholder="Numero di pagamenti"
-                                    fontWeight="500"
-                                    name={'numberOfPayments'}
-                                    action={'input'}
-                                    style={{
-                                        width: '100%',
-                                        borderRadius: '11px',
-                                        borderColor: '#857DAC',
-                                        display: 'flex',
-                                    }}
-                                />
-                                <div style={{ color: 'red' }}>
-                                    {errors?.numberOfPayments?.message}
+                                    {errors?.name?.message}
                                 </div>
                             </Stack>
                         </FormProvider>
@@ -217,11 +155,23 @@ const FormCustomer = ({
                             <Stack spacing={3}>
                                 <InputForm
                                     fontSize="16px"
-                                    label="Giorni tra i pagamenti"
+                                    label="Tipo di skill"
                                     fontWeight="500"
-                                    name={'daysBetweenPayments'}
-                                    action={'input'}
-                                    placeholder={'Giorni tra i pagamenti'}
+                                    name={'skillType'}
+                                    action={'select'}
+                                    type="text"
+                                    placeholder={''}
+                                    defaultElement={
+                                        // skill?getValues('skillType'):' '
+                                        ' '
+                                    }
+                                    selectElements={[
+                                        'Frontend',
+                                        'Backend',
+                                        'Designer',
+                                        'Administrator',
+                                        'Other',
+                                    ]}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -230,24 +180,7 @@ const FormCustomer = ({
                                     }}
                                 />
                                 <div style={{ color: 'red' }}>
-                                    {errors?.daysBetweenPayments?.message}
-                                </div>
-                                <InputForm
-                                    fontSize="16px"
-                                    label="Giorni scostamento pagamento"
-                                    fontWeight="500"
-                                    name={'daysOffsetPayments'}
-                                    action={'input'}
-                                    placeholder={'Giorni scostamento pagamento'}
-                                    style={{
-                                        width: '100%',
-                                        borderRadius: '11px',
-                                        borderColor: '#857DAC',
-                                        display: 'flex',
-                                    }}
-                                />
-                                <div style={{ color: 'red' }}>
-                                    {errors?.daysOffsetPayments?.message}
+                                    {/* {errors?.skillType?.message} */}
                                 </div>
                             </Stack>
                         </FormProvider>
@@ -276,20 +209,6 @@ const FormCustomer = ({
                             </div>
                         </Stack>
                     </FormProvider>
-                </Flex>
-                <Flex bgcolor="white" column="column">
-                    <TextElement
-                        paddingIcon="0"
-                        label={'Spostare i pagamenti alla fine del mese'}
-                        paddingBottom="6px"
-                    />
-                    <Stack
-                        align="center"
-                        direction="row"
-                        style={{ paddingRight: '22px' }}
-                    >
-                        <Switch size="md" />
-                    </Stack>
                 </Flex>
                 <Flex
                     bgcolor="white"
@@ -338,4 +257,4 @@ const FormCustomer = ({
         </Modal>
     )
 }
-export default FormTypeOfPayment
+export default FormCustomer

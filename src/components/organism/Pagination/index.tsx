@@ -90,8 +90,10 @@ const Paginate = ({
                     <Flex
                         style={{
                             backgroundColor: 'disabled',
-                            width: '2.7rem',
-                            height: '2.5rem',
+                            width: '2rem',
+                            height: '2rem',
+                            paddingTop: '7px',
+                            paddingLeft: '9px',
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: '0.5rem',
@@ -110,8 +112,10 @@ const Paginate = ({
                     <Flex
                         style={{
                             backgroundColor: 'disabled',
-                            width: '2.7rem',
-                            height: '2.5rem',
+                            width: '2rem',
+                            height: '2rem',
+                            paddingTop: '7px',
+                            paddingLeft: '9px',
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: '0.5rem',
@@ -130,8 +134,10 @@ const Paginate = ({
                     <Flex
                         style={{
                             backgroundColor: 'secondary',
-                            width: '2.7rem',
-                            height: '2.5rem',
+                            width: '2rem',
+                            height: '2rem',
+                            paddingTop: '7px',
+                            paddingLeft: '9px',
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: '0.5rem',
@@ -157,8 +163,10 @@ const Paginate = ({
                     <Flex
                         style={{
                             backgroundColor: 'disabled',
-                            width: '2.7rem',
-                            height: '2.5rem',
+                            width: '2rem',
+                            height: '2rem',
+                            paddingTop: '7px',
+                            paddingLeft: '9px',
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: '0.5rem',
@@ -172,8 +180,10 @@ const Paginate = ({
                     <Flex
                         style={{
                             backgroundColor: 'secondary',
-                            width: '2.7rem',
-                            height: '2.5rem',
+                            width: '2rem',
+                            height: '2rem',
+                            paddingTop: '7px',
+                            paddingLeft: '9px',
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: '0.5rem',
