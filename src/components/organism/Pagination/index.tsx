@@ -26,7 +26,9 @@ const Paginate = ({
     const [pages, setPages] = useState<number>()
 
     useEffect(() => {
-        setPages(Math.floor(totalElement / take) + 1)
+        totalElement===take?
+        (setPages(Math.floor(totalElement / take)))
+        :(setPages(Math.floor(totalElement / take) + 1))
     }, [totalElement])
     // const calcoloPages = async () => {
     //     await

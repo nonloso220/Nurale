@@ -15,12 +15,13 @@ import { QueryParams } from '../../../utils/models'
 import { TypeOfPayment } from '../../../store/typeOfPayments'
 import { typePage } from '../../../utils/costants'
 import { Customer } from '../../../store/customers'
+import { Supplier } from '../../../store/suppliers'
 
 interface Props {
     labelNavbar: string
     lablel: string
     totalElement: number //getPaginations  useSelector(getPaginations)
-    objects: Customer[] | TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
+    objects: Supplier[]| Customer[] | TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
     typePage: typePage
     elementFilter: boolean | string | undefined
     children: React.ReactNode

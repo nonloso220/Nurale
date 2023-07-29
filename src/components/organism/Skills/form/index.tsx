@@ -48,6 +48,7 @@ const FormSkill = ({ open, skill, skip, take, setOpen }: Props) => {
             name: getValues('name'),
             note: getValues('note'),
             skillType: getValues('skillType'),
+            id:skill?.id
         }
         if(skill){
             await dispatch(updateSkill(newSkill))

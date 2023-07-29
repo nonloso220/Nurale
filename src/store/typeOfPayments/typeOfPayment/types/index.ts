@@ -8,3 +8,9 @@ export interface TypeOfPayment{
     note: string
     id?: number | null
 }
+export interface initialStateTypeOfPayment
+{
+    data: TypeOfPayment | null,
+    loading: boolean,
+    error: string | null
+}

@@ -1,11 +1,10 @@
 import { FormProvider, useForm } from 'react-hook-form'
 import { useAppDispatch } from '../../../../store'
-import { fetchTypeOfPayments } from '../../../../store/typeOfPayments/typeOfPayments'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schema } from '../validation'
 import { useEffect } from 'react'
 import { Flex, Modal } from '../../../atoms'
-import { Stack, Switch } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
 import InputForm from '../../../molecules/InputForm'
 import { theme } from '../../../../theme'
 import Li from '../../../atoms/Li'
@@ -17,6 +16,8 @@ import {
     fetchCustomers,
     updateCustomer,
 } from '../../../../store/customers'
+import { useSelector } from 'react-redux'
+import { fetchTypeOfPayments, getTypeOfPayments } from '../../../../store/typeOfPayments'
 
 interface Props {
     open: boolean
@@ -28,10 +29,12 @@ interface Props {
 }
 const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
     const dispatch = useAppDispatch()
+    const typeOfPaymentsData=useSelector(getTypeOfPayments)
     const defaultValues = {
         name: '',
         typeOfPaymentId: 0,
         note: '',
+        id:0,
         typeOfPayment: { id: 0, name: '' },
     }
     const methods = useForm<Customer>({
@@ -47,32 +50,36 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
     } = methods
 
     const handleSave = async () => {
-        // setValue(
-        //     'daysBetweenPayments',
-        //     Number(getValues('daysBetweenPayments'))
-        // )
-        // setValue('daysOffsetPayments', Number(getValues('daysOffsetPayments')))
-        // setValue('daysToFirstPayment', Number(getValues('daysToFirstPayment')))
-        // setValue('numberOfPayments', Number(getValues('numberOfPayments')))
-        // getValues('daysOffsetPayments')
-        //     ? null
-        //     : setValue('daysOffsetPayments', 0)
-        // getValues('daysToFirstPayment')
-        //     ? null
-        //     : setValue('daysToFirstPayment', 0)
         const errors1 = await trigger()
         if (!errors1) {
             console.log(errors)
             return errors1
         }
         const newObject = {
-            name: getValues('name'),
-            note: getValues('note'),
-            id: customer?.id,
+            name: getValues('name'),//ok
+            note: getValues('note'),//ok
+            typeOfPaymentId:customer?.typeOfPaymentId,//undefined
+            id:customer?.id,
+            typeOfPayment:{
+                id:Number(typeOfPaymentsData.map(
+                (data)=>{
+                        if(data.name===String(getValues('typeOfPayment.name'))){
+                            console.log('data return:')
+                            console.log(data)
+                            return data.id//nan
+                        }
+                        console.log('data:')
+                        console.log(data)
+                })),
+            name:getValues('typeOfPayment.name')},//ok
         }
         if (customer) {
+            console.log('update object:')
+            console.log(newObject)
             await dispatch(updateCustomer(newObject))
         } else {
+            console.log('create object:')
+            console.log(newObject)
             await dispatch(createCustomer(newObject))
         }
         await reset(defaultValues)
@@ -83,6 +90,13 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
                 take: take,
             })
         )
+        const objectForm: any = {
+            open,
+            skip,
+            take,
+            setOpen,
+        }
+        form(objectForm)
     }
     const handleClick = () => {
         setOpen(!open)
@@ -96,12 +110,24 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
         form(objectForm)
     }
     useEffect(() => {
+        dispatch(
+            fetchTypeOfPayments()
+        )    
         if (customer) {
+            console.log('customer useEffect prima: ')
             console.log(customer)
             setValue('name', customer.name)
             setValue('note', customer.note)
+            setValue('typeOfPaymentId',customer.typeOfPaymentId)
+            setValue('typeOfPayment.name',customer.typeOfPayment.name)
+            setValue('typeOfPayment.id',customer.typeOfPayment.id)
         } else null
+        console.log('customer useEffect dopo: ')
+        console.log(customer)
     }, [open, customer])
+    const extractTypeOfPaymentId=()=>{
+        
+    }
     return (
         <Modal show={open} color="black">
             <Flex
@@ -155,23 +181,16 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
                             <Stack spacing={3}>
                                 <InputForm
                                     fontSize="16px"
-                                    label="Tipo di skill"
+                                    label="Tipo di pagamento"
                                     fontWeight="500"
-                                    name={'skillType'}
+                                    name={'typeOfPayment.name'}
                                     action={'select'}
                                     type="text"
                                     placeholder={''}
                                     defaultElement={
-                                        // skill?getValues('skillType'):' '
-                                        ' '
+                                        customer?getValues('typeOfPayment.name'):' '
                                     }
-                                    selectElements={[
-                                        'Frontend',
-                                        'Backend',
-                                        'Designer',
-                                        'Administrator',
-                                        'Other',
-                                    ]}
+                                    selectElements={typeOfPaymentsData.map((data)=>data.name)}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -180,7 +199,7 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
                                     }}
                                 />
                                 <div style={{ color: 'red' }}>
-                                    {/* {errors?.skillType?.message} */}
+                                    {errors?.typeOfPayment?.message}
                                 </div>
                             </Stack>
                         </FormProvider>
@@ -249,7 +268,7 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
                     >
                         <CheckIcon />
                         <span style={{ fontWeight: 'bold' }}>
-                            &nbsp; Conferma
+                            &nbsp; {customer? 'salva':'Conferma'}
                         </span>
                     </Li>
                 </Flex>

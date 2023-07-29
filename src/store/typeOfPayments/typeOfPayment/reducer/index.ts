@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import { fetchTypeOfPayments} from "../actions";
-import { initialStateTypeOfPayments } from '../../typeOfPayments';
 import { createTypeOfPayment, deleteTypeOfPayment, updateTypeOfPayments } from "../actions";
+import { initialStateTypeOfPayment } from "../types";
 
-const initialState : initialStateTypeOfPayments =
+const initialState : initialStateTypeOfPayment =
 {
-    data:[],
+    data:null,
     loading: false,
     error: null,
-    totalCount:0,
 };
 
 export const typeOfPaymentReducer = createSlice(

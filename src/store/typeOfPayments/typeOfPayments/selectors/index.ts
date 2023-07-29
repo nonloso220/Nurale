@@ -1,24 +1,24 @@
 import { createSelector } from "reselect";
 import { RootState } from "../../..";
 
-export const getUsersState = (state : RootState) => state.typeOfPayments;
+export const getTypeOfPaymentsState = (state : RootState) => state.typeOfPayments;
 
 export const getTypeOfPayments = createSelector(
-    getUsersState,
+    getTypeOfPaymentsState,
     (state)=> state.data
 );
 
 export const getTypeOfPaymentsLoading = createSelector(
-    getUsersState,
+    getTypeOfPaymentsState,
     (state)=> state.loading
 );
 
 export const getTypeOfPaymentsError = createSelector(
-    getUsersState,
+    getTypeOfPaymentsState,
     (state)=> state.error
 );
 export const getPaginations = createSelector(
-    getUsersState,
+    getTypeOfPaymentsState,
     (state)=> state.totalCount
 );
 // export const getUsersLength = createSelector(

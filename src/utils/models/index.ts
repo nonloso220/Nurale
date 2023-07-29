@@ -5,6 +5,7 @@ export interface User{
 }
 export interface QueryParams
 {
+    typeOfPaymentId?:number;
     hasEndOfMonth?: boolean;
     skillType?:string;
     search?: string;

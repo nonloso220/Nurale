@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import { fetchTypeOfPayments} from "../actions";
-import { initialStateCustomers } from '../../customers';
 import { createCustomer, deleteCustomer, updateCustomer } from "../actions";
+import { initialStateCustomer } from "..";
 
-const initialState : initialStateCustomers =
+const initialState : initialStateCustomer =
 {
-    data:[],
+    data:null,
     loading: false,
     error: null,
-    totalCount:0,
 };
 
 export const customerReducer = createSlice(

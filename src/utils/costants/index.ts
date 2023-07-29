@@ -23,7 +23,7 @@ export const ROUTES =
   Report:'/Report',
 };
 export type icons='homeIcon'|'inserimentoVel'|'commesseIcon'|'anagraficheIcon'|'settingsIcon' |'timesheetIcon'|'logoutIcon'|'darkmodeIcon'|'campanelloIcon'|'accountIcon'|'sidebarIcon'|'dropdownIcon'|'dropdownUpIcon'|'sidebarReverseIcon'|'rightArrowIcon'|'leftArrowIcon'|'editIcon'|'deleteIcon'|'trueIcon'|'falseIcon'
-export type typePage='user'|'skill'|'typeOfPayment'|'customer'
+export type typePage='user'|'skill'|'typeOfPayment'|'customer'|'supplier'
 export interface Column {
   id: string;
   name: string;
