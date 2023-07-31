@@ -5,6 +5,8 @@ export interface User{
 }
 export interface QueryParams
 {
+    hasCV?:boolean
+    supplierId?:Number
     typeOfPaymentId?:number;
     hasEndOfMonth?: boolean;
     skillType?:string;

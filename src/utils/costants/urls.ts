@@ -8,6 +8,7 @@ export const SKILLS = '/skills';
 export const TYPEOFPAYMENTS='/type-of-payments'
 export const CUSTOMERS='/customers'
 export const SUPPLIERS='/suppliers'
+export const RESOURCE='/resource'
 // Auth
 export const AUTH = '/auth';
 export const LOGIN = '/login';
