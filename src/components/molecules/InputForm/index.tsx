@@ -10,6 +10,8 @@ import {
 import { useFormContext } from 'react-hook-form'
 import Li from '../../atoms/Li'
 import { useState } from 'react'
+import { TypeOfPayment } from '../../../store/typeOfPayments'
+import { number } from 'zod'
 interface Props extends InputProps {
     type?: string
     placeholder: string
@@ -21,6 +23,7 @@ interface Props extends InputProps {
     action: string
     defaultElement?: any
     selectElements?: string[]
+    selectElementsObject?: any
     showPassword?: boolean
     closeIconAction?: () => void
 }
@@ -36,6 +39,7 @@ const InputForm = ({
     closeIconAction,
     defaultElement,
     selectElements,
+    selectElementsObject,
     showPassword = true,
     ...rest
 }: Props) => {
@@ -62,9 +66,18 @@ const InputForm = ({
                     }}
                     {...register(name)}
                 >
-                    {selectElements?.map((element) => (
-                        <option value={element}>{element}</option>
-                    ))}
+                    {selectElementsObject
+                        ? selectElementsObject?.map(
+                              (element: TypeOfPayment) => (
+                                  <option value={String(element.id)}>
+                                      {element.name}
+                                  </option>
+                              )
+                          )
+                        : selectElements?.map((element) => (
+                              <option value={element}>{element}</option>
+                          ))}
+                    {}
                 </Select>
             ) : action === 'input' ? ( //INPUT
                 <InputGroup>

@@ -9,11 +9,10 @@ export const updateSupplier: any = createAsyncThunk(
     async (supplier:Supplier, thunkAPI) =>
     {
         try
-        {   
-            const body={
-                // name:skill.name,
-                // skillType: skill.skillType,
-                // note: skill.note,
+        {   const body={
+                name: supplier.name,
+                note: supplier.note,
+                typeOfPaymentId: supplier.typeOfPaymentId
             }
             const response:any = await apiClient.patch<AxiosResponse>(
             {

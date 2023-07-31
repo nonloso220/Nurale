@@ -2,23 +2,24 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { useAppDispatch } from '../../../../store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schema } from '../validation'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Flex, Modal } from '../../../atoms'
-import { Stack, Switch } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
 import InputForm from '../../../molecules/InputForm'
 import { theme } from '../../../../theme'
 import Li from '../../../atoms/Li'
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
-import TextElement from '../../../molecules/TextElement'
-import {
-    Customer,
-    createCustomer,
-    fetchCustomers,
-    updateCustomer,
-} from '../../../../store/customers'
 import { useSelector } from 'react-redux'
-import { fetchTypeOfPayments, getTypeOfPayments } from '../../../../store/typeOfPayments'
-import { Supplier } from '../../../../store/suppliers'
+import {
+    fetchTypeOfPayments,
+    getTypeOfPayments,
+} from '../../../../store/typeOfPayments'
+import {
+    Supplier,
+    createSupplier,
+    fetchSuppliers,
+    updateSupplier,
+} from '../../../../store/suppliers'
 
 interface Props {
     open: boolean
@@ -30,15 +31,15 @@ interface Props {
 }
 const FormSupplier = ({ open, supplier, skip, take, setOpen, form }: Props) => {
     const dispatch = useAppDispatch()
-    const typeOfPaymentsData=useSelector(getTypeOfPayments)
+    const typeOfPaymentsData = useSelector(getTypeOfPayments)
     const defaultValues = {
         name: '',
         typeOfPaymentId: 0,
         note: '',
-        id:0,
+        id: 0,
         typeOfPayment: { id: 0, name: '' },
     }
-    const methods = useForm<Customer>({
+    const methods = useForm<Supplier>({
         defaultValues,
         resolver: zodResolver(schema),
     })
@@ -51,55 +52,31 @@ const FormSupplier = ({ open, supplier, skip, take, setOpen, form }: Props) => {
     } = methods
 
     const handleSave = async () => {
-        // setValue(
-        //     'daysBetweenPayments',
-        //     Number(getValues('daysBetweenPayments'))
-        // )
-        // setValue('daysOffsetPayments', Number(getValues('daysOffsetPayments')))
-        // setValue('daysToFirstPayment', Number(getValues('daysToFirstPayment')))
-        // setValue('numberOfPayments', Number(getValues('numberOfPayments')))
-        // getValues('daysOffsetPayments')
-        //     ? null
-        //     : setValue('daysOffsetPayments', 0)
-        // getValues('daysToFirstPayment')
-        //     ? null
-        //     : setValue('daysToFirstPayment', 0)
         const errors1 = await trigger()
         if (!errors1) {
             console.log(errors)
             return errors1
         }
+        console.log(getValues('typeOfPayment.id'))
         const newObject = {
-            name: getValues('name'),//ok
-            note: getValues('note'),//ok
-            typeOfPaymentId:supplier?.typeOfPaymentId,//undefined
-            id:supplier?.id,
-            typeOfPayment:{
-                id:(typeOfPaymentsData.map(
-                (data)=>{
-                        if(data.name===String(getValues('typeOfPayment.name'))){
-                            console.log('data return:')
-                            console.log(data)
-                            return data.id//nan
-                        }
-                        console.log('data:')
-                        console.log(data)
-                })),
-            name:getValues('typeOfPayment.name')},//ok
+            name: getValues('name'), //ok
+            note: getValues('note'), //ok
+            typeOfPaymentId: Number(getValues('typeOfPayment.id')), //ok
+            id: supplier?.id,
         }
         if (supplier) {
             console.log('update object:')
             console.log(newObject)
-            await dispatch(updateCustomer(newObject))
+            await dispatch(updateSupplier(newObject))
         } else {
             console.log('create object:')
             console.log(newObject)
-            await dispatch(createCustomer(newObject))
+            await dispatch(createSupplier(newObject))
         }
         await reset(defaultValues)
         await setOpen(false)
         await dispatch(
-            fetchCustomers({
+            fetchSuppliers({
                 skip: skip,
                 take: take,
             })
@@ -124,24 +101,19 @@ const FormSupplier = ({ open, supplier, skip, take, setOpen, form }: Props) => {
         form(objectForm)
     }
     useEffect(() => {
-        dispatch(
-            fetchTypeOfPayments()
-        )    
+        dispatch(fetchTypeOfPayments())
         if (supplier) {
-            console.log('customer useEffect prima: ')
+            console.log('Supplier useEffect prima: ')
             console.log(supplier)
             setValue('name', supplier.name)
             setValue('note', supplier.note)
-            setValue('typeOfPaymentId',supplier.typeOfPaymentId)
-            setValue('typeOfPayment.name',supplier.typeOfPayment.name)
-            setValue('typeOfPayment.id',supplier.typeOfPayment.id)
+            setValue('typeOfPaymentId', supplier.typeOfPaymentId)
+            setValue('typeOfPayment.name', supplier.typeOfPayment.name)
+            setValue('typeOfPayment.id', supplier.typeOfPayment.id)
         } else null
-        console.log('customer useEffect dopo: ')
+        console.log('supplier useEffect dopo: ')
         console.log(supplier)
     }, [open, supplier])
-    const extractTypeOfPaymentId=()=>{
-        
-    }
     return (
         <Modal show={open} color="black">
             <Flex
@@ -197,14 +169,16 @@ const FormSupplier = ({ open, supplier, skip, take, setOpen, form }: Props) => {
                                     fontSize="16px"
                                     label="Tipo di pagamento"
                                     fontWeight="500"
-                                    name={'typeOfPayment.name'}
+                                    name={'typeOfPayment.id'}
                                     action={'select'}
                                     type="text"
                                     placeholder={''}
                                     defaultElement={
-                                        supplier?getValues('typeOfPayment.name'):' '
+                                        supplier
+                                            ? getValues('typeOfPayment.name')
+                                            : ' '
                                     }
-                                    selectElements={typeOfPaymentsData.map((data)=>data.name)}
+                                    selectElementsObject={typeOfPaymentsData}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -282,7 +256,7 @@ const FormSupplier = ({ open, supplier, skip, take, setOpen, form }: Props) => {
                     >
                         <CheckIcon />
                         <span style={{ fontWeight: 'bold' }}>
-                            &nbsp; {supplier? 'salva':'Conferma'}
+                            &nbsp; {supplier ? 'salva' : 'Conferma'}
                         </span>
                     </Li>
                 </Flex>

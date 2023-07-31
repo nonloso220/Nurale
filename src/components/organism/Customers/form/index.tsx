@@ -9,7 +9,6 @@ import InputForm from '../../../molecules/InputForm'
 import { theme } from '../../../../theme'
 import Li from '../../../atoms/Li'
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
-import TextElement from '../../../molecules/TextElement'
 import {
     Customer,
     createCustomer,
@@ -17,7 +16,10 @@ import {
     updateCustomer,
 } from '../../../../store/customers'
 import { useSelector } from 'react-redux'
-import { fetchTypeOfPayments, getTypeOfPayments } from '../../../../store/typeOfPayments'
+import {
+    fetchTypeOfPayments,
+    getTypeOfPayments,
+} from '../../../../store/typeOfPayments'
 
 interface Props {
     open: boolean
@@ -29,12 +31,12 @@ interface Props {
 }
 const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
     const dispatch = useAppDispatch()
-    const typeOfPaymentsData=useSelector(getTypeOfPayments)
+    const typeOfPaymentsData = useSelector(getTypeOfPayments)
     const defaultValues = {
         name: '',
         typeOfPaymentId: 0,
         note: '',
-        id:0,
+        id: 0,
         typeOfPayment: { id: 0, name: '' },
     }
     const methods = useForm<Customer>({
@@ -55,23 +57,12 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
             console.log(errors)
             return errors1
         }
+        console.log(getValues('typeOfPayment.id'))
         const newObject = {
-            name: getValues('name'),//ok
-            note: getValues('note'),//ok
-            typeOfPaymentId:customer?.typeOfPaymentId,//undefined
-            id:customer?.id,
-            typeOfPayment:{
-                id:Number(typeOfPaymentsData.map(
-                (data)=>{
-                        if(data.name===String(getValues('typeOfPayment.name'))){
-                            console.log('data return:')
-                            console.log(data)
-                            return data.id//nan
-                        }
-                        console.log('data:')
-                        console.log(data)
-                })),
-            name:getValues('typeOfPayment.name')},//ok
+            name: getValues('name'), //ok
+            note: getValues('note'), //ok
+            typeOfPaymentId: Number(getValues('typeOfPayment.id')), //ok
+            id: customer?.id,
         }
         if (customer) {
             console.log('update object:')
@@ -110,24 +101,19 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
         form(objectForm)
     }
     useEffect(() => {
-        dispatch(
-            fetchTypeOfPayments()
-        )    
+        dispatch(fetchTypeOfPayments())
         if (customer) {
             console.log('customer useEffect prima: ')
             console.log(customer)
             setValue('name', customer.name)
             setValue('note', customer.note)
-            setValue('typeOfPaymentId',customer.typeOfPaymentId)
-            setValue('typeOfPayment.name',customer.typeOfPayment.name)
-            setValue('typeOfPayment.id',customer.typeOfPayment.id)
+            setValue('typeOfPaymentId', customer.typeOfPaymentId)
+            setValue('typeOfPayment.name', customer.typeOfPayment.name)
+            setValue('typeOfPayment.id', customer.typeOfPayment.id)
         } else null
         console.log('customer useEffect dopo: ')
         console.log(customer)
     }, [open, customer])
-    const extractTypeOfPaymentId=()=>{
-        
-    }
     return (
         <Modal show={open} color="black">
             <Flex
@@ -183,14 +169,16 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
                                     fontSize="16px"
                                     label="Tipo di pagamento"
                                     fontWeight="500"
-                                    name={'typeOfPayment.name'}
+                                    name={'typeOfPayment.id'}
                                     action={'select'}
                                     type="text"
                                     placeholder={''}
                                     defaultElement={
-                                        customer?getValues('typeOfPayment.name'):' '
+                                        customer
+                                            ? getValues('typeOfPayment.name')
+                                            : ' '
                                     }
-                                    selectElements={typeOfPaymentsData.map((data)=>data.name)}
+                                    selectElementsObject={typeOfPaymentsData}
                                     style={{
                                         width: '100%',
                                         borderRadius: '11px',
@@ -268,7 +256,7 @@ const FormCustomer = ({ open, customer, skip, take, setOpen, form }: Props) => {
                     >
                         <CheckIcon />
                         <span style={{ fontWeight: 'bold' }}>
-                            &nbsp; {customer? 'salva':'Conferma'}
+                            &nbsp; {customer ? 'salva' : 'Conferma'}
                         </span>
                     </Li>
                 </Flex>

@@ -21,7 +21,7 @@ interface Props {
     labelNavbar: string
     lablel: string
     totalElement: number //getPaginations  useSelector(getPaginations)
-    objects: Supplier[]| Customer[] | TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
+    objects: Supplier[] | Customer[] | TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
     typePage: typePage
     elementFilter: boolean | string | undefined
     children: React.ReactNode

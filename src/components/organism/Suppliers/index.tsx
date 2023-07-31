@@ -5,8 +5,15 @@ import { useSelector } from 'react-redux'
 import { Flex } from '../..'
 import Li from '../../atoms/Li'
 import { theme } from '../../../theme'
-import { Supplier, deleteSupplier, fetchSuppliers } from '../../../store/suppliers'
-import { getPaginations, getSuppliers } from '../../../store/suppliers/suppliers/selectors'
+import {
+    Supplier,
+    deleteSupplier,
+    fetchSuppliers,
+} from '../../../store/suppliers'
+import {
+    getPaginations,
+    getSuppliers,
+} from '../../../store/suppliers/suppliers/selectors'
 import FormSupplier from './form'
 
 const Suppliers = () => {
@@ -33,8 +40,8 @@ const Suppliers = () => {
     }
     return (
         <TableLayout
-            labelNavbar="Tipi di pagamento"
-            lablel="Aggiungi nuovo Tipo di Pagamento"
+            labelNavbar="fornitori"
+            lablel="Aggiungi nuovi fornitori"
             totalElement={totalElement}
             objects={suppliers}
             handleColumns={handleColumns}
