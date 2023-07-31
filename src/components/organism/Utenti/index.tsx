@@ -1,4 +1,3 @@
-import { createColumnHelper } from '@tanstack/react-table'
 import { Flex, Table } from '../..'
 import Navbar from '../../molecules/Navbar'
 import { useSelector } from 'react-redux'
@@ -104,7 +103,7 @@ const Users = () => {
                         onClick={handleClick}
                     >
                         <AddIcon />
-                        <span>&nbsp; {t('user.addNewUser')}</span>
+                        <span>&nbsp; {t('pages.users.add')}</span>
                     </Li>
                 </Flex>
                 <Text

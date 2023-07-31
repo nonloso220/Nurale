@@ -3,16 +3,16 @@ import { ROUTES } from '../utils/costants'
 
 import RequireAuth from '../utils/helpers/requaireAuth'
 import Login from '../components/pages/Login'
-import RecuperoPassword from '../components/pages/recuperoPassword'
 import Layout from '../components/molecules/Layout'
-import Home from '../components/pages/home'
-import Commesse from '../components/pages/commesse'
+import Commesse from '../components/pages/Commesse'
 import Ordini from '../components/pages/ordini'
 import Skills from '../components/pages/skills'
 import TypeOfPayments from '../components/pages/TypeOfPayments'
 import Users from '../components/pages/Users'
 import Costumers from '../components/pages/Costumers'
 import Suppliers from '../components/pages/Suppliers'
+import RecuperoPassword from '../components/organism/RecuperoPassword'
+import Home from '../components/pages/home'
 
 const AppRoutes = () => {
     return (
@@ -35,7 +35,10 @@ const AppRoutes = () => {
                             element={<TypeOfPayments />}
                         />
                         <Route path={ROUTES.Clienti} element={<Costumers />} />
-                        <Route path={ROUTES.Fornitori} element={<Suppliers />} />
+                        <Route
+                            path={ROUTES.Fornitori}
+                            element={<Suppliers />}
+                        />
                     </Route>
                 </Route>
             </Routes>

@@ -1,5 +1,237 @@
 {
-    "user":{
-        "addNewUser":"add new user"
+    "sidebar": {
+      "top-sidebar": {
+        "home": "Home",
+        "quick-insert": "Inserimento veloce",
+        "jobs": "Commesse",
+        "orders": "Ordini",
+        "activities": "Attività",
+        "personal-data": "Anagrafiche",
+        "customers": "Clienti",
+        "suppliers": "Fornitori",
+        "resources": "Risorse",
+        "resource-skill": "Skill delle risorse",
+        "purchases": "Acquisti",
+        "purchase-invoice": "Fattura d'acquisto",
+        "purchase-invoice-activity": "Fattura d'acquisto attività",
+        "sales": "Vendite",
+        "sales-invoices": "Fatture di vendita",
+        "timetable": "Scadenziario",
+        "scheduled-payments": "Scadenze",
+        "scheduled-values": "Pianificazione",
+        "settings": "Impostazioni",
+        "skills": "Abilità",
+        "type-of-payment": "Tipo di pagamento",
+        "users": "Utenti",
+        "timesheet": "Scheda attività",
+        "report": "Rapporti"
+      },
+      "bottom-sidebar": {
+        "log-out": "Esci",
+        "dark-mode": "Modalità scura"
+      }
+    },
+    "navbar": {
+      "home": "HOME",
+      "quick-insert": "INSERIMENTO VELOCE",
+      "jobs": "COMMESSE",
+      "orders": "ORDINI",
+      "activities": "ATTIVITÀ",
+      "personal-data": "ANAGRAFICHE",
+      "customers": "CLIENTI",
+      "suppliers": "FORNITORI",
+      "resources": "RISORSE",
+      "resource-skills": "SKILL DELLE RISORSE",
+      "purchases": "ACQUISTI",
+      "purchase-invoice": "FATTURA D'ACQUISTO",
+      "purchase-invoice-activity": "FATTURA D'ACQUISTO ATTIVITÀ",
+      "sales": "VENDITE",
+      "sales-invoices": "FATTIRA DI VENDITA",
+      "timetable": "SCADENZIARIO",
+      "scheduled-payments": "SCADENZE",
+      "scheduled-values": "PIANIFICAZIONE",
+      "settings": "IMPOSTAZIONI",
+      "skills": "ABILITÀ",
+      "type-of-payments": "TIPI DI PAGAMENTO",
+      "users": "UTENTI",
+      "timesheet": "SCHEDA ATTIVITÀ",
+      "report": "RAPPORTI"
+    },
+    "pages": {
+      "users": {
+        "add":"Aggiungi nuovo utente",
+        "table": {
+          "cols": {
+            "first-name": "Nome",
+            "last-name": "Cognome",
+            "email": "Email"
+          },
+          
+          "no-selected": "Nessun utente selezionato"
+        }
+      },
+      "skills": {
+        "table": {
+          "cols": {
+            "name": "Nome",
+            "skill-type": "Tipo di abilità",
+            "note": "Note"
+          },
+          "add": "AGGIUNGI NUOVA SKILL",
+          "edit": "MODIFICA SKILL",
+          "no-selected": "Nessuna skill selezionata"
+        }
+      },
+      "type-of-payments": {
+        "table": {
+          "cols": {
+            "name": "Nome",
+            "days-to-first-payment": "Giorni al primo pagamento",
+            "days-between-payments": "Giorni tra i pagamenti",
+            "number-of-payments": "Numero di pagamenti",
+            "move-payments-to-the-end-of-month": "Spostare i pagamenti alla fine del mese",
+            "days-offset-payments": "Giorni scostamento pagamento",
+            "note": "Note"
+          },
+          "filter": {
+            "payments-to-the-end-of-month": "Pagamenti alla fine del mese"
+          },
+          "add": "AGGIUNGI NUOVO TIPO DI PAGAMENTO",
+          "edit": "MODIFICA TIPO DI PAGAMENTO",
+          "no-selected": "Nessun tipo di pagamento selezionato"
+        }
+      },
+      "customers": {
+        "table": {
+          "cols": {
+            "name": "Nome",
+            "payment-type": "Tipo di pagamento",
+            "note": "Note"
+          },
+          "add": "AGGIUNGI NUOVO CLIENTE",
+          "edit": "MODIFICA CLIENTE",
+          "no-selected": "Nessun cliente selezionato"
+        }
+      },
+      "suppliers": {
+        "table": {
+          "cols": {
+            "name": "Nome",
+            "payment-type": "Tipo di pagamento",
+            "note": "Note"
+          },
+          "add": "AGGIUNGI NUOVO FORNITORE",
+          "edit": "MODIFICA FORNITORE",
+          "no-selected": "Nessun fornitore selezionato"
+        }
+      },
+      "resources": {
+        "table": {
+          "cols": {
+            "first-name": "Nome",
+            "last-name": "Cognome",
+            "hour-cost": "Costo or.",
+            "hour-revenue": "Ricavo or.",
+            "curriculum-vitae": "CV",
+            "supplier": "Fornitore",
+            "note": "Note"
+          },
+          "add": "AGGIUNGI NUOVA RISORSA",
+          "edit": "MODIFICA RISORSA",
+          "no-selected": "Nessuna risorsa selezionata"
+        }
+      },
+      "resource-skills": {
+        "table": {
+          "cols": {
+            "resource": "Risorsa",
+            "skill": "Abilità",
+            "level": "Livello",
+            "note": "Note"
+          },
+          "add": "AGGIUNGI NUOVA ABILITÀ PER LA RISORSA",
+          "edit": "MODIFICA ABILITÀ PER LA RISORSA",
+          "no-selected": "Nessuna abilità per la risorsa selezionata"
+        }
+      },
+      "purchase-invoices": {
+        "table": {
+          "cols": {
+            "invoice-number": "Numero fattura",
+            "supplier": "Fornitore",
+            "type-of-payment": "Tipo di pagamento",
+            "date": "Data",
+            "net-value": "Imponibile",
+            "vat-value": "IVA",
+            "total": "Totale",
+            "state": "Stato",
+            "note": "Note"
+          },
+          "add": "AGGIUNGI NUOVA FATTURA D'ACQUISTO",
+          "edit": "MODIFICA FATTURA D'ACQUISTO",
+          "no-selected": "Nessuna fattura selezionata"
+        }
+      },
+      "purchase-invoice-activities": {
+        "table": {
+          "cols": {
+            "id": "Id",
+            "activity": "Attività",
+            "purchase-invoice": "Fattura d'acquisto"
+          },
+          "add": "AGGIUNGI NUOVA FATTURA D'ACQUISTO ATTIVITÀ",
+          "edit": "MODIFICA FATTURA D'ACQUISTO ATTIVITÀ",
+          "no-selected": "Nessuna fattura d'acquisto attività selezionata"
+        }
+      },
+      "sales-invoices": {
+        "table": {
+          "cols": {
+            "invoice-number": "Numero fattura",
+            "date": "Data",
+            "net-value": "Imponibile",
+            "vat-value": "IVA",
+            "total": "Totale",
+            "customer": "Cliente",
+            "type-of-payment": "Tipo di pagamento",
+            "state": "Stato",
+            "note": "Note"
+          },
+          "add": "AGGIUNGI NUOVA FATTURA D'ACQUISTO ATTIVITÀ",
+          "edit": "MODIFICA FATTURA D'ACQUISTO ATTIVITÀ",
+          "no-selected": "Nessuna fattura d'acquisto attività selezionata"
+        }
+      },
+      "jobs": {
+        "table": {
+          "cols": {
+            "code": "Codice",
+            "description": "Descrizione",
+            "customer": "Cliente",
+            "start-date": "Data inizio",
+            "end-date": "Data fine",
+            "type-of-jobs": "Tipo di commessa",
+            "state": "Stato"
+          }
+        }
+      }
+    },
+    "utilities": {
+      "table": {
+        "actions": "Azioni",
+        "add": "Aggiungi nuovo",
+        "filter": "Filtra",
+        "confirm-delete": "Sei sicuro di voler eliminare"
+      },
+      "buttons": {
+        "confirm": "Conferma",
+        "cancel": "Annulla",
+        "clear-filters": "Svuota filtri",
+        "filter": "Filtra",
+        "all": "Tutti",
+        "yes": "Sì",
+        "no": "No",
+        "select": "Seleziona"
+      }
     }
-}
+  }
