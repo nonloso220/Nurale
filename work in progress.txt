@@ -1,6 +1,8 @@
-1)tableLayout 
-2)sitemare pagine già fatte con il tebleLayaout
-3)andare avanti con le pagine da fare
+1)andare avanti con le pagine da fare
+2)fare la traslation bene a tutte le pagine nuove e vecchie
+3)sitemare pagine già fatte con il tebleLayaout
+4)fare la darkmode 
+5)controllo finale funzionamento app,controllo finale design app,controllo finale efficienza app
 
 
 
