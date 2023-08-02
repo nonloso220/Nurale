@@ -12,6 +12,7 @@ import Li from '../../atoms/Li'
 import { useState } from 'react'
 import { TypeOfPayment } from '../../../store/typeOfPayments'
 import { number } from 'zod'
+import { Supplier } from '../../../store/suppliers'
 interface Props extends InputProps {
     type?: string
     placeholder: string
@@ -68,7 +69,7 @@ const InputForm = ({
                 >
                     {selectElementsObject
                         ? selectElementsObject?.map(
-                              (element: TypeOfPayment) => (
+                              (element: TypeOfPayment | Supplier) => (
                                   <option value={String(element.id)}>
                                       {element.name}
                                   </option>
@@ -86,6 +87,7 @@ const InputForm = ({
                         fontSize={fontSize ? fontSize : '18px'}
                         {...register(name)}
                         {...rest}
+                        defaultValue={defaultElement}
                         type={show ? 'text' : 'password'}
                         isDisabled={type === 'email' ? true : false}
                         cursor={type === 'email' ? 'not-allowed' : 'pointer'}

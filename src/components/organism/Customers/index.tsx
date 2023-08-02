@@ -14,33 +14,40 @@ import {
     getPaginations,
 } from '../../../store/customers'
 import FormCustomer from './form'
+import { FormProvider } from 'react-hook-form'
+import { Select, Stack } from '@chakra-ui/react'
+import InputForm from '../../molecules/InputForm'
+import { getTypeOfPayment } from '../../../store/typeOfPayments/typeOfPayment/selectors'
+import { TypeOfPayment, getTypeOfPayments } from '../../../store/typeOfPayments'
 
 const Customers = () => {
     const totalElement = useSelector(getPaginations)
     const customers = useSelector(getCustomers)
+    const typeOfPaymentsData = useSelector(getTypeOfPayments)
     const [customer, setCustomer] = useState<Customer | null>(null)
     const [open, setOpen] = useState<boolean>(false)
     const [skip, setSkip] = useState<number>(0)
     const [take, setTake] = useState<number>(0)
-    const [elementFilter, setElementFilter] = useState<boolean | string>()
+    const [elementFilter, setElementFilter] = useState<boolean | string |number>()
+    let v:string=''
     const formObject = (Object: any) => {
         setCustomer(Object.object)
         setSkip(Object.params.skip)
         setTake(Object.params.take)
         setOpen(Object.open)
     }
-    const handleFilter = (element: boolean) => {
+    const handleFilter = () => {
         // setColoredButton(element ? true : false)
         // setColoredButton2(element ? false : true)
-        setElementFilter(element)
+        setElementFilter(Number(v))
     }
     const handleResetFilter = async () => {
         setElementFilter(undefined)
     }
     return (
         <TableLayout
-            labelNavbar="Tipi di pagamento"
-            lablel="Aggiungi nuovo Tipo di Pagamento"
+            labelNavbar="clienti"
+            lablel="Aggiungi nuovo cliente"
             totalElement={totalElement}
             objects={customers}
             handleColumns={handleColumns}
@@ -53,60 +60,58 @@ const Customers = () => {
             elementFilter={elementFilter}
             childrenFilter={
                 <>
-                    {/* <Flex bgcolor="white">
-                        <span>Pagamenti alla fine del mese</span>
+                    <Flex bgcolor="white">
+                        <span>tipo di pagamento</span>
                     </Flex>
                     <Flex bgcolor="white">
-                        <Li
+                        <Flex
+                            bgcolor="white"
+                            column="column"
                             style={{
-                                backgroundColor: theme.colors.pink100,
-                                display: open ? 'none' : 'block',
-                                border: '0px',
-                                padding: '10px',
-                                width: '65px',
-                                color: 'white',
-                                textAlign: 'center',
-                            }}
-                            onClick={handleResetFilter}
-                        >
-                            Tutti
-                        </Li>
-                        <Li
-                            //  coloredButton
-                            //  ? theme.colors.purple
-                            style={{
-                                backgroundColor: theme.colors.pink100,
-                                display: open ? 'none' : 'block',
-                                border: '0px',
-                                padding: '10px',
-                                width: '65px',
-                                color: 'white',
-                                textAlign: 'center',
-                            }}
-                            onClick={() => handleFilter(true)}
-                        >
-                            Si
-                        </Li>
-                        <Li
-                            // coloredButton2
-                            // ? theme.colors.purple
-                            // :
-                            style={{
-                                backgroundColor: theme.colors.pink100,
-                                display: open ? 'none' : 'block',
-                                border: '0px',
-                                padding: '10px',
-                                width: '65px',
-                                color: 'white',
-                                textAlign: 'center',
-                            }}
-                            onClick={() => {
-                                handleFilter(false)
+                                marginLeft: '20px',
+                                width: '100%',
                             }}
                         >
-                            No
-                        </Li>
-                    </Flex> */}
+                                <Select
+                                    placeholder={''}
+                                    style={{
+                                        borderRadius: '11px',
+                                        borderColor: 'rgb(133, 125, 172)',
+                                    }}
+                                    // onChange={handleFilter}
+                                >
+                                   { typeOfPaymentsData?.map(
+                                        (element: TypeOfPayment) => (
+                                            <option value={String(element.id)}>
+                                                {element.name}
+                                            </option>
+                                        )
+                                    )}
+                                </Select>
+                                {/* <InputForm
+                                        fontSize="16px"
+                                        label="Tipo di pagamento"
+                                        fontWeight="500"
+                                        name={'typeOfPayment.id'}
+                                        action={'select'}
+                                        type="text"
+                                        placeholder={''}
+                                        defaultElement={
+                                            customer
+                                                ? customer.typeOfPayment.name
+                                                : ' '
+                                        }
+                                        selectElementsObject={typeOfPaymentsData}
+                                        style={{
+                                            width: '100%',
+                                            borderRadius: '11px',
+                                            borderColor: '#857DAC',
+                                            display: 'flex',
+                                        }}
+                                        // onChange={() => handleFilter(typeOfPaymentId)}
+                                    /> */}
+                        </Flex>
+                    </Flex>
                 </>
             }
             children={
