@@ -16,14 +16,15 @@ import { TypeOfPayment } from '../../../store/typeOfPayments'
 import { typePage } from '../../../utils/costants'
 import { Customer } from '../../../store/customers'
 import { Supplier } from '../../../store/suppliers'
+import { Resource } from '../../../store/resources'
 
 interface Props {
     labelNavbar: string
     lablel: string
     totalElement: number //getPaginations  useSelector(getPaginations)
-    objects: Supplier[] | Customer[] | TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
+    objects: Resource[]|Supplier[] | Customer[] | TypeOfPayment[] | User[] | Skill[] //getobject  useSelector(getTypeOfPayments)
     typePage: typePage
-    elementFilter: boolean | string | undefined
+    elementFilter: boolean | string | number | undefined
     children: React.ReactNode
     childrenFilter: React.ReactNode
     open: boolean
@@ -54,7 +55,7 @@ const TableLayout = ({
     const dispatch = useAppDispatch()
     const [openDelete, setOpenDelete] = useState(false)
     const [skip, setSkip] = useState(0)
-    const [object, setObject] = useState<TypeOfPayment | User | Skill | null>(
+    const [object, setObject] = useState<Resource|Supplier |Customer |TypeOfPayment | User | Skill | null>(
         null
     )
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -81,11 +82,11 @@ const TableLayout = ({
     const handleClickFilter = () => {
         setFilter(!filter)
     }
-    const handleFormEdit = (object: TypeOfPayment | User | Skill) => {
+    const handleFormEdit = (object:Resource|Supplier |Customer | TypeOfPayment | User | Skill) => {
         setOpen(true)
         setObject(object)
     }
-    const handleConfirmDelete = (object: TypeOfPayment | User | Skill) => {
+    const handleConfirmDelete = (object:Resource|Supplier |Customer | TypeOfPayment | User | Skill) => {
         setOpenDelete(true)
         setObject(object)
     }
@@ -135,6 +136,14 @@ const TableLayout = ({
                     })
                 )
                 break
+            case 'customer':
+                await dispatch(
+                    fetchElement({
+                        typeOfPaymentId:elementFilter,
+                        skip: skip,
+                        take: take,
+                    })
+                )
         }
     }
     const deleteName = () => {

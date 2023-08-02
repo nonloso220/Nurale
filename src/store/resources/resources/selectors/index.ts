@@ -1,9 +1,9 @@
 import { createSelector } from "reselect";
 import { RootState } from "../../../applicationStore";
 
-export const getUsersState = (state : RootState) => state.suppliers;
+export const getUsersState = (state : RootState) => state.resources;
 
-export const getSuppliers = createSelector(
+export const getResources = createSelector(
     getUsersState,
     (state)=> state.data
 );

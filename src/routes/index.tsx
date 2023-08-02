@@ -13,6 +13,7 @@ import Costumers from '../components/pages/Costumers'
 import Suppliers from '../components/pages/Suppliers'
 import RecuperoPassword from '../components/organism/RecuperoPassword'
 import Home from '../components/pages/home'
+import Resources from '../components/pages/resources'
 
 const AppRoutes = () => {
     return (
@@ -39,6 +40,7 @@ const AppRoutes = () => {
                             path={ROUTES.Fornitori}
                             element={<Suppliers />}
                         />
+                        <Route path={ROUTES.Risorse} element={<Resources />} />
                     </Route>
                 </Route>
             </Routes>
